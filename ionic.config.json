@@ -1,0 +1,7 @@
+{
+  "name": "FixedApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
