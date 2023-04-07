@@ -1,0 +1,60 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>validation</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form #form="ngForm" (ngSubmit)="onSubmit()">
+    <ion-card>
+
+
+        <ion-input
+          label-placement="floating" 
+          label="pass"
+          #passwordInput="ngModel"
+          ngModel
+          type="password"
+          name="password"
+          placeholder="Enter your password"
+          fill="solid"
+          required
+          ></ion-input>
+
+          <ng-container *ngIf="submissionType === 'CIN'"> 
+            <ion-input 
+            label="Phone number" 
+            label-placement="floating" 
+            fill="solid"
+            placeholder="Enter your phone number"
+              #phoneInput="ngModel"
+              ngModel
+              type="number"
+              name="phoneNumber"
+              required>
+          </ion-input>
+
+          </ng-container>
+
+
+
+      <ion-button
+        [disabled]="!form.valid"
+        type="submit"
+        shape="round"
+        expand="block"
+      >
+        {{ submissionType === 'CIN' ? 'Sign in' : 'Accept & Join' }}
+      </ion-button>
+
+    </ion-card>
+  </form>
+
+  <div class="toggle-text">
+    {{ submissionType === 'CIN' ? 'Scan Passeport/Sejour' : 'Scan the CIN Card' }}
+    <ion-text class="toggle-auth-mode" color="primary" (click)="toggleText()">
+      {{ submissionType === 'CIN' ? 'from here' : 'Click here' }}
+    </ion-text>
+  </div>
+
+</ion-content>

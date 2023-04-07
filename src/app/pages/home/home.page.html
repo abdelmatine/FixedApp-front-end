@@ -1,0 +1,55 @@
+<ion-header class="ion-no-border">
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-button>
+                <div class="headtainer">
+                    <ion-img src="assets/images/head.png"/>
+                </div>
+			</ion-button>
+		</ion-buttons>
+        <ion-title>Fixed App</ion-title>
+		<ion-buttons slot="end">
+			<ion-button class="bordered" fill="solid" color="light">
+                <ion-icon name="notifications"></ion-icon>            
+            </ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+
+
+
+</ion-header>
+<ion-content>
+  <ion-item lines="none">
+    <ion-label>
+        <p>What are you up,</p>
+        <h3>For today?</h3>
+    </ion-label>
+
+    <ion-avatar slot="end">  <img alt="test" src="assets/images/applee.png" /></ion-avatar>
+</ion-item>
+
+<div class="content_div">
+
+    <ion-grid >
+        <ion-row>
+            <ion-col sizeLg="4" sizeMd="4" sizeXs="6" tappable (click)="goto(item)" *ngFor="let item of items ">
+
+                <div class="col_div">
+
+                    <img src="{{item.img}}">
+                    <ion-label>{{item.name}}</ion-label>
+
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title>
+      Footer
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>

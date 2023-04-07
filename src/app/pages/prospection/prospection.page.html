@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+        <ion-title>Prospection</ion-title>
+		<ion-buttons slot="end">
+			<ion-button class="bordered" fill="solid" color="light">
+                <ion-icon name="notifications"></ion-icon>            
+            </ion-button>
+		</ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+
+  <h2 class="h2-class">Please proceed by choosing the client identity type from the lsit below </h2>
+ 
+
+  
+
+<ion-item>
+  <ion-label>Select ID type</ion-label>
+  <ion-select placeholder="ID type" [(ngModel)]="place" >
+    <ion-select-option value="cin">CIN</ion-select-option>
+    <ion-select-option value="pass">PASSEPORT</ion-select-option>
+    <ion-select-option value="sej">SEJOUR</ion-select-option>
+
+  </ion-select>
+</ion-item>
+
+</ion-content>
+
+<ion-footer>
+   <ion-button type="submit"
+   shape="round"
+   expand="block"
+   (click)="Search()">Search</ion-button>
+ </ion-footer>
