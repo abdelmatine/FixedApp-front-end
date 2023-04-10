@@ -50,8 +50,4 @@ export const routes: Routes = [
     path: 'validation',
     loadComponent: () => import('./pages/prospection/validation/validation.page').then( m => m.ValidationPage)
   },
-  {
-    path: 'imgtest',
-    loadComponent: () => import('./pages/imgtest/imgtest.page').then( m => m.ImgtestPage)
-  },
 ];

@@ -127,21 +127,31 @@
 
 
       <ng-container *ngIf="submissionType === 'join'"> 
-      <ion-input
-      label-placement="floating" 
-      label="confirm pass"
-      #confirmPasswordInput="ngModel"
-      ngModel
-      type="password"
-      name="confirmPassword"
-      placeholder="Confirm your password"
-      fill="solid"
-      required
-      ></ion-input>
+        <ion-item>
+          <ion-input
+          label-placement="floating" 
+          label="confirm pass"
+          #confirmPasswordInput="ngModel"
+          ngModel
+          type="{{ showPassword ? 'text' : 'password' }}"
+          name="confirmPassword"
+          placeholder="Confirm your password"
+          fill="solid"
+          required
+          (ionChange)="validatePassword()"
+          ></ion-input>
+          <ion-buttons slot="end">
+            <button ion-button clear (click)="toggleShowPassword()">
+              <ion-icon slot="icon-only" [name]="showPassword ? 'eye-off' : 'eye'"></ion-icon>
+            </button>
+          </ion-buttons>
+        </ion-item>
+
   <ion-text
   color="danger"
   *ngIf="!passwordInput.valid && passwordInput.touched"
   >Please confirm your Password.</ion-text>
+  <ion-text color="danger" *ngIf="passwordMismatch">Password mismatch</ion-text>
   </ng-container>
 
 

@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
-import { IonicModule, IonInput, PopoverController } from '@ionic/angular';
+import { FormGroup, FormsModule, NgForm, Validators } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { AuthService } from './services/auth.service';
+import { NewUser } from './models/newUser.model';
 
 @Component({
   selector: 'app-login',
@@ -12,17 +14,25 @@ import { Router } from '@angular/router';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class LoginPage implements OnInit {
+
   @ViewChild('form') form: NgForm | undefined;
 
 
-  submissionType: 'login' | 'join' = 'login';
+  passwordMismatch = false;
+  passwordMatched = false;
 
-  constructor(private router:Router,private popoverController: PopoverController) { }
+  submissionType: 'login' | 'join' = 'login';
+  showPassword = false;
+
+  constructor(private router:Router, private authService: AuthService) { }
 
   ngOnInit() {
   }
+  onSubmit(){
+    
+  }
 
-  onSubmit() {
+  /*onSubmit() {
     const { username, password } = this.form!.value;
     if (!username || !password) return;
 
@@ -31,12 +41,30 @@ export class LoginPage implements OnInit {
       this.router.navigate(['/home'])
       }
      else if (this.submissionType === 'join'){
-      const { firstName, lastName, email, password, username, phoneNumber, confirmPassword } = this.form!.value;
+      const { firstName, lastName, email, phoneNumber, confirmPassword } = this.form!.value;
       if (!firstName || !lastName || !email || !password || !username || !phoneNumber || !confirmPassword) return;
-      console.log(2, 'handle join', firstName, lastName, email, password, username, phoneNumber);
-    }
 
+
+      const newUser: NewUser = { username ,firstName, lastName, email, phoneNumber , password};
+      return this.authService.register(newUser).subscribe(() => {
+        this.toggleText();
+      })
+
+
+
+    }
   }
+  
+    get isUserLoggedIn(): Observable<boolean>{
+    return this.user$.asObservable().pipe(
+      switchMap((user: User) => {
+        const isUserAuthenticated = user !== null;
+        return of(isUserAuthenticated);
+      })
+    )
+  }
+  
+  */
 
 
   toggleText(){
@@ -50,6 +78,32 @@ export class LoginPage implements OnInit {
 
 
     }
+  }
+
+
+
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
+  }
+
+
+  validatePassword() {
+
+    if (this.submissionType === 'join'){
+
+      const { firstName, lastName, email, password, username, phoneNumber, confirmPassword } = this.form!.value;
+
+      if (password === confirmPassword) {
+        this.passwordMismatch = false;
+        this.passwordMatched = true;
+      } else {
+        this.passwordMismatch = true;
+        this.passwordMatched = false;
+      }
+
+    }
+
   }
 
 
