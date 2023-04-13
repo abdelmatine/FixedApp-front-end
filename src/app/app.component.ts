@@ -10,7 +10,7 @@ register();
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [IonicModule,HttpClientModule],
+  imports: [IonicModule,HttpClientModule,],
 })
 
 export class AppComponent {

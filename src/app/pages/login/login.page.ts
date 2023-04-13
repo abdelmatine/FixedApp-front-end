@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormGroup, FormsModule, NgForm, Validators } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
@@ -10,6 +10,7 @@ import { NewUser } from './models/newUser.model';
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
+  providers: [AuthService],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule]
 })
@@ -28,43 +29,41 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
   }
-  onSubmit(){
-    
-  }
 
-  /*onSubmit() {
+
+  onSubmit() {
     const { username, password } = this.form!.value;
-    if (!username || !password) return;
 
     if (this.submissionType === 'login') {
-      console.log(1, 'handle login', username, password);
-      this.router.navigate(['/home'])
+      if (!username || !password) return;
+      return this.authService.login(username, password).subscribe(() => {
+       this.router.navigateByUrl('/home');
+      });
       }
      else if (this.submissionType === 'join'){
       const { firstName, lastName, email, phoneNumber, confirmPassword } = this.form!.value;
       if (!firstName || !lastName || !email || !password || !username || !phoneNumber || !confirmPassword) return;
-
-
       const newUser: NewUser = { username ,firstName, lastName, email, phoneNumber , password};
       return this.authService.register(newUser).subscribe(() => {
         this.toggleText();
       })
-
-
-
     }
+    return null;
   }
+
+
   
-    get isUserLoggedIn(): Observable<boolean>{
+  
+   /* get isUserLoggedIn(): Observable<boolean>{
     return this.user$.asObservable().pipe(
       switchMap((user: User) => {
         const isUserAuthenticated = user !== null;
         return of(isUserAuthenticated);
       })
     )
-  }
+  }*/
   
-  */
+  
 
 
   toggleText(){

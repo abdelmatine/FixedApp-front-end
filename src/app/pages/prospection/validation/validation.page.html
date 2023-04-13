@@ -1,6 +1,14 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>validation</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+        <ion-title>Validation</ion-title>
+		<ion-buttons slot="end">
+			<ion-button class="bordered" fill="solid" color="light">
+                <ion-icon name="notifications"></ion-icon>            
+            </ion-button>
+		</ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -9,34 +17,29 @@
     <ion-card>
 
 
-        <ion-input
-          label-placement="floating" 
-          label="pass"
-          #passwordInput="ngModel"
-          ngModel
-          type="password"
-          name="password"
-          placeholder="Enter your password"
-          fill="solid"
-          required
-          ></ion-input>
+      <ion-item>
+        <ion-text slot="start">Scan Front</ion-text>
+        <ion-icon name='camera'slot="end"></ion-icon>
+      </ion-item>
+      <ng-container *ngIf="scan === 'is scanned'">
+        <ion-img>
+        </ion-img>
+      </ng-container>
 
-          <ng-container *ngIf="submissionType === 'CIN'"> 
-            <ion-input 
-            label="Phone number" 
-            label-placement="floating" 
-            fill="solid"
-            placeholder="Enter your phone number"
-              #phoneInput="ngModel"
-              ngModel
-              type="number"
-              name="phoneNumber"
-              required>
-          </ion-input>
+      <ng-container *ngIf="submissionType === 'CIN'">
+        <ion-item>
+          <ion-text slot="start">Scan Back</ion-text>
+          <ion-icon name='camera'slot="end"></ion-icon>
+        </ion-item>
+        <ng-container *ngIf="scan === 'is scanned'">
+          <ion-img>
 
-          </ng-container>
+          </ion-img>
+        </ng-container>
 
+      </ng-container>
 
+      
 
       <ion-button
         [disabled]="!form.valid"
@@ -44,17 +47,11 @@
         shape="round"
         expand="block"
       >
-        {{ submissionType === 'CIN' ? 'Sign in' : 'Accept & Join' }}
+        {{ submissionType === 'CIN' ? 'Search By CIN' : submissionType === 'PASSPORT' ? 'Search By PASS' : 'Search By SEJOUR' }}
       </ion-button>
 
     </ion-card>
   </form>
 
-  <div class="toggle-text">
-    {{ submissionType === 'CIN' ? 'Scan Passeport/Sejour' : 'Scan the CIN Card' }}
-    <ion-text class="toggle-auth-mode" color="primary" (click)="toggleText()">
-      {{ submissionType === 'CIN' ? 'from here' : 'Click here' }}
-    </ion-text>
-  </div>
 
 </ion-content>
