@@ -1,0 +1,343 @@
+<ion-content [fullscreen]="true">
+
+  <ion-title>Fiche de prospection</ion-title>
+
+
+  <form #form="ngForm" (ngSubmit)="onSubmit()">
+    <swiper-container>
+      <swiper-slide>
+        <ion-card>
+          <ng-container>
+    
+    
+              <ion-select 
+              #offretype="ngModel"
+              ngModel
+              label="Type d'offre" 
+              label-placement="floating" 
+              fill="outline" 
+              name="offretype"
+              required
+              >
+                <ion-select-option value="FO">Fibre Optique</ion-select-option>
+                <ion-select-option value="FB">Fixe Box</ion-select-option>
+                <ion-select-option value="FJ">Fixe Jdid</ion-select-option>
+                <ion-select-option value="ADSL">ADSL</ion-select-option>
+                <ion-select-option value="VDSL">VDSL</ion-select-option>
+              </ion-select>
+              <ion-text
+              color="danger"
+              *ngIf="!offretype.valid && offretype.touched"
+              >Type d'offre est obligatoire!</ion-text>
+    
+            <ion-input 
+            #fullName="ngModel"
+            ngModel
+            label="Nom & prénom" 
+            label-placement="floating" 
+            fill="outline"
+            placeholder="Full name"
+              
+              type="text"
+              name="fulltName"
+              required
+              >
+          </ion-input>
+          <ion-text
+          color="danger"
+          *ngIf="!fullName.valid && fullName.touched"
+          >Nom & prenom sont obligatoire!</ion-text>
+    
+    
+          <ion-input 
+          #CIN="ngModel"
+          label="CIN" 
+          label-placement="floating" 
+          fill="outline"
+          placeholder="CIN"
+            ngModel
+            type="number"
+            name="CIN"
+            required
+            >
+        </ion-input>
+        <ion-text
+        color="danger"
+        *ngIf="!CIN.valid && CIN.touched"
+        >CIN est obligatoire!</ion-text>
+    
+        <ion-input 
+        #contractNum="ngModel"
+        label="Numéro du contrat" 
+        label-placement="floating" 
+        fill="outline"
+          ngModel
+          type="number"
+          name="contractNum"
+          required
+          >
+      </ion-input>
+      <ion-text
+      color="danger"
+      *ngIf="!contractNum.valid && contractNum.touched"
+      >Numero de contrat est obligatoire!</ion-text>
+    <!--     placeholder="Contract Number" -->
+    
+    <ion-input 
+    #residenceName="ngModel"
+    label="Nom de la residence" 
+    label-placement="floating" 
+    fill="outline"
+      ngModel
+      type="text"
+      name="residenceName"
+      required
+      >
+    </ion-input>
+    <ion-text
+    color="danger"
+    *ngIf="!residenceName.valid && residenceName.touched"
+    >Nom de la residence est obligatoire!</ion-text>
+    
+    <ion-item
+    >
+    
+      <ion-buttons >
+        <ion-text>Récupérer les coordonnées GPS</ion-text>
+        <ion-icon     (click)="printCurrentPosition()"
+         name="locate-outline" slot="end" color="success">
+        </ion-icon>
+      </ion-buttons>
+      <ion-list>  
+        <ion-list-header>  
+          <ion-label>Location Information</ion-label>  
+        </ion-list-header>  
+        <ion-item>  
+          <ion-label>Latitue</ion-label>  
+          <ion-badge slot="end">{{lati}}</ion-badge>  
+        </ion-item>  
+        <ion-item>  
+          <ion-label>longitude</ion-label>  
+          <ion-badge slot="end">{{longi}}</ion-badge>  
+        </ion-item>  
+      </ion-list>  
+    </ion-item>
+    
+    <ion-item>
+          <ion-input 
+          slot="start"
+          #latitude="ngModel"
+          label="latitude" 
+          label-placement="floating" 
+          fill="outline"
+            ngModel
+            type="text"
+            name="latitude"
+            required
+            >
+          </ion-input>
+          
+        
+          <ion-input 
+          slot="start"
+          #longitude="ngModel"
+          label="longitude" 
+          label-placement="floating" 
+          fill="outline"
+            ngModel
+            type="text"
+            name="longitude"
+            required
+            >
+          </ion-input>
+    
+    </ion-item>
+    <ion-text
+    color="danger"
+    *ngIf="!latitude.valid && !longitude.valid"
+    >Recupérer les coordonnées en cliquant sur la boutton "GPS" SVP</ion-text>
+    
+        </ng-container>
+        </ion-card>
+      </swiper-slide>
+
+
+      <swiper-slide>
+        <ion-card>
+          <ng-container>
+            <ion-select 
+            placeholder="zone Couverte" 
+            [(ngModel)]="zone"
+
+            label="Zone Couverte" 
+            label-placement="floating" 
+            fill="outline" 
+            name="zone"
+            required
+            >
+              <ion-select-option value="OUI">OUI</ion-select-option>
+              <ion-select-option value="NON">NON</ion-select-option>
+             
+            </ion-select>
+
+
+            <ion-select 
+            placeholder="access" 
+            [(ngModel)]="access"
+            label="Accès à l'immeuble" 
+            label-placement="floating" 
+            fill="outline" 
+            name="access"
+
+            required
+            >
+              <ion-select-option value="OUI">OUI</ion-select-option>
+              <ion-select-option value="NON" id="open-modal">NON</ion-select-option>
+             
+            </ion-select>
+
+
+            <ng-container *ngIf="access === 'OUI'">
+              <ion-input 
+              #bloc="ngModel"
+              label="Bloc" 
+              label-placement="floating" 
+              fill="outline"
+                ngModel
+                type="text"
+                name="bloc"
+                required
+                >
+              </ion-input>
+              <ion-text
+              color="danger"
+              *ngIf="!bloc.valid && bloc.touched"
+              >bloc est obligatoire!</ion-text>
+  
+              <ion-input 
+              #etage="ngModel"
+              label="Etage" 
+              label-placement="floating" 
+              fill="outline"
+                ngModel
+                type="text"
+                name="etage"
+                required
+                >
+              </ion-input>
+              <ion-text
+              color="danger"
+              *ngIf="!etage.valid && etage.touched"
+              >etage est obligatoire!</ion-text>
+  
+              <ion-input 
+              #appartement="ngModel"
+              label="N° appartement" 
+              label-placement="floating" 
+              fill="outline"
+                ngModel
+                type="text"
+                name="appartement"
+                required
+                >
+              </ion-input>
+              <ion-text
+              color="danger"
+              *ngIf="!appartement.valid && appartement.touched"
+              >appartement est obligatoire!</ion-text>
+
+            </ng-container >
+
+
+            <ng-container *ngIf="access === 'NON'">
+
+              <ion-radio-group 
+              [(ngModel)]="radio" 
+              required
+              name="radio" 
+              (ionChange)="onSelectionChange()">
+
+                <ion-radio value="1" labelPlacement="end"  aria-label="1">Interdiction des travaux bâtiments</ion-radio><br/>
+                <ion-radio value="2" labelPlacement="end"  aria-label="2">Sécurité</ion-radio><br/>
+                <ion-radio value="3" labelPlacement="end"  aria-label="3">Souhaite geste commerciale</ion-radio><br/>
+                <ion-radio value="4" labelPlacement="end"  aria-label="4">Autres</ion-radio>
+                
+                <ng-container *ngIf="radio=== '4'">
+                  <ion-input 
+                  #appartement="ngModel"
+                  ngModel
+                  type="text" 
+                  [(ngModel)]="autres"
+                  name="autres"
+                  required
+                  label="Raison"
+                  label-placement="floating" 
+                  fill="outline"
+                  >
+                  </ion-input>
+                  <ion-text
+                  color="danger"
+                  *ngIf="!appartement.valid && appartement.touched"
+                  >Type d'offre est obligatoire!</ion-text>
+
+                </ng-container>
+              
+              </ion-radio-group>
+
+            </ng-container >
+
+
+            <ion-select 
+            placeholder="Etat Prospection" 
+            [(ngModel)]="etat"
+            label="Etat Prospection" 
+
+            label-placement="floating" 
+            fill="outline" 
+            name="etat"
+            required
+            >
+              <ion-select-option value="CINT">Client intéressé</ion-select-option>
+              <ion-select-option value="CNINT">Client non intéressé</ion-select-option>
+              <ion-select-option value="CIND">Client indisponible</ion-select-option>
+
+            </ion-select>
+
+
+
+          </ng-container>
+        </ion-card>
+
+
+
+
+      </swiper-slide>
+    </swiper-container>
+
+
+ 
+
+
+ 
+    <ion-button
+    [disabled]="!form.valid"
+    type="submit"
+    shape="round"
+    expand="block"
+  >
+  submit
+  </ion-button>
+  </form>
+
+
+
+
+
+
+
+</ion-content>
+
+
+
+
+

@@ -51,5 +51,9 @@ export const routes: Routes = [
   {
     path: 'validation',
     loadComponent: () => import('./pages/prospection/validation/validation.page').then( m => m.ValidationPage)
+  },  {
+    path: 'formulaire',
+    loadComponent: () => import('./pages/prospection/formulaire/formulaire.page').then( m => m.FormulairePage)
   },
+
 ];

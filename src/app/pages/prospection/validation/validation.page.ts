@@ -2,8 +2,7 @@ import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { of } from 'rxjs';
-import { ProspectionPage } from '../prospection.page';
+import {  Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -20,7 +19,7 @@ export class ValidationPage implements OnInit {
   scan: any;
 
 
-  constructor(private route: ActivatedRoute ){}
+  constructor(private route: ActivatedRoute, private router: Router ){}
   
   
   ngOnInit() {  
@@ -32,6 +31,8 @@ export class ValidationPage implements OnInit {
   }
 
   onSubmit(){
+
+    this.router.navigateByUrl('/formulaire');
 
     }
 

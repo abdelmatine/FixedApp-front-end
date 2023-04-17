@@ -25,7 +25,7 @@
   
 
     <ion-item>
-      <ion-label>Select ID type</ion-label>
+      <ion-label>Type d'identité</ion-label>
       <ion-select placeholder="ID type" [(ngModel)]="place" >
         <ion-select-option value="CIN">CIN</ion-select-option>
         <ion-select-option value="PASS">PASSEPORT</ion-select-option>
@@ -34,15 +34,12 @@
       </ion-select>
     </ion-item>
 
-
+    <ion-button type="submit"
+    shape="round"
+    expand="block"
+    (click)="Search()">Search</ion-button>
   </ion-card>
 
 
 </ion-content>
 
-<ion-footer>
-   <ion-button type="submit"
-   shape="round"
-   expand="block"
-   (click)="Search()">Search</ion-button>
- </ion-footer>

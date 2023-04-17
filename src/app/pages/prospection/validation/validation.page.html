@@ -4,19 +4,13 @@
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
         <ion-title>Validation</ion-title>
-		<ion-buttons slot="end">
-			<ion-button class="bordered" fill="solid" color="light">
-                <ion-icon name="notifications"></ion-icon>            
-            </ion-button>
-		</ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <form #form="ngForm" (ngSubmit)="onSubmit()">
     <ion-card>
-
-
       <ion-item>
         <ion-text slot="start">Scan Front</ion-text>
         <ion-icon name='camera'slot="end"></ion-icon>

@@ -130,7 +130,7 @@
         <ion-item>
           <ion-input
           label-placement="floating" 
-          label="confirm pass"
+          placeholder="confirm pass"
           #confirmPasswordInput="ngModel"
           ngModel
           type="{{ showPassword ? 'text' : 'password' }}"
@@ -172,8 +172,7 @@
       </ion-button>
 
       <ion-item lines="none">
-        <ion-label>Remember me</ion-label>
-        <ion-checkbox defaultChecked={true} slot="start" />
+        <ion-checkbox label="Remember Me" defaultChecked={true} slot="start" />
         </ion-item>
 
     </ion-card>

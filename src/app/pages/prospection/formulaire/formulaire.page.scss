@@ -1,0 +1,66 @@
+ion-title{
+  margin-top: 10%;
+
+  font-size: 32px;
+  text-align: center;
+}
+
+ion-radio-group{
+  margin-top: 10px;
+  ion-radio{
+    margin-top: 10px;
+
+  }
+
+  ion-radio::part(container) {
+    width: 30px;
+    height: 30px;
+    
+    border-radius: 8px;
+    border: 2px solid #ddd;
+  }
+  
+  ion-radio::part(mark) {
+    background: none;
+    transition: none;
+    transform: none;
+    border-radius: 0;
+  }
+  
+  ion-radio.radio-checked::part(container) {
+    background: #2dd36f;
+    border-color: transparent;
+  }
+  
+  ion-radio.radio-checked::part(mark) {
+    width: 6px;
+    height: 10px;
+  
+    border-width: 0px 2px 2px 0px;
+    border-style: solid;
+    border-color: #fff;
+  
+    transform: rotate(45deg);
+  }
+}
+form {
+    ion-card {
+      margin-left: 5%;
+      margin-right: 5%;
+      margin-top: 10%;
+      //max-width: 400px;
+      box-shadow: none;
+      border: 1px solid #e1e1e1;
+      padding: 24px;
+      ion-select{
+        margin-top: 10px;
+      }
+      ion-input{
+        margin-top: 10px;
+      }
+      ion-item{
+        margin-top: 10px;
+      }
+
+    }
+  }
