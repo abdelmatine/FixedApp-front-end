@@ -4,7 +4,8 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Geolocation } from '@capacitor/geolocation';
-
+import { LoadingController } from '@ionic/angular';  
+import { AlertController } from '@ionic/angular';  
 @Component({
   selector: 'app-formulaire',
   templateUrl: './formulaire.page.html',
@@ -18,6 +19,7 @@ export class FormulairePage implements OnInit {
 
 
 
+  coordinates: any='';
 
   lati: any = '';  
   longi: any = '';  
@@ -35,13 +37,35 @@ export class FormulairePage implements OnInit {
   
 
 
-  constructor() { }
+  constructor(private geolocation: Geolocation, public loadingController: LoadingController, public alertController: AlertController) { }
 
   ngOnInit() {
     Geolocation.requestPermissions();
   }
 
-  onSubmit(){
+  onSubmit() {
+    /*const { username, password } = this.form!.value;
+
+    if (this.access === 'OUI') {
+      if (!username || !password) return;
+
+     // return this.authService.login(username, password).subscribe(() => {
+      //});
+      }
+     else if (this.access === 'NON'){
+      if(this.radio === '4'){
+
+      }else{
+
+      }
+      const { firstName, lastName, email, phoneNumber, confirmPassword } = this.form!.value;
+      if (!firstName || !lastName || !email || !password || !username || !phoneNumber || !confirmPassword) return;
+      const newUser: NewUser = { username ,firstName, lastName, email, phoneNumber , password};
+      return this.authService.register(newUser).subscribe(() => {
+        this.toggleText();
+      })
+    }
+    return null;*/
   }
 
   onSelectionChange() {
@@ -51,11 +75,42 @@ export class FormulairePage implements OnInit {
 
   printCurrentPosition = async () => {
     const coordinates = await Geolocation.getCurrentPosition();
-  
+
+    this.lati = this.coordinates.coords.latitude;  
+    this.longi = this.coordinates.coords.longitude; 
+      
     console.log('Current position:', coordinates);
+
+   
   };
 
 
+
+
+
+
+   getCurrentLocation = async () => {  
+    /*const loading = await this.loadingController.create({  
+      message: 'Please wait...',  
+      });  
+    await loading.present(); */
+
+    this.coordinates = await Geolocation.getCurrentPosition();
+
+    this.lati = this.coordinates.coords.latitude;  
+    this.longi = this.coordinates.coords.longitude; 
+  
+  }  
+
+
+  async showLoader(msg: string) {  
+    const alert = await this.alertController.create({  
+      message: msg,  
+      buttons: ['OK']  
+    });  
+  
+    await alert.present();  
+  } 
 
 
 }

@@ -99,31 +99,27 @@
     *ngIf="!residenceName.valid && residenceName.touched"
     >Nom de la residence est obligatoire!</ion-text>
     
+    <ion-list>  
+      <ion-list-header>  
+        <ion-buttons >
+          <ion-text>Récupérer les coordonnées GPS</ion-text>
+          <ion-icon     (click)="getCurrentLocation()"
+           name="locate-outline" slot="end" color="success">
+          </ion-icon>
+        </ion-buttons>      </ion-list-header>  
+      <ion-item>  
+        <ion-label>Latitude</ion-label>  
+        <ion-badge slot="end">{{lati}}</ion-badge>  
+      </ion-item>  
+      <ion-item>  
+        <ion-label>longitude</ion-label>  
+        <ion-badge slot="end">{{longi}}</ion-badge>  
+      </ion-item>  
+    </ion-list> 
+    
     <ion-item
     >
-    
-      <ion-buttons >
-        <ion-text>Récupérer les coordonnées GPS</ion-text>
-        <ion-icon     (click)="printCurrentPosition()"
-         name="locate-outline" slot="end" color="success">
-        </ion-icon>
-      </ion-buttons>
-      <ion-list>  
-        <ion-list-header>  
-          <ion-label>Location Information</ion-label>  
-        </ion-list-header>  
-        <ion-item>  
-          <ion-label>Latitue</ion-label>  
-          <ion-badge slot="end">{{lati}}</ion-badge>  
-        </ion-item>  
-        <ion-item>  
-          <ion-label>longitude</ion-label>  
-          <ion-badge slot="end">{{longi}}</ion-badge>  
-        </ion-item>  
-      </ion-list>  
-    </ion-item>
-    
-    <ion-item>
+
           <ion-input 
           slot="start"
           #latitude="ngModel"
@@ -135,6 +131,7 @@
             name="latitude"
             required
             >
+            {{coordinates}}
           </ion-input>
           
         
