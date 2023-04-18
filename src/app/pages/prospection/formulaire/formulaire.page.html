@@ -1,5 +1,10 @@
 <ion-content [fullscreen]="true">
 
+<ion-buttons>
+  <ion-back-button  defaultHref="prospection"></ion-back-button>
+</ion-buttons>
+
+
   <ion-title>Fiche de prospection</ion-title>
 
 
@@ -98,61 +103,44 @@
     color="danger"
     *ngIf="!residenceName.valid && residenceName.touched"
     >Nom de la residence est obligatoire!</ion-text>
-    
-    <ion-list>  
-      <ion-list-header>  
-        <ion-buttons >
-          <ion-text>Récupérer les coordonnées GPS</ion-text>
-          <ion-icon     (click)="getCurrentLocation()"
-           name="locate-outline" slot="end" color="success">
-          </ion-icon>
-        </ion-buttons>      </ion-list-header>  
-      <ion-item>  
-        <ion-label>Latitude</ion-label>  
-        <ion-badge slot="end">{{lati}}</ion-badge>  
-      </ion-item>  
-      <ion-item>  
-        <ion-label>longitude</ion-label>  
-        <ion-badge slot="end">{{longi}}</ion-badge>  
-      </ion-item>  
-    </ion-list> 
-    
-    <ion-item
-    >
 
-          <ion-input 
-          slot="start"
-          #latitude="ngModel"
-          label="latitude" 
-          label-placement="floating" 
-          fill="outline"
-            ngModel
-            type="text"
-            name="latitude"
-            required
-            >
-            {{coordinates}}
-          </ion-input>
-          
-        
-          <ion-input 
-          slot="start"
-          #longitude="ngModel"
-          label="longitude" 
-          label-placement="floating" 
-          fill="outline"
-            ngModel
-            type="text"
-            name="longitude"
-            required
-            >
-          </ion-input>
-    
+
+    <ion-item button="" (click)="getCurrentLocation()">
+      <ion-buttons >
+        <ion-text>Récupérer les coordonnées GPS</ion-text>
+        <ion-icon     
+         name="locate-outline" slot="end" color="success">
+        </ion-icon>
+      </ion-buttons> 
     </ion-item>
     <ion-text
     color="danger"
     *ngIf="!latitude.valid && !longitude.valid"
     >Recupérer les coordonnées en cliquant sur la boutton "GPS" SVP</ion-text>
+
+
+      <ion-item aria-label="Latitude">  
+        <ion-label>Latitude</ion-label>  
+        <ion-badge slot="end"
+        #latitude="ngModel"
+        ngModel
+        required
+        name="latitude">{{lati}}</ion-badge>  
+      </ion-item> 
+      
+      
+      <ion-item aria-label="longitude">  
+        <ion-label>longitude</ion-label>  
+        <ion-badge 
+        #longitude="ngModel"
+        ngModel
+        required
+        name="longitude"
+        slot="end">{{longi}}</ion-badge>  
+      </ion-item>  
+
+
+
     
         </ng-container>
         </ion-card>

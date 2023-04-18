@@ -3,9 +3,12 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { Geolocation } from '@capacitor/geolocation';
+import { Geolocation, Position } from '@capacitor/geolocation';
 import { LoadingController } from '@ionic/angular';  
 import { AlertController } from '@ionic/angular';  
+
+
+
 @Component({
   selector: 'app-formulaire',
   templateUrl: './formulaire.page.html',
@@ -19,10 +22,9 @@ export class FormulairePage implements OnInit {
 
 
 
-  coordinates: any='';
 
-  lati: any = '';  
-  longi: any = '';  
+  lati: any | undefined;  
+  longi: any ;  
 
   @ViewChild('form') form: NgForm | undefined;
 
@@ -32,6 +34,7 @@ export class FormulairePage implements OnInit {
   etat: 'CINT' | 'CNINT' | 'CIND' = 'CINT';
   radio: any;
   autres: any;
+coordinates: any;
 
 
   
@@ -73,46 +76,18 @@ export class FormulairePage implements OnInit {
   }
 
 
-  printCurrentPosition = async () => {
-    const coordinates = await Geolocation.getCurrentPosition();
-
-    this.lati = this.coordinates.coords.latitude;  
-    this.longi = this.coordinates.coords.longitude; 
-      
-    console.log('Current position:', coordinates);
-
-   
-  };
-
-
-
-
-
 
    getCurrentLocation = async () => {  
-    /*const loading = await this.loadingController.create({  
-      message: 'Please wait...',  
-      });  
-    await loading.present(); */
+    const coordinates = await Geolocation.getCurrentPosition();
 
-    this.coordinates = await Geolocation.getCurrentPosition();
-
-    this.lati = this.coordinates.coords.latitude;  
-    this.longi = this.coordinates.coords.longitude; 
+    this.lati = coordinates.coords.latitude;  
+    this.longi = coordinates.coords.longitude; 
   
   }  
 
 
-  async showLoader(msg: string) {  
-    const alert = await this.alertController.create({  
-      message: msg,  
-      buttons: ['OK']  
-    });  
-  
-    await alert.present();  
-  } 
-
-
 }
+
+
 
 
