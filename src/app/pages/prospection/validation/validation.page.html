@@ -13,7 +13,16 @@
     <ion-card>
       <ion-item>
         <ion-text slot="start">Scan Front</ion-text>
-        <ion-icon name='camera'slot="end"></ion-icon>
+        <ion-icon 
+        name='camera'
+        slot="end"
+        (click)="submitImg()"
+        ></ion-icon>
+
+        <!--
+          (click)="toggleInput()"
+        -->
+
       </ion-item>
       <ng-container *ngIf="scan === 'is scanned'">
         <ion-img>
@@ -33,7 +42,51 @@
 
       </ng-container>
 
-      
+
+
+
+      <!--
+
+      <ng-container *ngIf="showInput">  
+        <ion-input 
+        #firstName="ngModel"
+        label="nom complet" 
+        label-placement="floating" 
+        fill="outline"
+        placeholder="Enter your firs name"
+          ngModel
+          type="text"
+          name="firstName"
+          required>
+      </ion-input>
+      <ion-text
+      color="danger"
+      *ngIf="!firstName.valid && firstName.touched"
+      >Please enter your first Name.</ion-text>
+
+
+      <ion-input 
+      #numID="ngModel"
+      label="numero ID" 
+      label-placement="floating" 
+      fill="outline"
+      placeholder="numID"
+        ngModel
+        type="number"
+        name="numID"
+        required
+        >
+    </ion-input>
+    <ion-text
+    color="danger"
+    *ngIf="!numID.valid && numID.touched"
+    >CIN est obligatoire!</ion-text>
+
+
+</ng-container>
+
+        
+      -->
 
       <ion-button
         [disabled]="!form.valid"
@@ -41,8 +94,11 @@
         shape="round"
         expand="block"
       >
-        {{ submissionType === 'CIN' ? 'Search By CIN' : submissionType === 'PASSPORT' ? 'Search By PASS' : 'Search By SEJOUR' }}
+        {{ submissionType === 'CIN' ? 'Search By CIN' : submissionType === 'PASS' ? 'Search By PASS' : 'Search By SEJOUR' }}
       </ion-button>
+
+
+
 
     </ion-card>
   </form>

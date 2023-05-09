@@ -1,23 +1,40 @@
-ion-content{
+/*ion-content{
     --ion-background-color:#E0E0E0;
-  }
+  }*/
   
-  form {
-    max-width: 400px;
-    margin-top: 50%;
-    margin-bottom: 50%;
-    ion-card {
-      box-shadow: none;
-      border: 1px solid #e1e1e1;
-      padding: 24px;  
 
-      ion-button {
-        margin-top: 16px;
-        height: 48px;
+
+  form {
+
+    max-width: 400px;
+    margin: auto;
+  
+      ion-card {
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-top: 10%;
+        //max-width: 400px;
+        box-shadow: none;
+        border: 1px solid #e1e1e1;
+        padding: 24px;
+        ion-item{
+          margin-top: 10px;
+        }
+        ion-button{
+          margin: 25px;
+        }
+  
       }
-    }
+  }
+
+  .inputs{
+    margin-top: 25px;
   }
   
+
+  ion-input{
+    margin-top: 10px;
+  }
 
   
   ion-modal {
@@ -35,35 +52,5 @@ ion-content{
     --background: rgb(14 116 144);
     --color: white;
   }
+
   
-  .text-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
-    margin-bottom: 20px;
-  
-  }
-  
-  
-  
-  
-  
-  .title-container{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 80px;
-  
-      .header-text {
-      font-size: 36px;
-      font-weight: 700;
-      }
-  
-      ion-img{
-  
-        height: 120px;
-        width: 120px;
-  
-      }
-  }

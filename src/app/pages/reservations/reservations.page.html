@@ -1,0 +1,381 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>reservations</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="content">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">reservations</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <swiper-container>
+      <swiper-slide>
+        <ion-card>
+          <ng-container>
+    
+            <ion-row>
+              <ion-col>
+                <ion-select 
+                placeholder="INDOOR" 
+                label="Type de box" 
+                label-placement="floating" 
+                fill="outline" 
+                formControlName="boxtype"
+                required>
+                  <ion-select-option value="indoor">INDOOR</ion-select-option>
+                  <ion-select-option value="outdoor">OUTDOOR</ion-select-option>
+                </ion-select>
+              </ion-col>
+    
+              <ion-col>
+                <ion-select 
+                placeholder="B2B" 
+                label="Type d'abonnement" 
+                label-placement="floating" 
+                fill="outline" 
+                formControlName="abbtype"
+                required>
+                  <ion-select-option value="B2B">B2B</ion-select-option>
+                  <ion-select-option value="B2C">B2C</ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row>
+    
+    
+    
+     <ion-row>
+      <ion-col>
+        <ion-select 
+        placeholder="Civilté" 
+        label="Civilté" 
+        label-placement="floating" 
+        fill="outline" 
+        formControlName="civilite"
+        required>
+          <ion-select-option value="madame">Mme</ion-select-option>
+          <ion-select-option value="Monsieur">Mr</ion-select-option>
+        </ion-select>
+      </ion-col>
+    
+      <ion-col>
+        <ion-select 
+        placeholder="Nationalité" 
+        label="Nationalité" 
+        label-placement="floating" 
+        fill="outline" 
+        formControlName="nationalite"
+        required>
+        </ion-select>
+      </ion-col>
+     </ion-row>
+    
+    
+            <ion-row>
+              <ion-col>
+    
+                <ion-input
+                placeholder="Prénom" 
+                label="Prénom" 
+                label-placement="floating" 
+                fill="outline"
+                type="text"
+                formControlName="prenom"
+                errorText="prenom requis"
+                required>
+              </ion-input>
+      
+    
+              </ion-col>
+    
+              <ion-col>
+                <ion-input
+                placeholder="Nom"   
+                label="Nom" 
+                label-placement="floating" 
+                fill="outline"
+                type="text"
+                formControlName="nom"
+                errorText="nom requis"
+                required>
+              </ion-input>
+              </ion-col>
+    
+            </ion-row>
+    
+    
+            <ion-row>
+              <ion-col>
+                <ion-select 
+                placeholder="type ID" 
+                label="Type ID" 
+                label-placement="floating" 
+                fill="outline" 
+                formControlName="idtype"
+                required>
+                  <ion-select-option value="CIN">CIN</ion-select-option>
+                  <ion-select-option value="PASS">PASSEPORT</ion-select-option>
+                  <ion-select-option value="SEJ">SEJOUR</ion-select-option>
+    
+                </ion-select>
+              </ion-col>
+              <ion-col>
+                <ion-input
+                placeholder="00000000"   
+                label="numéro ID"
+                maxlength="8"
+                [counter]="true"
+                [counterFormatter]="customCounterFormatter"
+                label-placement="floating" 
+                fill="outline"
+                type="number"
+                formControlName="numID"
+                errorText="Numero ID invalid"
+                required>
+              </ion-input>
+              </ion-col>
+            </ion-row>
+    
+    
+            <ion-row>
+              <ion-col>
+                <ion-input
+                label="Date de naissance" 
+                label-placement="floating" 
+                fill="outline"
+                type="date"
+                formControlName="naissance"
+                errorText="date de naissance invalide"
+                required>
+              </ion-input>
+              </ion-col>
+    
+              <ion-col>
+                <ion-input
+                placeholder="154 boumhal 2097"  
+                label="Adresse" 
+                label-placement="floating" 
+                fill="outline"
+                type="text"
+                formControlName="adresse"
+                errorText="adresse invalide"
+                required>
+              </ion-input>
+    
+              </ion-col>
+            </ion-row>
+    
+            <ion-row>
+              <ion-col>
+                <ion-input
+                placeholder="Ben Arous"   
+                label="Gouvernorat" 
+                label-placement="floating" 
+                fill="outline"
+                type="text"
+                formControlName="gouvernorat"
+                errorText="gouvernorat requis"
+                required>
+              </ion-input>
+              </ion-col>
+    
+              <ion-col>
+                <ion-input
+                placeholder=""   
+                label="Délégation" 
+                label-placement="floating" 
+                fill="outline"
+                type="text"
+                formControlName="delegation"
+                errorText="délégation requis"
+                required>
+              </ion-input>
+              </ion-col>
+            </ion-row>
+        
+          </ng-container>
+        </ion-card>
+
+      </swiper-slide>
+
+      <swiper-slide>
+        <!--SWIPER PAGE 2-->
+        <ion-card>
+          <ng-container>
+    
+
+    
+    
+    
+     <ion-row>
+      <ion-col>
+        <ion-input
+        placeholder=""   
+        label="Localité" 
+        label-placement="floating" 
+        fill="outline"
+        type="text"
+        formControlName="localite"
+        errorText="Localité requis"
+        required>
+      </ion-input>
+      </ion-col>
+    
+      <ion-col>
+        <ion-input
+        placeholder="Boumhal"   
+        label="Ville" 
+        label-placement="floating" 
+        fill="outline"
+        type="text"
+        formControlName="ville"
+        errorText="Ville requise"
+        required>
+      </ion-input>
+      </ion-col>
+     </ion-row>
+    
+    
+            <ion-row>
+              <ion-col>
+    
+                <ion-input
+                maxlength="4"
+                [counter]="true"
+                [counterFormatter]="customCounterFormatter"
+                placeholder="2097"   
+                label="Code postale" 
+                label-placement="floating" 
+                fill="outline"
+                type="number"
+                formControlName="codePostal"
+                errorText="Code postale requis"
+                required>
+              </ion-input>
+      
+    
+              </ion-col>
+    
+              <ion-col>
+                <ion-input
+                placeholder="example@email.com"   
+                label="Email" 
+                label-placement="floating" 
+                fill="outline"
+                type="email"
+                formControlName="email"
+                errorText="Email requise"
+                required>
+              </ion-input>
+              </ion-col>
+    
+            </ion-row>
+    
+    
+            <ion-row>
+              <ion-col>
+                <ion-input
+                maxlength="8"
+                [counter]="true"
+                [counterFormatter]="customCounterFormatter"
+                placeholder="22 222 222"   
+                label="N° Mobile 1" 
+                label-placement="floating" 
+                fill="outline"
+                type="number"
+                formControlName="telone"
+                errorText="Numéro mobile 1 requis"
+                required>
+              </ion-input>
+              </ion-col>
+              <ion-col>
+                <ion-input
+                maxlength="8"
+                [counter]="true"
+                [counterFormatter]="customCounterFormatter"
+                placeholder="20 202 020"   
+                label="N° Mobile 2"
+                maxlength="8"
+                [counter]="true"
+                [counterFormatter]="customCounterFormatter"
+                label-placement="floating" 
+                fill="outline"
+                type="number"
+                formControlName="teltwo"
+                errorText="Numero mobile 2 requis"
+                required>
+              </ion-input>
+              </ion-col>
+            </ion-row>
+
+            <ion-item button="" (click)="getCurrentLocation()">
+              <ion-buttons >
+                <ion-text>Récupérer les coordonnées GPS</ion-text>
+                <ion-icon     
+                 name="locate-outline" slot="end" color="success">
+                </ion-icon>
+              </ion-buttons> 
+            </ion-item>
+
+
+            <ion-row>
+              <ion-col>
+                <ion-input
+                label="Latitude" 
+                label-placement="floating" 
+                fill="outline"
+                type="number"
+                formControlName="latitude"
+                errorText="latitude requise"
+                required>
+              </ion-input>
+              </ion-col>
+    
+              <ion-col>
+                <ion-input
+                label="Longitude" 
+                label-placement="floating" 
+                fill="outline"
+                type="number"
+                formControlName="longitude" 
+                errorText="longitude requise"
+                required>
+              </ion-input>
+              </ion-col>
+    
+            </ion-row>
+        
+    
+        
+          </ng-container>
+        </ion-card>
+        <!--ENDS HERE-->
+
+      </swiper-slide>
+    </swiper-container>
+
+
+    <div class="center-container">
+      <ion-button 
+      class="center-button"
+      type="submit" 
+      [disabled]="myForm.invalid">Submit</ion-button>
+    </div>
+
+ </form>
+
+</ion-content>
+
+<!--
+
+  <ion-datetime presentation="date" [showDefaultButtons]="true"></ion-datetime>
+
+-->

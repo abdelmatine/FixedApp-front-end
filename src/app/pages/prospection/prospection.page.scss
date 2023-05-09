@@ -1,4 +1,5 @@
 .h2-class{
+    text-align: center;
     color: #000000;
     font-size: 24px;
     margin: 50px;
@@ -10,11 +11,24 @@
     height: 48px;
   }
 
-  ion-card{
-margin-top: 50%;
-margin-bottom: 50%;
-margin-right: 5px;
-margin-left: 5px;
-    position: fixed;
+
+
+  ion-card {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 10%;
+    margin-bottom: 5%;
+    //max-width: 400px;
+    box-shadow: none;
+    border: 1px solid #e1e1e1;
+    padding: 24px;
+    ion-select{
+      margin-top: 10px;
+    }
+
+  }
+
+  ion-list {
+    margin-bottom: 25px;
   }
 

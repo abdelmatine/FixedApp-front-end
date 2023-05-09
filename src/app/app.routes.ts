@@ -37,10 +37,6 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/activation/activation.page').then( m => m.ActivationPage)
   },
   {
-    path: 'reservation',
-    loadComponent: () => import('./pages/reservation/reservation.page').then( m => m.ReservationPage)
-  },
-  {
     path: 'sla',
     loadComponent: () => import('./pages/sla/sla.page').then( m => m.SlaPage)
   },
@@ -51,9 +47,14 @@ export const routes: Routes = [
   {
     path: 'validation',
     loadComponent: () => import('./pages/prospection/validation/validation.page').then( m => m.ValidationPage)
-  },  {
+  },
+  {
     path: 'formulaire',
     loadComponent: () => import('./pages/prospection/formulaire/formulaire.page').then( m => m.FormulairePage)
+  },
+  {
+    path: 'reservations',
+    loadComponent: () => import('./pages/reservations/reservations.page').then( m => m.ReservationsPage)
   },
 
 ];

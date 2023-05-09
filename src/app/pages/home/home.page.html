@@ -14,10 +14,9 @@
             </ion-button>
 		</ion-buttons>
 	</ion-toolbar>
-
-
-
 </ion-header>
+
+
 <ion-content>
   <ion-item lines="none">
     <ion-label>
@@ -25,25 +24,65 @@
         <h3>For today?</h3>
     </ion-label>
 
-    <ion-avatar slot="end">  <img alt="test" src="assets/images/applee.png" /></ion-avatar>
+    <ion-avatar slot="end">  <img alt="test" src="assets/icon/avatar.svg" /></ion-avatar>
 </ion-item>
 
 <div class="content_div">
-
     <ion-grid >
         <ion-row>
             <ion-col sizeLg="4" sizeMd="4" sizeXs="6" tappable (click)="goto(item)" *ngFor="let item of items ">
-
                 <div class="col_div">
-
                     <img src="{{item.img}}">
                     <ion-label>{{item.name}}</ion-label>
-
                 </div>
             </ion-col>
         </ion-row>
     </ion-grid>
 </div>
+
+
+<ion-modal #modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header class="ion-no-border">
+        <ion-toolbar>
+          <ion-title>Choisir le type d'offre</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpen(false)">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <ion-header >
+                <div>
+                    <ion-row>
+                        <ion-col>
+                            <div>
+                                <img src="assets/images/daisy.png">
+                            </div>
+                        </ion-col>
+               
+                    </ion-row>
+                </div>
+        </ion-header>
+
+        <div class="content_div">
+            <ion-grid >
+                <ion-row>
+                    <ion-col sizeLg="4" sizeMd="4" sizeXs="6" tappable (click)="goToOffer(selection)" *ngFor="let selection of selections ">
+                        <div class="col_div">
+                            <img src="{{selection.img}}">
+                            <ion-label>{{selection.name}}</ion-label>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
 </ion-content>
 
 <ion-footer>

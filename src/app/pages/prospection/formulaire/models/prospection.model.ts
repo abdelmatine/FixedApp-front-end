@@ -1,24 +1,22 @@
+export type offre = 'FO' | 'FB' | 'FJ' | 'ADSL' | 'VDSL';
+
 export interface ProspectionForm{
 
-    offretype: string;
-    fullName: string;
-    CIN: number;
-    contractNum: number;
-    residenceName: string;
-    latitude: string;
-    longitude: string;
-
-    zone: string;
-    access: string;
-
-    bloc: number;
-    etage: number;
-    appartement: number;
-
-    radio: string;
-    autres: string;
     
-    etat: string;
+    offretype: offre  ;
+    fullName: string ;
+    numID: number ;
+    contractNum: number ;
+    residenceName: string ;
+    latitude: number ;
+    longitude: number ;
+
+    zone: string ;
+    access: boolean ;
+    
+    etat: string ;
 
 
 }
+
+

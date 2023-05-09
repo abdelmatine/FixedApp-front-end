@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, ContentChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
@@ -13,12 +13,15 @@ import { ActivatedRoute } from '@angular/router';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class ValidationPage implements OnInit {
+
+
+
   
   
   submissionType: any ;
   scan: any;
-
-
+  showInput = false;
+ 
   constructor(private route: ActivatedRoute, private router: Router ){}
   
   
@@ -30,10 +33,16 @@ export class ValidationPage implements OnInit {
 
   }
 
-  onSubmit(){
-
+    onSubmit(){
     this.router.navigateByUrl('/formulaire');
+    }
 
+    toggleInput() {
+      this.showInput = !this.showInput;
+    }
+
+    submitImg() {
+      console.log("searching");
     }
 
 
