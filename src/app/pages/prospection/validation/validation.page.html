@@ -12,11 +12,11 @@
   <form #form="ngForm" (ngSubmit)="onSubmit()">
     <ion-card>
       <ion-item>
-        <ion-text slot="start">Scan Front</ion-text>
+        <ion-text slot="start">Scanner recto</ion-text>
         <ion-icon 
         name='camera'
         slot="end"
-        (click)="submitImg()"
+        (click)="takePictureRecto()"
         ></ion-icon>
 
         <!--
@@ -24,18 +24,20 @@
         -->
 
       </ion-item>
-      <ng-container *ngIf="scan === 'is scanned'">
-        <ion-img>
+      <ng-container *ngIf="scanfront === 'is scanned'">
+        <ion-img src="{{ImageSourceRecto}}">
+
         </ion-img>
       </ng-container>
 
       <ng-container *ngIf="submissionType === 'CIN'">
         <ion-item>
-          <ion-text slot="start">Scan Back</ion-text>
-          <ion-icon name='camera'slot="end"></ion-icon>
+          <ion-text slot="start">Scanner verso</ion-text>
+          <ion-icon (click)="takePictureVerso()" 
+          name='camera'slot="end"></ion-icon>
         </ion-item>
-        <ng-container *ngIf="scan === 'is scanned'">
-          <ion-img>
+        <ng-container *ngIf="scanback === 'is scanned'">
+          <ion-img src="{{ImageSourceVerso}}">
 
           </ion-img>
         </ng-container>
@@ -94,7 +96,7 @@
         shape="round"
         expand="block"
       >
-        {{ submissionType === 'CIN' ? 'Search By CIN' : submissionType === 'PASS' ? 'Search By PASS' : 'Search By SEJOUR' }}
+        {{ submissionType === 'CIN' ? 'Chercher par CIN' : submissionType === 'PASS' ? 'chercher par passeport' : 'chercher par sejour' }}
       </ion-button>
 
 

@@ -5,6 +5,9 @@ ion-title{
   text-align: center;
 }
 
+
+
+
 ion-radio-group{
   margin-top: 10px;
   ion-radio{
@@ -67,6 +70,7 @@ form {
       }
       ion-item{
         margin-top: 10px;
+
       }
       ion-button{
         margin: 25px;
@@ -74,3 +78,12 @@ form {
 
     }
 }
+
+
+#map {
+  height: 400px;
+}
+.hidden {
+  display: none;
+}
+

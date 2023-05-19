@@ -1,0 +1,111 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Retour</ion-button>
+    </ion-buttons>
+    <ion-title>Detail fiche prospection de: {{ itemDetails?.fullName }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  
+    
+
+    <ion-card>
+      <ion-list>
+
+        <ion-item>
+          <ion-label>Type de l'offre:</ion-label>
+          <ion-note slot="end">{{ itemDetails?.offreType }}</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Nom Complet:</ion-label>
+          <ion-note slot="end">{{ itemDetails?.fullName }}</ion-note>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label>Numéro de contact:</ion-label>
+          <ion-note slot="end">{{ itemDetails?.contactNum }}</ion-note>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label>Numéro pièce d'identité:</ion-label>
+          <ion-note slot="end">{{ itemDetails?.numID }}</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Date de demande:</ion-label>
+          <ion-note slot="end">{{ itemDetails?.dateCreation }}</ion-note>
+        </ion-item>
+    
+
+
+        <ion-item>
+          <ion-label>Adresse:</ion-label>
+          <ion-note slot="end">{{ itemDetails?.adresse }}</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Date de demande:</ion-label>
+          <ion-note slot="end">{{ itemDetails?.dateCreation }}</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Couverture:</ion-label>
+          <ion-note slot="end">{{ itemDetails?.zone }}</ion-note>
+        </ion-item>
+
+        <ng-container *ngIf="itemDetails?.zone === 'Zone Couverte'">
+
+          <ion-item >
+            <ion-label>Accès à l'immeuble:</ion-label>
+            <ion-note slot="end">{{ itemDetails?.access }}</ion-note>
+          </ion-item>
+
+          <ng-container *ngIf="itemDetails?.access === 'AVEC'">
+
+  
+            <ion-item>
+              <ion-label>Nom de la residence:</ion-label>
+              <ion-note slot="end">{{ itemDetails?.residenceName }}</ion-note>
+            </ion-item>
+    
+            <ion-item>
+              <ion-label>bloc:</ion-label>
+              <ion-note slot="end">{{ itemDetails?.bloc }}</ion-note>
+            </ion-item>
+    
+            <ion-item>
+              <ion-label>Etage:</ion-label>
+              <ion-note slot="end">{{ itemDetails?.etage }}</ion-note>
+            </ion-item>
+    
+            <ion-item>
+              <ion-label>Appartement:</ion-label>
+              <ion-note slot="end">{{ itemDetails?.appartement }}</ion-note>
+            </ion-item>
+          </ng-container>
+
+
+          <ng-container *ngIf="itemDetails?.access === 'SANS'">
+ 
+            <ion-item>
+              <ion-label>Raison:</ion-label>
+              <ion-note slot="end">{{ itemDetails?.raison }}</ion-note>
+            </ion-item>
+          </ng-container>
+
+
+        </ng-container>
+
+        <ion-item>
+          <ion-label>Etat:</ion-label>
+          <ion-note slot="end">{{ itemDetails?.etat }}</ion-note>
+        </ion-item>
+
+      </ion-list>
+    </ion-card>
+
+
+</ion-content>

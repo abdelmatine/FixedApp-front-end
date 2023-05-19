@@ -36,9 +36,8 @@
     <ion-button type="submit"
     shape="round"
     expand="block"
-    (click)="Search()">Search</ion-button>
+    (click)="Search()">CHERCHER</ion-button>
 
-    
   </ion-card>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
@@ -46,7 +45,7 @@
       <ion-icon name="chevron-up-circle"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button (click)="getListProspection()" id="open-modal">
+      <ion-fab-button id="open-modal">
         <ion-icon name="document"></ion-icon>
       </ion-fab-button>
       <ion-fab-button>
@@ -58,46 +57,121 @@
     </ion-fab-list>
   </ion-fab>
 
-  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+  <ion-modal trigger="open-modal">
     <ng-template>
-      <ion-header>
+      <ion-header class="ion-no-border">
         <ion-toolbar>
           <ion-buttons slot="start">
             <ion-button (click)="cancel()">Fermer</ion-button>
           </ion-buttons>
+
           <ion-title>Liste des prospections</ion-title>
+
 
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
+
+        <ion-item>
+          <ion-buttons  slot="start">
+            <ion-searchbar
+            [(ngModel)]="searchTerm" 
+            (ionChange)="searchProsp()"
+            show-clear-button="focus"
+            animated="true" 
+            placeholder="Chercher une demande de prospection par: {{selectedAttribute}}"
+            ></ion-searchbar>
+          </ion-buttons>
+            
+            <ion-select 
+            label="Filtre:" 
+            [(ngModel)]="selectedAttribute" 
+            (ionChange)="searchProsp()">
+              <ion-select-option value="fullName">Nom complet</ion-select-option>
+              <ion-select-option value="numID">Numéro de l'identifiant</ion-select-option>
+              <ion-select-option value="adresse">Adresse</ion-select-option>
+              <ion-select-option value="zone">Couverture</ion-select-option>
+  
+            </ion-select>
+        </ion-item>
+
+
         <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
+
+
+
         <ion-card>
 
         <ion-list [inset]="true" *ngFor="let p of prospections">
-          <ion-item
-          button detail="true" 
-          detail-icon="caret-forward-outline">
+            <ion-item
+            long-press>
           
-            <ion-label>
-              <h2>{{ p.fullName }} </h2>
-              <p>{{ p.numID }}</p>
-            </ion-label>
-            <ion-badge
-            [color]="p.zone === 'Zone Couverte' ? 'success' : 'danger'" 
-            slot="end">{{p.zone}}</ion-badge>
-            <ion-badge
-            [color]="p.access === 'Avec Accès' ? 'success' : 'danger'" 
-            slot="end">{{p.access}}</ion-badge>
-          </ion-item>
+            
+              <ion-label>
+                <h2>{{ p.fullName }} </h2>
+                <p>{{ p.numID }}</p>
+              </ion-label>
+              <ion-badge
+              label="zone"
+              [color]="p.zone === 'Zone Couverte' ? 'success' : 'danger'" 
+              slot="end">{{p.adresse}}</ion-badge>
+              <ion-badge
+              [color]="p.access === 'AVEC' ? 'success' : 'danger'" 
+              slot="end">{{p.access}}</ion-badge>
+            <!--
+              <ion-button             
+              (click)="openDetails(p)"
+              slot="end" >
+              <ion-icon slot="icon-only" name="caret-forward-outline"></ion-icon>
+              </ion-button>
+            -->
+
+              <ion-icon 
+              (click)="openDetails(p)"
+              name="caret-forward-outline" slot="end"></ion-icon>
+
+            
+            </ion-item>
+
+
+      
         </ion-list>
+        <p *ngIf="!prospections || prospections.length === 0">{{ notFoundMessage }}</p>
       </ion-card>
 
       </ion-content>
     </ng-template>
+
+
+
   </ion-modal>
 
 
 </ion-content>
+
+<ion-modal trigger="open-details">
+  <ng-template>
+    <ion-header class="ion-no-border">
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="cancel()">Fermer</ion-button>
+        </ion-buttons>
+
+        <ion-title>Detail prospection </ion-title>
+
+
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+
+      <ion-card>
+
+
+      </ion-card>
+
+    </ion-content>
+  </ng-template>
+</ion-modal>
 

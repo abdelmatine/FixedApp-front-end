@@ -7,7 +7,7 @@
 
 
   <ion-text class="text-container" color="grey700">
-    Welcome back, you've been missed!
+    Bienvenue à nouveau, vous nous avez manqué !
   </ion-text>
 
 
@@ -17,53 +17,45 @@
       <ng-container *ngIf="submissionType === 'join'">  
         <ion-input 
         #firstName="ngModel"
-        label="First Name" 
+        label="Nom" 
         label-placement="floating" 
-        fill="solid"
-        placeholder="Enter your firs name"
+        fill="outline"
           ngModel
           type="text"
           name="firstName"
+          errorText="le nom est obligatoire"
           required>
+          
       </ion-input>
-      <ion-text
-      color="danger"
-      *ngIf="!firstName.valid && firstName.touched"
-      >Please enter your first Name.</ion-text>
       </ng-container>
 
       <ion-input 
       label="Username" 
       label-placement="floating" 
-      fill="solid"
-      placeholder="Enter your username"
+      fill="outline"
         #firstNameInput="ngModel"
         ngModel
         type="text"
         name="username"
+        errorText="le nom d'utilisateur est obligatoire"
+
         required>
     </ion-input>
-    <ion-text
-    color="danger"
-    *ngIf="!firstNameInput.valid && firstNameInput.touched"
-    >Please enter your username.</ion-text>
+
 
       <ng-container *ngIf="submissionType === 'join'"> 
         <ion-input 
-        label="Last name" 
+        label="Prénom" 
         label-placement="floating" 
-        fill="solid"
-        placeholder="Enter your last name"
+        fill="outline"
           #lastNameInput="ngModel"
           ngModel
           type="text"
           name="lastName"
+          errorText="Le prenom est obligatoire"
           required>
       </ion-input>
-        <ion-text
-        color="danger"
-        *ngIf="!lastNameInput.valid && lastNameInput.touched"
-        >Please enter your last name.</ion-text>
+
       </ng-container>
 
 
@@ -73,36 +65,30 @@
         #emailInput="ngModel"
         label="Email" 
         label-placement="floating" 
-        fill="solid"
-        placeholder="Enter your email"
+        fill="outline"
           ngModel
           type="email"
           name="email"
+          errorText="L'adresse email est obligatorie"
           required>
       </ion-input>
-      <ion-text
-      color="danger"
-      *ngIf="!emailInput.valid && emailInput.touched"
-      >Please enter your email address.</ion-text>
+
       </ng-container>
 
       <ng-container *ngIf="submissionType === 'join'"> 
         <ion-input 
-        label="Phone number" 
+        label="Numéro telephone" 
         label-placement="floating" 
-        fill="solid"
-        placeholder="Enter your phone number"
+        fill="outline"
           #phoneInput="ngModel"
           ngModel
           type="number"
           name="phoneNumber"
+          errorText="Numéro de telephone obligatoire"
           required>
       </ion-input>
 
-        <ion-text
-        color="danger"
-        *ngIf="!phoneInput.valid && phoneInput.touched"
-        >Please enter your phone number.</ion-text>
+
       </ng-container>
 
 
@@ -111,55 +97,49 @@
 
         <ion-input
           label-placement="floating" 
-          label="pass"
+          label="mots de passe"
           #passwordInput="ngModel"
           ngModel
           type="password"
           name="password"
-          placeholder="Enter your password"
-          fill="solid"
+          errorText="Le mots de passe est obligatoire"
+          fill="outline"
           required
           ></ion-input>
-      <ion-text
-      color="danger"
-      *ngIf="!passwordInput.valid && passwordInput.touched"
-      >Please enter your Password.</ion-text>
+
 
 
       <ng-container *ngIf="submissionType === 'join'"> 
-        <ion-item>
+        <ion-item
+        fill="outline">
           <ion-input
+          label="confirmer mots de passe"
           label-placement="floating" 
-          placeholder="confirm pass"
           #confirmPasswordInput="ngModel"
           ngModel
           type="{{ showPassword ? 'text' : 'password' }}"
           name="confirmPassword"
-          placeholder="Confirm your password"
           fill="solid"
           required
+          errorText="Confirmation obligatoire"
           (ionChange)="validatePassword()"
           ></ion-input>
           <ion-buttons slot="end">
             <button ion-button clear (click)="toggleShowPassword()">
-              <ion-icon slot="icon-only" [name]="showPassword ? 'eye-off' : 'eye'"></ion-icon>
+              <ion-icon slot="icon-only" [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
             </button>
           </ion-buttons>
         </ion-item>
 
-  <ion-text
-  color="danger"
-  *ngIf="!passwordInput.valid && passwordInput.touched"
-  >Please confirm your Password.</ion-text>
-  <ion-text color="danger" *ngIf="passwordMismatch">Password mismatch</ion-text>
+  <ion-text color="danger" *ngIf="passwordMismatch">mots de passe incorrect</ion-text>
   </ng-container>
 
 
       <p *ngIf="submissionType === 'join'" class="terms-and-conditions">
-        By clicking Agree & Join, you agree to the Ooredoo
-        <ion-text color="primary">User Agreement</ion-text>,
-        <ion-text color="primary">Privacy Policy</ion-text>, and
-        <ion-text color="primary">Cookie Policy</ion-text>.
+        En cliquant sur Accepter & rejoindre, vous acceptez le Ooredoo
+        <ion-text color="primary">Accord de l'utilisateur</ion-text>,
+        <ion-text color="primary">Politique de confidentialité</ion-text>, et
+        <ion-text color="primary">Politique relative aux cookies</ion-text>.
       </p>
 
       <ion-button
@@ -168,7 +148,7 @@
         shape="round"
         expand="block"
       >
-        {{ submissionType === 'login' ? 'Sign in' : 'Accept & Join' }}
+        {{ submissionType === 'login' ? 's"identifier' : 'Accepter et rejoindre' }}
       </ion-button>
 
 
@@ -177,9 +157,9 @@
   </form>
 
   <div class="toggle-text">
-    {{ submissionType === 'login' ? 'New to FixedApp' : 'Already on FixedApp' }}
+    {{ submissionType === 'login' ? 'Nouveau sur FixedApp?' : 'Déjà sur FixedApp' }}
     <ion-text class="toggle-auth-mode" color="primary" (click)="toggleText()">
-      {{ submissionType === 'login' ? 'Join now' : 'Sign in' }}
+      {{ submissionType === 'login' ? 'Adhérer maintenant' : 'S"identifier' }}
     </ion-text>
   </div>
 

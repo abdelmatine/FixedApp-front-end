@@ -1,16 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlertController, IonicModule, LoadingController, ToastController } from '@ionic/angular';
+import { AlertController, IonicModule, IonModal, LoadingController, ToastController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Geolocation } from '@capacitor/geolocation';
-import { ProspectionServiceService } from './services/prospection.service.service';
+import { ProspectionService } from './services/prospection.service';
 import { HttpClient, HttpClientModule, HttpEvent, HttpEventType, HttpHeaders } from '@angular/common/http';
-import { ProspService } from './services/prosp.service';
-import { Router } from '@angular/router';
-
+import { ActivatedRoute, Router } from '@angular/router';
+import { NativeGeocoder } from '@capgo/nativegeocoder';
 
 
 
@@ -19,7 +18,7 @@ import { Router } from '@angular/router';
   selector: 'app-formulaire',
   templateUrl: './formulaire.page.html',
   styleUrls: ['./formulaire.page.scss'],
-  providers: [ProspectionServiceService,ProspService],
+  providers: [ProspectionService],
   standalone: true,
   imports: [IonicModule, 
             CommonModule, 
@@ -31,36 +30,47 @@ import { Router } from '@angular/router';
 export class FormulairePage implements OnInit {
 
 
-  lati: any | undefined;  
+  @ViewChild(IonModal) modal: IonModal | undefined;
+
+
+
+
+  lati: any ;  
   longi: any ;  
+  adress: any;
 
   coordinates: any;
   prospector: FormGroup ;
+  //contractNum: string;
+
   showBackdrop = true;
 
 
   constructor(
-    private alertCtrl: AlertController,
-    private loadingCtrl: LoadingController,
-    private http:HttpClient,
-    private router: Router, 
-    private toastController: ToastController,
-    private formBuilder: FormBuilder,
-    private pPS: ProspService)
     
-    { 
+    private loadingCtrl: LoadingController,
+    private toastController: ToastController,
+    private http:HttpClient,
+    private alertCtrl: AlertController,
+    private router: Router, 
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,)
+    
+    {
+
 
 
       this.prospector = this.formBuilder.group({
-        offreType: ['', Validators.required],
+        offreType: ['Fibre Optique'],
         fullName: ['', Validators.required],
         numID: ['', Validators.required],
-        contractNum: ['', Validators.required],
-        residenceName: ['', Validators.required],
-        latitude: ['', Validators.required],
-        longitude: ['', Validators.required],
+        contactNum: ['', Validators.required],
+        latitude: [this.lati, Validators.required],
+        longitude: [this.longi, Validators.required],
+        adresse: [this.adress, Validators.required],
         zone: ['', Validators.required],
         access: [''],
+        residenceName: [''],
         bloc: [''],
         etage: [''],
         appartement: [''],
@@ -76,7 +86,40 @@ export class FormulairePage implements OnInit {
 
 
 
+    ngOnInit() {
+      Geolocation.requestPermissions();
+
+      this.lati = this.route.snapshot.queryParamMap.get('latitude');
+      this.longi = this.route.snapshot.queryParamMap.get('longitude');
+      this.adress = this.route.snapshot.queryParamMap.get('adresse');
+
+      console.log(this.lati, this.longi, this.adress);
+    }
+
+
+
+
+    goToProspection(){
+      this.router.navigate(['/prospection']);
+    }
+  
+  
+    gotoHome() {
+      this.prospector.reset();
+      this.router.navigate(['/home']);
+    }
+
+
+    goToMaps() {
+      this.router.navigate(['/map']);
+      }
+
+
+
     validateCouverture(group: FormGroup) {
+      const offreControl = group.controls['offreType'];
+      offreControl.disabled;
+
       if(group.controls['zone'].value === 'Zone Couverte'){
         const accessControl = group.controls['access'];
         accessControl.setValidators([Validators.required]);
@@ -88,22 +131,11 @@ export class FormulairePage implements OnInit {
           if(group.controls['raison'].value === 'Autres'){
             const autresControl = group.controls['autres'];
             autresControl.setValidators([Validators.required]);
-           // group.controls['access'].setValue(group.controls['autres'].value);
+            this.prospector.value.raison = this.prospector.value.autres;
           }
-  
-          raisonControl.setValidators([Validators.required]);
         }
-
-      }
-
     }
-
-  ngOnInit() {
-    Geolocation.requestPermissions();
   }
-
-
-
 
 
 
@@ -114,32 +146,38 @@ export class FormulairePage implements OnInit {
     this.lati = coordinates.coords.latitude;  
     this.longi = coordinates.coords.longitude; 
     this.prospector.controls['latitude'].setValue(parseFloat(this.lati));
-    this.prospector.controls['longitude'].setValue(this.longi);
+    this.prospector.controls['longitude'].setValue(parseFloat(this.longi));
   
+  }
+
+
+  customCounterFormatter(inputLength: number, maxLength: number) {
+
+    return `${maxLength - inputLength} caractères restants`;
+  }
+
+      onSelectionChange() {
+  console.log('Selected value:', this.prospector.controls['raison'].value);    
+  }
+
+  onInput(event: any) {
+    const inputValue: string = event.target.value;
+    if (inputValue.length >= 8) {
+      event.target.value = inputValue.slice(0, 8); // Truncate input to maximum length
+      event.target.blur(); // Remove focus from the input
+    }
   }
   
   
-  async presentToast() {
+  /*async presentToast() {
     const toast = await this.toastController.create({
-      message: 'Data added succesfully',
+      message: 'Données ajoutées avec succès',
       duration: 1500,
       position: 'bottom'
     });
 
     await toast.present();
-  }
-
-  goToProspection(){
-    this.router.navigate(['/prospection']);
-  }
-
-
-  gotoHome() {
-    this.prospector.reset();
-    this.router.navigate(['/home']);
-  }
-
-
+  }*/
 
 
 
@@ -150,7 +188,7 @@ export class FormulairePage implements OnInit {
 
   async submitForm() {
     const loading = await this.loadingCtrl.create({
-      message: 'Please wait...',
+      message: 'Veuillez patienter...',
     });
     await loading.present();
     const formData = this.prospector.value;
@@ -159,11 +197,11 @@ export class FormulairePage implements OnInit {
     .subscribe((response) => {
       loading.dismiss();
       this.prospector.reset();
-      this.presentAlert('Success', 'Votre demande de prospection a été envoyée avec succès.');
+      this.presentAlert('Succès', 'Votre demande de prospection a été envoyée avec succès.');
       console.log('Form submitted successfully');
     }, (error) => {
       loading.dismiss();
-      this.presentAlert('Error', 'Failed to save data to the database. Please try again later.');
+      this.presentAlert('Erreur', 'Échec de l"enregistrement des données dans la base de données. Veuillez réessayer plus tard.');
       console.error('Error submitting form:', error);
     });
 
@@ -177,24 +215,22 @@ export class FormulairePage implements OnInit {
     const alert = await this.alertCtrl.create({
       header,
       message,
-      buttons: [      
-        {
-        text: 'Cancel',
-        role: 'cancel',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      },
-      {
-        text: 'OK',
-        handler: () => {
-          console.log('OK clicked');
-        }
-      }]
+      buttons: []
     });
     await alert.present();
+
+    setTimeout(() => {
+      alert.dismiss();
+    }, 1000);
   }
 
+  cancel() {
+    this.modal!.dismiss(null, 'cancel');
+  }
+
+
+
+  
 
   async ConfirmationFormSubmitAlert(header: string, message: string) {
     const alert = await this.alertCtrl.create({
@@ -202,14 +238,20 @@ export class FormulairePage implements OnInit {
       message,
       buttons: [      
         {
-        text: 'Cancel',
+        text: 'Annuler',
         role: 'cancel',
         handler: () => {
-          console.log('Cancel clicked');
+          this.prospector.reset();
         }
       },
       {
-        text: 'OK',
+        text: 'modifier',
+        role: 'cancel',
+        handler: () => {
+        }
+      },
+      {
+        text: 'Confirmer',
         handler: () => {
           this.submitForm();
         }
@@ -219,44 +261,34 @@ export class FormulairePage implements OnInit {
   }
 
 
-  customCounterFormatter(inputLength: number, maxLength: number) {
-  
-    return `${maxLength - inputLength} characters remaining`;
-  }
-
-      onSelectionChange() {
-  console.log('Selected value:', this.prospector.controls['raison'].value);    
-  }
 
 
-
-  ///////////////////CONFIRMATION TOAST CODE///////////////
-  /*async presentConfirmationToast() {
-  this.showBackdrop = false; // show backdrop to prevent user interaction
-  const toast = await this.toastController.create({
-    message: 'Are you sure you want to submit?',
-    position: 'bottom',
-    buttons: [
-      {
-        text: 'Cancel',
+  async getActualPosAlert(header: string, message: string) {
+    const alert = await this.alertCtrl.create({
+      header,
+      message,
+      buttons: [      
+        {
+        text: 'Annuler',
         role: 'cancel',
         handler: () => {
-          this.showBackdrop = false; // hide backdrop when toast is dismissed
-        },
+        }
       },
       {
-        text: 'Submit',
+        text: 'Confirmer',
         handler: () => {
-          this.submitForm();
-          this.showBackdrop = false; // hide backdrop after form is submitted
-        },
-      },
-    ],
-  });
-  await toast.present();
-}*/
+          this.getCurrentLocation();
+        }
+      }]
+    });
+    await alert.present();
+  }
 
   
+
+////////////MAPS MODAL////////////////////////
+
+////////////////////////////////////////////////
 
 }
 

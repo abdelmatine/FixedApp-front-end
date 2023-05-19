@@ -1,295 +1,353 @@
 <ion-content [fullscreen]="true">
-<ion-item>
-  <ion-buttons>
-    <ion-back-button  defaultHref="prospection"></ion-back-button>
-  </ion-buttons>
-  <ion-buttons slot="end">
-    <ion-button (click)="gotoHome()">
-      <ion-icon name="close-outline"></ion-icon>
-
-    </ion-button>
-  </ion-buttons>
-</ion-item>
-
-
-  <ion-title>Fiche de prospection</ion-title>
-
-
-  <form  [formGroup]="prospector" (ngSubmit)="onSubmit()">
-
-
-    <swiper-container>
-      <swiper-slide>
-        <ion-card>
-          <ng-container>
+  <ion-item>
+    <ion-buttons>
+      <ion-back-button  defaultHref="prospection"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="gotoHome()">
+        <ion-icon name="close-outline"></ion-icon>
+  
+      </ion-button>
+    </ion-buttons>
+  </ion-item>
+  
+  
+    <ion-title>Fiche de prospection</ion-title>
+  
+  
+    <form  [formGroup]="prospector" (ngSubmit)="onSubmit()">
+  
+  
+      <swiper-container
+      [pagination]="true"
     
-    
-              <ion-select 
-              formControlName="offreType"
-              label="Type d'offre *" 
-              label-placement="floating"
-              fill="outline"
-              errorText="Type d'offre requis" 
-              >
-                <ion-select-option value="Fibre Optique">Fibre Optique</ion-select-option>
-                <ion-select-option value="Fixe Box">Fixe Box</ion-select-option>
-                <ion-select-option value="Fixe Jdid">Fixe Jdid</ion-select-option>
-                <ion-select-option value="ADSL">ADSL</ion-select-option>
-                <ion-select-option value="VDSL">VDSL</ion-select-option>
-              </ion-select>
-    
-            <ion-input 
-            label="Nom & prénom *" 
-            label-placement="floating" 
-            fill="outline"
-            placeholder="Nom Complet"
-            type="text"
-            formControlName="fullName"
-            errorText="Nom complet requis"
-              >
-          </ion-input>
-
-    
-    
-          <ion-input 
-          label="numéro ID *"
-          maxlength="8"
-          [counter]="true"
-          [counterFormatter]="customCounterFormatter"
-          placeholder="00000000"    
-          label-placement="floating" 
-          fill="outline"
-          placeholder="Numéro de l'identifiant"
-          type="number"
-          formControlName="numID"
-          errorText="Numero de 'identifiant requis"
-          >
-        </ion-input>
-
-    
-        <ion-input 
-
-        label="Numéro du contrat *" 
-        label-placement="floating" 
-        fill="outline"
-        type="number"
-        formControlName="contractNum"
-        errorText="Numéro de contrat requis"
-          >
-      </ion-input>
-
-    
-    <ion-input 
-    label="Nom de la residence *" 
-    label-placement="floating" 
-    fill="outline"
-    type="text"
-    formControlName="residenceName"
-    errorText="Nom de la residence requis"
       >
-    </ion-input>
-
-    
-    <ion-item button="" (click)="getCurrentLocation()">
-      <ion-buttons >
-        <ion-text>Récupérer les coordonnées GPS</ion-text>
-        <ion-icon     
-         name="locate-outline" slot="end" color="success">
-        </ion-icon>
-      </ion-buttons> 
-    </ion-item>
-
-
-    <ion-row>
-      <ion-col>
-        <ion-input
-        label="Latitude *" 
-        label-placement="floating" 
-        fill="outline"
-        type="number"
-        readonly
-        formControlName="latitude"
-        errorText="latitude requise"
-        >
-      </ion-input>
-      </ion-col>
-
-      <ion-col>
-        <ion-input
-        label="Longitude *" 
-        label-placement="floating" 
-        fill="outline"
-        type="number"
-        readonly
-        formControlName="longitude" 
-        errorText="longitude requise"
-        >
-      </ion-input>
-      </ion-col>
-
-    </ion-row>
-
-
-    
-        </ng-container>
-        </ion-card>
-      </swiper-slide>
-
-
-
-      <swiper-slide>
-        <ion-card>
-          <ng-container>
-            <ion-select
-            label="Couverture * "
-            placeholder="Préciser la couverture du zone"
-            label-placement="floating" 
-            fill="outline"
-            formControlName="zone"
-            errorText="Couverture de la zone requise"
-            
-            >
-              <ion-select-option value="Zone Couverte">OUI</ion-select-option>
-              <ion-select-option value="Zone Non Couverte">NON</ion-select-option>
-             
-            </ion-select>
-            
-            <ng-container *ngIf="prospector.get('zone')!.value === 'Zone Couverte'">
-
-              <ion-select 
-              label="Accès à l'immeuble *" 
-              placeholder="Vérifier l'accès a l'immeuble pour future intervention"
+        <swiper-slide>
+          <ion-card>
+            <ng-container>
+  
+  
+      
+      
+                <ion-select
+                formControlName="offreType"
+                label="Type d'offre" 
+                label-placement="floating"
+                fill="outline"
+                errorText="Type d'offre requis"
+                okText="Confirmer"
+                cancelText="Annuler"
+                >
+  
+                  <ion-select-option value="Fibre Optique">Fibre Optique</ion-select-option>
+                </ion-select>
+                <!--
+                  <ion-select-option value="Fixe Jdid">Fixe Jdid</ion-select-option>
+                  <ion-select-option value="ADSL">ADSL</ion-select-option>
+                  <ion-select-option value="VDSL">VDSL</ion-select-option>
+                <ion-select-option value="Fixe Box">Fixe Box</ion-select-option>
+  
+                -->
+      
+              <ion-input 
+              label="Nom & prénom *" 
               label-placement="floating" 
               fill="outline"
-              formControlName="access"
-              errorText="Verifier l'accès OUI/NON" 
+              placeholder="Nom Complet"
+              type="text"
+              formControlName="fullName"
+              errorText="Nom complet requis"
+                >
+            </ion-input>
+  
+      
+      
+            <ion-input 
+            label="numéro de l'identifiant *"
+            maxLength="8"
+            inputLength="8"
+            (input)="onInput($event)"
+            [counterFormatter]="customCounterFormatter"
+            [counter]="true"
+            placeholder="00000000"    
+            label-placement="floating" 
+            fill="outline"
+            placeholder="02415529"
+            type="number"
+            formControlName="numID"
+            errorText="Numero de 'identifiant requis"
+            >
+          </ion-input>
+  
+      
+  
+          <ion-input 
+          maxLength="8"
+          inputLength="8"
+          (input)="onInput($event)"
+          [counterFormatter]="customCounterFormatter"
+          [counter]="true"
+          placeholder="22222222"   
+          label="Numéro de contact *"
+          label-placement="floating" 
+          fill="outline"
+          type="number"
+          formControlName="contactNum"
+          errorText="Numéro de contact requis"
+            >
+        </ion-input>
+      
+  <!--
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-buttons button=""  (click)="getActualPosAlert('Confirmation', 'Voulez vous vraiment récupérer vos coordonnées actuelles?')">
+                <ion-text>Ma position actuelle</ion-text>
+                <ion-icon     
+                 name="locate" slot="end" color="success">
+                </ion-icon>
+              </ion-buttons> 
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item class="ion-activated">
+              <ion-buttons button=""  (click)="goToMaps()">
+                <ion-text slot="start">Ouvrir la carte</ion-text>
+              <ion-icon
+              name="location" slot="end"  color="success">
+              </ion-icon>
+            </ion-buttons>
+  
+            </ion-item>
+          </ion-col>
+        </ion-row>
+  
+  -->
+  <ion-item>
+    <ion-buttons button=""  (click)="getActualPosAlert('Confirmation', 'Voulez vous vraiment récupérer vos coordonnées actuelles?')">
+      <ion-text>Récupérer ma position actuelle</ion-text>
+      <ion-icon
+       name="locate" slot="end" color="success">
+      </ion-icon>
+    </ion-buttons> 
+  </ion-item>
+
+      <ion-row>
+        <ion-col>
+          <ion-input
+          label="Latitude *" 
+          label-placement="floating" 
+          fill="outline"
+          type="number"
+          readonly
+          formControlName="latitude"
+          errorText="latitude requise"
+          >
+        </ion-input>
+        </ion-col>
+  
+        <ion-col>
+          <ion-input
+          label="Longitude *" 
+          label-placement="floating" 
+          fill="outline"
+          type="number"
+          readonly
+          formControlName="longitude" 
+          errorText="longitude requise"
+          >
+        </ion-input>
+        </ion-col>
+  
+      </ion-row>
+
+
+          <ion-input 
+              label="adresse *" 
+              label-placement="floating" 
+              fill="outline"
+              placeholder="6 rue l'orange"
+              type="text"
+              formControlName="adresse"
+              errorText="adresse du client requise"
+                >
+          </ion-input>
+  
+      
+          </ng-container>
+          </ion-card>
+        </swiper-slide>
+  
+  
+  
+        <swiper-slide>
+          <ion-card>
+            <ng-container>
+              <ion-select
+              label="Couverture * "
+              placeholder="Préciser la couverture du zone"
+              label-placement="floating" 
+              fill="outline"
+              formControlName="zone"
+              errorText="Couverture de la zone requise"
+              
               >
-                <ion-select-option value="AVEC">Avec</ion-select-option>
-                <ion-select-option value="SANS" id="open-modal">Sans</ion-select-option>
+                <ion-select-option value="Zone Couverte">OUI</ion-select-option>
+                <ion-select-option value="Zone Non Couverte">NON</ion-select-option>
                
+              </ion-select>
+              
+              <ng-container *ngIf="prospector.get('zone')!.value === 'Zone Couverte'">
+  
+                <ion-select 
+                label="Accès à l'immeuble *" 
+                placeholder="Vérifier l'accès a l'immeuble pour future intervention"
+                label-placement="floating" 
+                fill="outline"
+                formControlName="access"
+                errorText="Verifier l'accès OUI/NON" 
+                >
+                  <ion-select-option value="AVEC">Avec</ion-select-option>
+                  <ion-select-option value="SANS" id="open-modal">Sans</ion-select-option>
+                 
+                </ion-select>
+    
+    
+                <ng-container *ngIf="prospector.get('access')!.value === 'AVEC'">
+                  
+                  
+                  
+                  <ion-input 
+                  label="Nom de la residence *" 
+                  label-placement="floating" 
+                  fill="outline"
+                  type="text"
+                  formControlName="residenceName"
+                  errorText="Nom de la residence requis"
+                  >
+                  </ion-input>
+                  
+                  <ion-input 
+                  label="Bloc *" 
+                  label-placement="floating" 
+                  fill="outline"
+                  type="number"
+                  formControlName="bloc"
+                  errorText="Numero du bloc requis"
+                  >
+                  </ion-input>
+  
+      
+                  <ion-input 
+                  label="Etage *" 
+                  label-placement="floating" 
+                  fill="outline"
+                  type="number"
+                  name="etage"
+                  formControlName="etage"
+                  errorText="Numero d'étage requis"
+                    >
+                  </ion-input>
+  
+      
+                  <ion-input 
+                  label="N° appartement *" 
+                  label-placement="floating" 
+                  fill="outline"
+                  type="number"
+                  formControlName="appartement"
+                  errorText="Numero d'étage requis"
+                    >
+                  </ion-input>
+  
+    
+                </ng-container >
+    
+    
+                <ng-container *ngIf="prospector.get('access')!.value === 'SANS'">
+    
+                  <ion-radio-group 
+                  formControlName="raison"
+                  errorText="Spécifier le raison du non accesibilité" 
+                  (ionChange)="onSelectionChange()">
+    
+                    <ion-radio value="Interdiction des travaux bâtiments" labelPlacement="end"  aria-label="Interdiction des travaux bâtiments">Interdiction des travaux bâtiments</ion-radio><br/>
+                    <ion-radio value="Dérangement" labelPlacement="end"  aria-label="Dérangement">Dérangement</ion-radio><br/>
+                    <ion-radio value="Sécurité" labelPlacement="end"  aria-label="Sécurité">Sécurité</ion-radio><br/>
+                    <ion-radio value="Souhaite geste commerciale" labelPlacement="end"  aria-label="Souhaite geste commerciale">Souhaite geste commerciale</ion-radio><br/>
+                    <ion-radio value="Autres" labelPlacement="end"  aria-label="Autres">Autres</ion-radio>
+                    
+                    <ng-container *ngIf="prospector.get('raison')!.value === 'Autres'">
+                      
+                      <ion-input 
+                      type="text" 
+                      formControlName="autres"
+                      errorText="Spécifier le raison"
+                      label="Raison *"
+                      label-placement="floating" 
+                      fill="outline"
+                      >
+                      </ion-input>
+  
+    
+                    </ng-container>
+                  
+                  </ion-radio-group>
+    
+                </ng-container >
+  
+              </ng-container>
+  
+  
+              <ion-select 
+              placeholder="Préciser si le client est intéressé ou non" 
+              label="Etat Prospection *" 
+              label-placement="floating" 
+              fill="outline" 
+              formControlName="etat"
+              errorText="Préciser si le client est intéressé ou non"
+              
+              >
+                <ion-select-option value="Client intéressé">Client intéressé</ion-select-option>
+                <ion-select-option value="Client non intéressé">Client non intéressé</ion-select-option>
+                <ion-select-option value="Client indisponible">Client indisponible</ion-select-option>
               </ion-select>
   
   
-              <ng-container *ngIf="prospector.get('access')!.value === 'AVEC'">
-                <ion-input 
-                label="Bloc *" 
-                label-placement="floating" 
-                fill="outline"
-                type="number"
-                formControlName="bloc"
-                errorText="Numero du bloc requis"
-                >
-                </ion-input>
-
-    
-                <ion-input 
-                label="Etage *" 
-                label-placement="floating" 
-                fill="outline"
-                type="number"
-                name="etage"
-                formControlName="etage"
-                errorText="Numero d'étage requis"
-                  >
-                </ion-input>
-
-    
-                <ion-input 
-                label="N° appartement *" 
-                label-placement="floating" 
-                fill="outline"
-                type="number"
-                formControlName="appartement"
-                errorText="Numero d'étage requis"
-                  >
-                </ion-input>
-
-  
-              </ng-container >
   
   
-              <ng-container *ngIf="prospector.get('access')!.value === 'SANS'">
   
-                <ion-radio-group 
-                formControlName="raison"
-                errorText="Spécifier le raison du non accesibilité" 
-                (ionChange)="onSelectionChange()">
-  
-                  <ion-radio value="Interdiction des travaux bâtiments" labelPlacement="end"  aria-label="Interdiction des travaux bâtiments">Interdiction des travaux bâtiments</ion-radio><br/>
-                  <ion-radio value="Sécurité" labelPlacement="end"  aria-label="Sécurité">Sécurité</ion-radio><br/>
-                  <ion-radio value="Souhaite geste commerciale" labelPlacement="end"  aria-label="Souhaite geste commerciale">Souhaite geste commerciale</ion-radio><br/>
-                  <ion-radio value="Autres" labelPlacement="end"  aria-label="Autres">Autres</ion-radio>
-                  
-                  <ng-container *ngIf="prospector.get('raison')!.value === 'Autres'">
-                    
-                    <ion-input 
-                    type="text" 
-                    formControlName="autres"
-                    errorText="Spécifier le raison"
-                    label="Raison *"
-                    label-placement="floating" 
-                    fill="outline"
-                    >
-                    </ion-input>
-
-  
-                  </ng-container>
-                
-                </ion-radio-group>
-  
-              </ng-container >
-
             </ng-container>
-
-
-            <ion-select 
-            placeholder="Préciser si le client est intéressé ou non" 
-            label="Etat Prospection *" 
-            label-placement="floating" 
-            fill="outline" 
-            formControlName="etat"
-            errorText="Préciser si le client est intéressé ou non"
-            
-            >
-              <ion-select-option value="Client intéressé">Client intéressé</ion-select-option>
-              <ion-select-option value="Client non intéressé">Client non intéressé</ion-select-option>
-              <ion-select-option value="Client indisponible">Client indisponible</ion-select-option>
-            </ion-select>
-
-
-
-
-
-          </ng-container>
-        </ion-card>
-
-
-
-
-      </swiper-slide>
-
-
-
-    </swiper-container>
-
- 
-
-<ion-button
-[disabled]="!prospector.valid"
-type="submit"
-shape="round"
-expand="block"
-
->
-submit
-</ion-button>
- 
-
-  </form>
-
-</ion-content>
-
-
-
-
-
+          </ion-card>
+  
+  
+  
+  
+        </swiper-slide>
+  
+  
+  
+      </swiper-container>
+  
+   
+  
+  <ion-button
+  [disabled]="!prospector.valid"
+  type="submit"
+  shape="round"
+  expand="block"
+  
+  >
+  submit
+  </ion-button>
+   
+  
+    </form>
+  
+  </ion-content>
+  
+  
+  
+  
+  
+  

@@ -3,14 +3,16 @@ export type offre = 'FO' | 'FB' | 'FJ' | 'ADSL' | 'VDSL';
 export interface ProspectionForm{
 
     
-    offretype: string  ;
+    offretype: offre  ;
     fullName: string ;
     numID: number ;
-    contactNum: number ;
+    contractNum: number ;
+    residenceName: string ;
     latitude: number ;
     longitude: number ;
 
     zone: string ;
+    access: boolean ;
     
     etat: string ;
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ProspectionForm } from '../models/prospection.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, from, map, Observable, of, switchMap, take } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, from, map, Observable, of, switchMap, take, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
@@ -10,12 +10,12 @@ import { environment } from 'src/environments/environment';
 
 //////////////////////////////////
 
-
+const baseUrl = 'https://localhost:8080/SpringMVC/Prospection';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProspectionServiceService {
+export class ProspectionService {
 
 
 
@@ -52,5 +52,19 @@ export class ProspectionServiceService {
       observe: 'events'
     });
   }
+
+
+  deleteProspection(id: number): Observable<any> {
+    const url = `${environment.baseApiUrl}/Prospection/deleteProspection/${id}`;
+    return this.http.delete(url).pipe(
+      tap(_ => console.log(`deleted prospection id=${id}`)),
+    );
+  }
+
+
+  findByTitle(fullName: any): Observable<ProspectionForm[]> {
+    return this.http.get<ProspectionForm[]>(`${baseUrl}?title=${fullName}`);
+  }
+
 
 }

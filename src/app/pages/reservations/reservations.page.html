@@ -17,16 +17,29 @@
 
 
   <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-    <swiper-container>
+    <swiper-container
+  [pagination]="true">
       <swiper-slide>
         <ion-card>
           <ng-container>
+
+            <ion-input 
+
+            readonly
+            label="Numéro du contrat *" 
+            label-placement="floating" 
+            fill="outline"
+            type="string"
+            formControlName="contractNum"
+            errorText="Numéro de contrat requis"
+              >
+          </ion-input>
     
             <ion-row>
               <ion-col>
                 <ion-select 
                 placeholder="INDOOR" 
-                label="Type de box" 
+                label="Type de box*" 
                 label-placement="floating" 
                 fill="outline" 
                 formControlName="boxtype"
@@ -39,7 +52,7 @@
               <ion-col>
                 <ion-select 
                 placeholder="B2B" 
-                label="Type d'abonnement" 
+                label="Type d'abonnement*" 
                 label-placement="floating" 
                 fill="outline" 
                 formControlName="abbtype"
@@ -55,25 +68,29 @@
      <ion-row>
       <ion-col>
         <ion-select 
-        placeholder="Civilté" 
-        label="Civilté" 
+        placeholder="Mr." 
+        label="Civilté*" 
         label-placement="floating" 
         fill="outline" 
         formControlName="civilite"
         required>
-          <ion-select-option value="madame">Mme</ion-select-option>
-          <ion-select-option value="Monsieur">Mr</ion-select-option>
+          <ion-select-option value="madame">Mme.</ion-select-option>
+          <ion-select-option value="Monsieur">Mr.</ion-select-option>
         </ion-select>
       </ion-col>
     
       <ion-col>
         <ion-select 
-        placeholder="Nationalité" 
-        label="Nationalité" 
+        placeholder="Tunisien(ne)" 
+        label="Nationalité*" 
         label-placement="floating" 
         fill="outline" 
         formControlName="nationalite"
         required>
+        <ion-select-option value="TN">Tunisien(ne)</ion-select-option>
+        <ion-select-option value="AG">Algerien(ne)</ion-select-option>
+        <ion-select-option value="LB">lybien(ne)</ion-select-option>
+
         </ion-select>
       </ion-col>
      </ion-row>
@@ -84,7 +101,7 @@
     
                 <ion-input
                 placeholder="Prénom" 
-                label="Prénom" 
+                label="Prénom*" 
                 label-placement="floating" 
                 fill="outline"
                 type="text"
@@ -99,7 +116,7 @@
               <ion-col>
                 <ion-input
                 placeholder="Nom"   
-                label="Nom" 
+                label="Nom*" 
                 label-placement="floating" 
                 fill="outline"
                 type="text"
@@ -115,8 +132,8 @@
             <ion-row>
               <ion-col>
                 <ion-select 
-                placeholder="type ID" 
-                label="Type ID" 
+                placeholder="CIN" 
+                label="Type de l'identifiant*" 
                 label-placement="floating" 
                 fill="outline" 
                 formControlName="idtype"
@@ -130,7 +147,7 @@
               <ion-col>
                 <ion-input
                 placeholder="00000000"   
-                label="numéro ID"
+                label="numéro de l'identifiant*"
                 maxlength="8"
                 [counter]="true"
                 [counterFormatter]="customCounterFormatter"
@@ -142,16 +159,15 @@
                 required>
               </ion-input>
               </ion-col>
-            </ion-row>
-    
-    
+            </ion-row>    
             <ion-row>
               <ion-col>
                 <ion-input
-                label="Date de naissance" 
+                label="Date de naissance*" 
                 label-placement="floating" 
                 fill="outline"
                 type="date"
+                displayFormat="dd/mm/yyyy"
                 formControlName="naissance"
                 errorText="date de naissance invalide"
                 required>
@@ -161,7 +177,7 @@
               <ion-col>
                 <ion-input
                 placeholder="154 boumhal 2097"  
-                label="Adresse" 
+                label="Adresse*" 
                 label-placement="floating" 
                 fill="outline"
                 type="text"
@@ -177,7 +193,7 @@
               <ion-col>
                 <ion-input
                 placeholder="Ben Arous"   
-                label="Gouvernorat" 
+                label="Gouvernorat*" 
                 label-placement="floating" 
                 fill="outline"
                 type="text"
@@ -190,7 +206,7 @@
               <ion-col>
                 <ion-input
                 placeholder=""   
-                label="Délégation" 
+                label="Délégation*" 
                 label-placement="floating" 
                 fill="outline"
                 type="text"
@@ -219,7 +235,7 @@
       <ion-col>
         <ion-input
         placeholder=""   
-        label="Localité" 
+        label="Localité*" 
         label-placement="floating" 
         fill="outline"
         type="text"
@@ -232,7 +248,7 @@
       <ion-col>
         <ion-input
         placeholder="Boumhal"   
-        label="Ville" 
+        label="Ville*" 
         label-placement="floating" 
         fill="outline"
         type="text"
@@ -252,7 +268,7 @@
                 [counter]="true"
                 [counterFormatter]="customCounterFormatter"
                 placeholder="2097"   
-                label="Code postale" 
+                label="Code postale*" 
                 label-placement="floating" 
                 fill="outline"
                 type="number"
@@ -267,7 +283,7 @@
               <ion-col>
                 <ion-input
                 placeholder="example@email.com"   
-                label="Email" 
+                label="Email*" 
                 label-placement="floating" 
                 fill="outline"
                 type="email"
@@ -278,16 +294,31 @@
               </ion-col>
     
             </ion-row>
-    
+    <!--
+          label="numéro ID *"
+          maxLength="8"
+          inputLength="8"
+          (input)="onInput($event)"
+          [counterFormatter]="customCounterFormatter"
+          [counter]="true"
+          placeholder="00000000"    
+          label-placement="floating" 
+          fill="outline"
+          placeholder="Numéro de l'identifiant"
+          type="number"
+          formControlName="numID"
+          errorText="Numero de 'identifiant requis"
+    -->
     
             <ion-row>
               <ion-col>
                 <ion-input
+                (input)="onInput($event)"
                 maxlength="8"
                 [counter]="true"
                 [counterFormatter]="customCounterFormatter"
                 placeholder="22 222 222"   
-                label="N° Mobile 1" 
+                label="N° Mobile 1*" 
                 label-placement="floating" 
                 fill="outline"
                 type="number"
@@ -298,12 +329,10 @@
               </ion-col>
               <ion-col>
                 <ion-input
+                (input)="onInput($event)"
                 maxlength="8"
-                [counter]="true"
-                [counterFormatter]="customCounterFormatter"
                 placeholder="20 202 020"   
                 label="N° Mobile 2"
-                maxlength="8"
                 [counter]="true"
                 [counterFormatter]="customCounterFormatter"
                 label-placement="floating" 
@@ -329,7 +358,7 @@
             <ion-row>
               <ion-col>
                 <ion-input
-                label="Latitude" 
+                label="Latitude*" 
                 label-placement="floating" 
                 fill="outline"
                 type="number"
@@ -341,7 +370,7 @@
     
               <ion-col>
                 <ion-input
-                label="Longitude" 
+                label="Longitude*" 
                 label-placement="floating" 
                 fill="outline"
                 type="number"
@@ -351,10 +380,7 @@
               </ion-input>
               </ion-col>
     
-            </ion-row>
-        
-    
-        
+            </ion-row>        
           </ng-container>
         </ion-card>
         <!--ENDS HERE-->

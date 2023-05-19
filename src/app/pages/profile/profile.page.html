@@ -4,10 +4,69 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+
+  <form #myForm="ngForm">
+    <ion-item>
+      <ion-label>Name</ion-label>
+      <ion-input type="text" name="name" ngModel required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Eligibility</ion-label>
+      <ion-select name="eligibility" [(ngModel)]="eligibility" required>
+        <ion-select-option value="yes">Yes</ion-select-option>
+        <ion-select-option value="no">No</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ng-container *ngIf="eligibility === 'yes'">
+      <ion-item>
+        <ion-label>Capability</ion-label>
+        <ion-select name="capability" [(ngModel)]="capability" required>
+          <ion-select-option value="yes">Yes</ion-select-option>
+          <ion-select-option value="no">No</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ng-container *ngIf="capability === 'yes'">
+        <ion-item>
+          <ion-label>Phone</ion-label>
+          <ion-input type="text" name="phone" ngModel required></ion-input>
+        </ion-item>
+      </ng-container>
+
+      <ng-container *ngIf="capability === 'no'">
+        <ion-item>
+          <ion-label>Reason</ion-label>
+          <ion-radio-group name="reason" [(ngModel)]="reason" required>
+            <ion-item>
+              <ion-label>Option 1</ion-label>
+              <ion-radio value="option1"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>Option 2</ion-label>
+              <ion-radio value="option2"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>Other</ion-label>
+              <ion-radio value="other"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-item>
+
+        <ng-container *ngIf="reason === 'other'">
+          <ion-item>
+            <ion-label>Other Reason</ion-label>
+            <ion-input type="text" name="otherReason" ngModel required></ion-input>
+          </ion-item>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+
+    <ion-button expand="block" type="submit" (click)="submitForm()" [disabled]="myForm.invalid">
+      Submit
+    </ion-button>
+  </form>
+
 </ion-content>

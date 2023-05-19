@@ -36,8 +36,8 @@ export class LoginPage implements OnInit {
 
     if (this.submissionType === 'login') {
       if (!username || !password) return;
-      this.router.navigateByUrl('/home');
-
+      //this.router.navigateByUrl('/home');
+      console.log(username, password)
      // return this.authService.login(username, password).subscribe(() => {
       //});
       }
@@ -45,9 +45,12 @@ export class LoginPage implements OnInit {
       const { firstName, lastName, email, phoneNumber, confirmPassword } = this.form!.value;
       if (!firstName || !lastName || !email || !password || !username || !phoneNumber || !confirmPassword) return;
       const newUser: NewUser = { username ,firstName, lastName, email, phoneNumber , password};
-      return this.authService.register(newUser).subscribe(() => {
+      
+      console.log(newUser);
+      
+      /*return this.authService.register(newUser).subscribe(() => {
         this.toggleText();
-      })
+      });*/
     }
     return null;
   }

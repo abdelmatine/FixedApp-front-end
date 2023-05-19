@@ -28,6 +28,7 @@ export const routes: Routes = [
     path: 'maps',
     loadComponent: () => import('./pages/maps/maps.page').then( m => m.MapsPage)
   },
+
   {
     path: 'prospection',
     loadComponent: () => import('./pages/prospection/prospection.page').then( m => m.ProspectionPage)
@@ -55,6 +56,10 @@ export const routes: Routes = [
   {
     path: 'reservations',
     loadComponent: () => import('./pages/reservations/reservations.page').then( m => m.ReservationsPage)
+  },  {
+    path: 'detailprosp',
+    loadComponent: () => import('./pages/prospection/detailprosp/detailprosp.page').then( m => m.DetailprospPage)
   },
+
 
 ];

@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Geolocation } from '@capacitor/geolocation';
-import { format, parseISO } from 'date-fns';
+import { ContractService } from './services/contract.service';
 
 
 @Component({
@@ -15,6 +15,7 @@ import { format, parseISO } from 'date-fns';
   templateUrl: './reservations.page.html',
   styleUrls: ['./reservations.page.scss'],
   standalone: true,
+  providers: [ContractService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule]
 })
@@ -28,12 +29,18 @@ longi: any;
 
   myForm: FormGroup;
   testval: string = "test";
+  selectedDate: any;
 
 
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) { 
+  constructor(    
+    private contractService: ContractService,
+    private formBuilder: FormBuilder, 
+    private http: HttpClient) { 
     this.myForm = this.formBuilder.group({
 
+      
+      contractNum: [this.contractService.generateContractNum(), Validators.required],
       boxtype: ['', Validators.required],
       abbtype: ['', Validators.required],
       civilite: ['', Validators.required],
@@ -61,12 +68,35 @@ longi: any;
 
   ngOnInit() {
     Geolocation.requestPermissions();
+    
   }
 
 
+  padContractNumber(number: number): string {
+    const paddingLength = 6;
+    const paddingCharacter = '0';
+  
+    // Convert the number to a string
+    let numberString = number.toString();
+  
+    // Pad the number with leading zeros if needed
+    while (numberString.length < paddingLength) {
+      numberString = paddingCharacter + numberString;
+    }
+  
+    return numberString;
+  }
 
   customCounterFormatter(inputLength: number, maxLength: number) {
-    return `${maxLength - inputLength} characters remaining`;
+    return `${maxLength - inputLength} caractères restants`;
+  }
+
+  onInput(event: any) {
+    const inputValue: string = event.target.value;
+    if (inputValue.length >= 8) {
+      event.target.value = inputValue.slice(0, 8); // Truncate input to maximum length
+      event.target.blur(); // Remove focus from the input
+    }
   }
 
 
