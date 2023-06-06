@@ -1,4 +1,26 @@
 
+
+/*ion-content {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  ion-content::before,
+  ion-content::after {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 200px;
+    height: 200px;
+    background-color: red;
+    border-radius: 50%;
+    opacity: 0.5;
+  }*/
+
+
+
+  
 ion-avatar {
     --border-radius: 4px;
   }
@@ -6,22 +28,24 @@ ion-avatar {
 ion-item{
     margin-top: 10%;
 }
-
-.headtainer{
-    ion-img{
-        height: 150px;
-        width: 120px;
-      }
+ion-title{
+    font-size: 24px;
+    font-weight: bold;
 }
+
+
+    ion-img{
+        height: 200px;
+        width: 180px;
+      }
+
 
 .offre_div{
     background: white;
 }
 
 .content_div{
-    background: white;
-    //width: 100%;
-    margin-top: 5%;
+    margin-top: 10%;
 
 
     .col_div{
@@ -50,6 +74,54 @@ ion-item{
             --ion-background-color: black;
         }
 
+
+    }
+}
+
+
+/* Default styles for mobile devices */
+ion-header {
+    ion-toolbar {
+        /* Add your styles for mobile here */
+    }
+}
+
+/* Media query for larger screens */
+@media (min-width: 768px) {
+    ion-header {
+        ion-toolbar {
+            /* Add your styles for larger screens (e.g., PC) here */
+            width: 100%; /* Set the toolbar width to 100% */
+            justify-content: space-between; /* Align items on the toolbar */
+            align-items: center;
+            height: 60px; /* Set the height of the toolbar */
+            background-color: #ff0000; /* Set a background color for the toolbar */
+        }
+
+        ion-buttons[slot="start"] {
+            margin-right: 15%; /* Adjust the margin of the start button */
+
+        }
+
+        ion-title {
+            font-size: 40px; /* Increase the font size of the title */
+        }
+
+        ion-buttons[slot="end"] {
+            margin-right: 20px; /* Adjust the margin of the end button */
+        }
+
+        ion-icon{
+            width: 30px;
+            height: 30px;
+        }
+        
+
+            ion-img{
+                height: 300px;
+                width: 230px;
+              }
+        
     }
 }
 

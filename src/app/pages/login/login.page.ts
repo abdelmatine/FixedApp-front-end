@@ -36,7 +36,7 @@ export class LoginPage implements OnInit {
 
     if (this.submissionType === 'login') {
       if (!username || !password) return;
-      //this.router.navigateByUrl('/home');
+      this.router.navigateByUrl('/home');
       console.log(username, password)
      // return this.authService.login(username, password).subscribe(() => {
       //});

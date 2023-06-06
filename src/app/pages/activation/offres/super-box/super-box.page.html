@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>SuperBox</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="prospector" (ngSubmit)="submit()">
+
+  <swiper-container>
+    <swiper-slide>
+      <ion-item>
+        <ion-label>Choix:</ion-label>
+        <ion-select formControlName="choix">
+          <ion-select-option value="15Go/mois">15Go/mois</ion-select-option>
+          <ion-select-option value="25Go/mois">25Go/mois</ion-select-option>
+          <ion-select-option value="35Go/mois">35Go/mois</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div>
+        <label for="nom">ICCID:</label>
+        <input type="text"
+         id="iccid"
+        name="iccid"
+        formControlName="iccid">
+      </div>
+      <div>
+        <label for="nom">Numero de serie :</label>
+        <input type="text"
+        id="Numero de serie"
+        name="Numero de serie"
+        formControlName="numeroserie"
+        >
+      </div>
+      <div>
+        <label >Zone de recherche:</label>
+        <input type="text" id="Zone de recherche" name="Zone de recherche"
+        formControlName="zonerecherche"
+        >
+      </div>
+      <div>
+        <label>MSISDN:</label>
+        <input type="text"
+         id="MSISDN"
+         name="MSISDN"
+        formControlName="msisdn"
+        >
+      </div>
+      <div class="ion-text-center">
+        <ion-button (click)="ActiverBox()">ActiverBOX</ion-button>
+      </div>
+    </swiper-slide>
+    <swiper-slide>
+      <ion-item>
+        <label >Signature Client:</label>
+        <canvas #signaturePad width="500" height="200"></canvas>
+
+        <div class="ion-text-center">
+          <ion-buttons>
+            <ion-button (click)="clear()">Clear</ion-button>
+          </ion-buttons>
+          <ion-buttons>
+            <ion-button (click)="submit()">Submit</ion-button>
+          </ion-buttons>
+        </div>
+      </ion-item>
+      <div class="ion-text-center">
+        <ion-button (click)="Valider()">Valider</ion-button>
+      </div>
+    </swiper-slide>
+  </swiper-container>
+  </form>
+</ion-content>
+
+
+
+
+
+

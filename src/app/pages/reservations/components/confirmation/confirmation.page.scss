@@ -1,0 +1,39 @@
+canvas {
+    display: block;
+    height: auto;
+    touch-action: none;
+    width: auto;
+  }
+
+.class-title{
+  margin-top: 2%;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: "primary";
+}
+
+.center-button {
+    margin: 25px;
+    text-align: center;
+  }
+
+  .center-text {
+    margin-top: 20%;
+    text-align: center;
+    margin-bottom: 5%;
+  }
+
+.center-container {
+    margin-top: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  .container {
+    border: 1px dashed #000;
+    margin-bottom: 20px;
+    width: auto;
+  }

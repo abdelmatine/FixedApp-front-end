@@ -1,11 +1,11 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
         <ion-title>Prospection</ion-title>
 		<ion-buttons slot="end">
-			<ion-button class="bordered" fill="solid" color="light">
+			<ion-button class="bordered" color="light">
           <ion-icon name="notifications"></ion-icon>            
       </ion-button>
 		</ion-buttons>
@@ -59,20 +59,19 @@
 
   <ion-modal trigger="open-modal">
     <ng-template>
-      <ion-header class="ion-no-border">
-        <ion-toolbar>
+        <ion-toolbar color="primary">
           <ion-buttons slot="start">
-            <ion-button (click)="cancel()">Fermer</ion-button>
+            <ion-button (click)="cancel()">
+              <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+            </ion-button>
           </ion-buttons>
 
           <ion-title>Liste des prospections</ion-title>
 
-
         </ion-toolbar>
-      </ion-header>
       <ion-content class="ion-padding">
 
-        <ion-item>
+        <ion-item lines="none">
           <ion-buttons  slot="start">
             <ion-searchbar
             [(ngModel)]="searchTerm" 
@@ -151,27 +150,5 @@
 
 </ion-content>
 
-<ion-modal trigger="open-details">
-  <ng-template>
-    <ion-header class="ion-no-border">
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-button (click)="cancel()">Fermer</ion-button>
-        </ion-buttons>
 
-        <ion-title>Detail prospection </ion-title>
-
-
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-
-      <ion-card>
-
-
-      </ion-card>
-
-    </ion-content>
-  </ng-template>
-</ion-modal>
 

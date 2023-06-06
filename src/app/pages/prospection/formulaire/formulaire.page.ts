@@ -1,16 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlertController, IonicModule, IonModal, LoadingController, ToastController } from '@ionic/angular';
+import { AlertController, IonicModule, IonModal, LoadingController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Geolocation } from '@capacitor/geolocation';
-import { ProspectionService } from './services/prospection.service';
-import { HttpClient, HttpClientModule, HttpEvent, HttpEventType, HttpHeaders } from '@angular/common/http';
+import { HttpClientModule} from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NativeGeocoder } from '@capgo/nativegeocoder';
-
+import { Swiper } from 'swiper';
+import { ProspectionService } from '../services/prospection.service';
 
 
 
@@ -28,46 +27,40 @@ import { NativeGeocoder } from '@capgo/nativegeocoder';
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class FormulairePage implements OnInit {
-
-
+  @ViewChild('swiper')
+  swiperRef: ElementRef | undefined;
+  swiper?: Swiper;
   @ViewChild(IonModal) modal: IonModal | undefined;
 
 
 
 
-  lati: any ;  
-  longi: any ;  
-  adress: any;
+  latitude: any ;  
+  longitude: any ;  
+  adresse: any;
 
-  coordinates: any;
   prospector: FormGroup ;
-  //contractNum: string;
 
   showBackdrop = true;
 
 
   constructor(
-    
+    private prospectionService: ProspectionService,
     private loadingCtrl: LoadingController,
-    private toastController: ToastController,
-    private http:HttpClient,
     private alertCtrl: AlertController,
     private router: Router, 
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,)
     
     {
-
-
-
       this.prospector = this.formBuilder.group({
         offreType: ['Fibre Optique'],
         fullName: ['', Validators.required],
         numID: ['', Validators.required],
         contactNum: ['', Validators.required],
-        latitude: [this.lati, Validators.required],
-        longitude: [this.longi, Validators.required],
-        adresse: [this.adress, Validators.required],
+        latitude: [this.latitude, Validators.required],
+        longitude: [this.longitude, Validators.required],
+        adresse: [this.adresse, Validators.required],
         zone: ['', Validators.required],
         access: [''],
         residenceName: [''],
@@ -89,15 +82,29 @@ export class FormulairePage implements OnInit {
     ngOnInit() {
       Geolocation.requestPermissions();
 
-      this.lati = this.route.snapshot.queryParamMap.get('latitude');
-      this.longi = this.route.snapshot.queryParamMap.get('longitude');
-      this.adress = this.route.snapshot.queryParamMap.get('adresse');
+      this.latitude = this.route.snapshot.queryParamMap.get('latitude');
+      this.longitude = this.route.snapshot.queryParamMap.get('longitude');
+      this.adresse = this.route.snapshot.queryParamMap.get('adresse');
 
-      console.log(this.lati, this.longi, this.adress);
+      console.log(this.latitude, this.longitude, this.adresse);
     }
 
 
-
+    swiperSlideChanged(e: any) {
+      console.log('changed: ', e);
+    }
+   
+    swiperReady() {
+      this.swiper = this.swiperRef?.nativeElement.swiper;
+    }
+   
+    goNext() {
+      this.swiper?.slideNext();
+    }
+   
+    goPrev() {
+      this.swiper?.slidePrev();
+    }
 
     goToProspection(){
       this.router.navigate(['/prospection']);
@@ -131,7 +138,6 @@ export class FormulairePage implements OnInit {
           if(group.controls['raison'].value === 'Autres'){
             const autresControl = group.controls['autres'];
             autresControl.setValidators([Validators.required]);
-            this.prospector.value.raison = this.prospector.value.autres;
           }
         }
     }
@@ -143,10 +149,8 @@ export class FormulairePage implements OnInit {
    getCurrentLocation = async () => {  
     const coordinates = await Geolocation.getCurrentPosition();
 
-    this.lati = coordinates.coords.latitude;  
-    this.longi = coordinates.coords.longitude; 
-    this.prospector.controls['latitude'].setValue(parseFloat(this.lati));
-    this.prospector.controls['longitude'].setValue(parseFloat(this.longi));
+    this.prospector.controls['latitude'].setValue(coordinates.coords.latitude);
+    this.prospector.controls['longitude'].setValue(coordinates.coords.longitude);
   
   }
 
@@ -168,17 +172,6 @@ export class FormulairePage implements OnInit {
     }
   }
   
-  
-  /*async presentToast() {
-    const toast = await this.toastController.create({
-      message: 'Données ajoutées avec succès',
-      duration: 1500,
-      position: 'bottom'
-    });
-
-    await toast.present();
-  }*/
-
 
 
   async onSubmit(){
@@ -192,19 +185,21 @@ export class FormulairePage implements OnInit {
     });
     await loading.present();
     const formData = this.prospector.value;
-    console.log(formData);
-    this.http.post('http://localhost:8080/SpringMVC/Prospection/addProspection', formData)
-    .subscribe((response) => {
-      loading.dismiss();
-      this.prospector.reset();
-      this.presentAlert('Succès', 'Votre demande de prospection a été envoyée avec succès.');
-      console.log('Form submitted successfully');
-    }, (error) => {
-      loading.dismiss();
-      this.presentAlert('Erreur', 'Échec de l"enregistrement des données dans la base de données. Veuillez réessayer plus tard.');
-      console.error('Error submitting form:', error);
-    });
 
+    this.prospectionService.addProspection(formData)
+      .subscribe(
+        (response) => {
+          loading.dismiss();
+          this.prospector.reset();
+          this.presentAlert('Succès', 'Votre demande de prospection a été envoyée avec succès.');
+          console.log('Form submitted successfully');
+        },
+        (error) => {
+          loading.dismiss();
+          this.presentAlert('Erreur', 'Échec de l"enregistrement des données dans la base de données. Veuillez réessayer plus tard.');
+          console.error('Error submitting form:', error);
+        }
+      );
   }
 
 
@@ -283,12 +278,6 @@ export class FormulairePage implements OnInit {
     });
     await alert.present();
   }
-
-  
-
-////////////MAPS MODAL////////////////////////
-
-////////////////////////////////////////////////
 
 }
 

@@ -1,30 +1,42 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
-    <ion-title>reservations</ion-title>
+    <ion-title>Reservations</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="content">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">reservations</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-
+      <ion-title 
+      color="primary" 
+      class="class-title" 
+      size="large">FIXE JDID BOX</ion-title>
 
   <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
     <swiper-container
-  [pagination]="true">
+    #swiper
+    (afterinit)="swiperReady()"
+    (slidechange)="swiperSlideChanged($event)"
+    [pagination]="true">
       <swiper-slide>
         <ion-card>
           <ng-container>
+            <ion-item lines="none"  button="" (click)="getCurrentLocation()">
+              
+              <ion-buttons >
+                <ion-text>Réservation FWBA</ion-text>
+              </ion-buttons> 
+              <ion-buttons>
+                <ion-icon     
+                name="location-sharp" slot="end" color="success">
+               </ion-icon>
+              </ion-buttons>
+            </ion-item>
 
+            <!--
             <ion-input 
-
             readonly
             label="Numéro du contrat *" 
             label-placement="floating" 
@@ -34,6 +46,7 @@
             errorText="Numéro de contrat requis"
               >
           </ion-input>
+            -->
     
             <ion-row>
               <ion-col>
@@ -42,10 +55,10 @@
                 label="Type de box*" 
                 label-placement="floating" 
                 fill="outline" 
-                formControlName="boxtype"
+                formControlName="boxType"
                 required>
-                  <ion-select-option value="indoor">INDOOR</ion-select-option>
-                  <ion-select-option value="outdoor">OUTDOOR</ion-select-option>
+                  <ion-select-option value="INDOOR">INDOOR</ion-select-option>
+                  <ion-select-option value="OUTDOOR">OUTDOOR</ion-select-option>
                 </ion-select>
               </ion-col>
     
@@ -55,7 +68,7 @@
                 label="Type d'abonnement*" 
                 label-placement="floating" 
                 fill="outline" 
-                formControlName="abbtype"
+                formControlName="abbType"
                 required>
                   <ion-select-option value="B2B">B2B</ion-select-option>
                   <ion-select-option value="B2C">B2C</ion-select-option>
@@ -74,7 +87,7 @@
         fill="outline" 
         formControlName="civilite"
         required>
-          <ion-select-option value="madame">Mme.</ion-select-option>
+          <ion-select-option value="Madame">Mme.</ion-select-option>
           <ion-select-option value="Monsieur">Mr.</ion-select-option>
         </ion-select>
       </ion-col>
@@ -136,7 +149,7 @@
                 label="Type de l'identifiant*" 
                 label-placement="floating" 
                 fill="outline" 
-                formControlName="idtype"
+                formControlName="idType"
                 required>
                   <ion-select-option value="CIN">CIN</ion-select-option>
                   <ion-select-option value="PASS">PASSEPORT</ion-select-option>
@@ -146,11 +159,12 @@
               </ion-col>
               <ion-col>
                 <ion-input
-                placeholder="00000000"   
-                label="numéro de l'identifiant*"
+                (input)="onInput($event)"
                 maxlength="8"
                 [counter]="true"
                 [counterFormatter]="customCounterFormatter"
+                placeholder="00000000"   
+                label="numéro de l'identifiant*"
                 label-placement="floating" 
                 fill="outline"
                 type="number"
@@ -219,6 +233,17 @@
         
           </ng-container>
         </ion-card>
+
+        <ion-item 
+        (click)="goNext()"
+        lines="none">
+          <ion-buttons  slot="end">
+              Page suivante
+            <ion-button color="success">
+              <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
 
       </swiper-slide>
 
@@ -322,7 +347,7 @@
                 label-placement="floating" 
                 fill="outline"
                 type="number"
-                formControlName="telone"
+                formControlName="telOne"
                 errorText="Numéro mobile 1 requis"
                 required>
               </ion-input>
@@ -338,16 +363,16 @@
                 label-placement="floating" 
                 fill="outline"
                 type="number"
-                formControlName="teltwo"
+                formControlName="telTwo"
                 errorText="Numero mobile 2 requis"
                 required>
               </ion-input>
               </ion-col>
             </ion-row>
 
-            <ion-item button="" (click)="getCurrentLocation()">
+            <ion-item class="item-loc" button="" (click)="getCurrentLocation()">
               <ion-buttons >
-                <ion-text>Récupérer les coordonnées GPS</ion-text>
+                <ion-text>Récupérer les coordonnées du site actuel</ion-text>
                 <ion-icon     
                  name="locate-outline" slot="end" color="success">
                 </ion-icon>
@@ -385,23 +410,211 @@
         </ion-card>
         <!--ENDS HERE-->
 
+        <ion-item  
+        (click)="goPrev()"
+        lines="none">
+          <ion-buttons  slot="start">
+            <ion-button color="success">
+              <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+            </ion-button>
+            Page précédente
+          </ion-buttons>
+        </ion-item>
+
+        <div class="center-container">
+          <ion-button 
+          shape="round"
+          id="confirmer"          
+          [disabled]="myForm.invalid">Suivant</ion-button>
+        </div>
+
+        <ion-button
+        id="confirm">
+          btn
+        </ion-button>
+
       </swiper-slide>
+
     </swiper-container>
 
 
-    <div class="center-container">
-      <ion-button 
-      class="center-button"
-      type="submit" 
-      [disabled]="myForm.invalid">Submit</ion-button>
-    </div>
+
 
  </form>
 
+
+ <ion-modal trigger="confirmer" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+  <ng-template>
+
+
+
+      <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+          <ion-button (click)="cancel()">
+            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+        <ion-title>Confirmation</ion-title>
+
+      </ion-toolbar>
+    <ion-content class="ion-padding">
+
+
+      <ion-title 
+      color="primary" 
+      class="class-title" 
+      size="large">FIXE JDID BOX</ion-title>
+
+
+          <!--
+          <h1 class="class-center">Procéder au Règlement?</h1>
+          -->
+
+        <ion-item
+        fill="outline" 
+        lines="none" 
+        class="input-type">
+          <ion-label>
+            Type de box: 
+          </ion-label>
+          <ion-input
+          text-align="center" 
+          readonly
+          fill="outline" 
+          type="text" 
+          [value]="myForm.value.boxType"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item 
+        fill="outline" 
+        lines="none" 
+        class="input-type">
+          <label>
+            Type d'abonnement:
+          </label>
+          <ion-input 
+          text-align="center" 
+          readonly
+          fill="outline" 
+          type="text" 
+          [value]="myForm.value.abbType"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item
+        fill="outline" 
+        lines="none" 
+        class="input-type">
+          <ion-label>
+            Prix TTC:
+          </ion-label>
+            <ion-input
+            text-align="center" 
+            readonly
+            fill="outline" 
+            type="text" 
+            [value]="31.500"
+            ></ion-input>
+        </ion-item>
+
+
+        <ion-row>
+          <ion-col>
+            <div class="center-container">
+              <ion-button
+              (click)="handleClick()">
+                Règlement
+              </ion-button>
+            </div>
+          </ion-col>
+          <ion-col>
+            <div class="center-container">
+              <ion-button
+              (click)="handleClick()">
+                Annuler
+              </ion-button>
+            </div>
+          </ion-col>
+          <ion-col>
+            <div class="center-container">
+              <ion-button
+              (click)="handleClick()">
+                Modifier
+              </ion-button>
+            </div>
+          </ion-col>
+        </ion-row>
+
+
+        <ion-text>Vous pouvez annuler ou modifier la demande en cliquant sur la button correspendante !</ion-text>
+
+
+
+
+    </ion-content>
+
+  </ng-template>
+
+
+
+</ion-modal>
+
 </ion-content>
 
+
+
 <!--
+        <swiper-slide>
+        <ion-item>
+          <label for="nom">Signature Client :</label>
+          <canvas #signaturePad></canvas>
+  
+          <div class="ion-text-center">
+            <ion-buttons>
+              <ion-button (click)="clear()">Clear</ion-button>
+            </ion-buttons>
+            <ion-buttons>
+              <ion-button (click)="submit()">Submit</ion-button>
+  </ion-buttons>
+  </div>
+  </ion-item>
+  <div class="ion-text-center">
+    <ion-button (click)="Valider()">Valider</ion-button>
+  </div>
+  </swiper-slide>
+-->
 
-  <ion-datetime presentation="date" [showDefaultButtons]="true"></ion-datetime>
+<!--
+  <ion-modal trigger="reglement" #modaltwo [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+  <ng-template>
 
+      <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+          <ion-button (click)="modal?.dismiss()">
+            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+        <ion-title>Confirmation</ion-title>
+
+      </ion-toolbar>
+    <ion-content class="ion-padding">
+
+
+      <ion-title 
+      color="primary" 
+      class="class-title" 
+      size="large">FIXE JDID BOX</ion-title>
+
+
+
+      
+
+
+    </ion-content>
+  </ng-template>
+
+</ion-modal>
 -->

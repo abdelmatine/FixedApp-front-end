@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, LoadingController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
-
 import * as Leaflet from 'leaflet';
+import { NavigationExtras, Router } from '@angular/router';
+import { control } from 'leaflet';
 import 'leaflet-control-geocoder';
 import GeocoderControl from 'leaflet-control-geocoder';
+import { Observable } from 'rxjs';
 import { LatLngTuple } from 'leaflet';
 
 
@@ -29,13 +30,15 @@ export class MapsPage implements OnInit {
   private circle!: Leaflet.Circle;
   coordonees:any=[];
   caseStatus!:any;
-  private serviceUrl='http://localhost:8080/maps';
+  latitude: number | undefined;
+  longitude: number | undefined;
+  private serviceUrl='http://localhost:8080/Maps/maps';
 
-  constructor(private http:HttpClient,private route: ActivatedRoute,private router: Router) {
+  constructor(private http:HttpClient,private router: Router) {
   }
 
   ngOnInit() {
-    this.http.get<any[]>('http://localhost:8080/maps').subscribe(data => {
+    this.http.get<any[]>('http://localhost:8080/Maps/maps').subscribe(data => {
       this.maps = data;
       console.log(this.maps);
     });
@@ -43,10 +46,31 @@ export class MapsPage implements OnInit {
   ionViewDidEnter(){
     if (!document.getElementById('map')) {
       return;
+
     }
 
 
+
+    
+
     const map = Leaflet.map('map').setView([36.806, 10.1815], 10);
+//affichage de longitude et latitude
+      map.on('click', (e: Leaflet.LeafletMouseEvent) => {
+        this.latitude = e.latlng.lat;
+        this.longitude = e.latlng.lng;
+        console.log('Latitude: ', this.latitude);
+        console.log('Longitude: ', this.longitude);
+        const coordinatesElement = document.getElementById('coordinates');
+if (coordinatesElement) {
+  coordinatesElement.innerHTML = `Latitude: ${this.latitude}, Longitude: ${this.longitude}`;
+}
+        const popupContent = `Latitude: ${this.latitude}<br>Longitude: ${this.longitude}`;
+  const popup = Leaflet.popup()
+    .setLatLng(e.latlng)
+    .setContent(popupContent)
+    .openOn(map);
+});
+
 
     Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(map);
     if (this.maps && this.maps.length > 0) {
@@ -120,7 +144,7 @@ export class MapsPage implements OnInit {
             const address = data.display_name;
             const postcode = data.address.postcode;
             const popupContent = `Adresse : ${address}, ${postcode}`;
-            const popup = Leaflet.popup().setLatLng(latlng).setContent(popupContent).openOn(map);
+           //const popup = Leaflet.popup().setLatLng(latlng).setContent(popupContent).openOn(map);
           })
           .catch(error => console.error(error));
       });
@@ -244,24 +268,9 @@ const activationFastBoxControl = Leaflet.Control.extend({
   }
 });
 
-
-
-
 }
 
 
-onMapClick(event: L.LeafletMouseEvent) {
-  const latitude = event.latlng.lat;
-  const longitude = event.latlng.lng;
-
-  // Show confirmation alert
-  this.router.navigate(['/prospection'], {
-    queryParams: {
-      latitude: latitude,
-      longitude: longitude
-    }
-  });
-}
 
 }
 

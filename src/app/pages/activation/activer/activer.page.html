@@ -1,0 +1,47 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>activer</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">activer</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content [fullscreen]="true">
+    <form #form="ngForm" (ngSubmit)="onSubmit()">
+      <ion-card>
+        <ion-item>
+          <ion-text slot="start">Scan Front</ion-text>
+          <ion-icon name='camera'slot="end"></ion-icon>
+        </ion-item>
+        <ng-container *ngIf="scan === 'is scanned'">
+          <ion-img>
+          </ion-img>
+        </ng-container>
+
+        <ng-container *ngIf="submissionType === 'CIN'">
+          <ion-item>
+            <ion-text slot="start">Scan Back</ion-text>
+            <ion-icon name='camera'slot="end"></ion-icon>
+          </ion-item>
+          <ng-container *ngIf="scan === 'is scanned'">
+            <ion-img>
+            </ion-img>
+          </ng-container>
+        </ng-container>
+        <ion-button
+          [disabled]="!form.valid"
+          type="submit"
+          shape="round"
+          expand="block"
+        >
+          {{ submissionType === 'CIN' ? 'Search By CIN' : submissionType === 'PASSEPORT' ? 'Search By PASSEPORT' : 'Search By SEJOUR' }}
+        </ion-button>
+
+      </ion-card>
+    </form>
+
+
+  </ion-content>

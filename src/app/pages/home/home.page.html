@@ -1,15 +1,13 @@
-<ion-header class="ion-no-border">
+<ion-header [translucent]="true" class="ion-no-border">
 	<ion-toolbar>
 		<ion-buttons slot="start">
 			<ion-button>
-                <div class="headtainer">
                     <ion-img src="assets/images/head.png"/>
-                </div>
 			</ion-button>
 		</ion-buttons>
         <ion-title>Fixed App</ion-title>
 		<ion-buttons slot="end">
-			<ion-button class="bordered" fill="solid" color="light">
+			<ion-button class="bordered" color="dark">
                 <ion-icon name="notifications"></ion-icon>            
             </ion-button>
 		</ion-buttons>
@@ -17,17 +15,9 @@
 </ion-header>
 
 
-<ion-content>
-  <ion-item lines="none">
-    <ion-label>
-        <p>What are you up,</p>
-        <h3>For today?</h3>
-    </ion-label>
+<ion-content [fullscreen]="true" class="ion-padding">
 
-    <ion-avatar slot="end">  <img alt="test" src="assets/icon/avatar.svg" /></ion-avatar>
-</ion-item>
-
-<div class="content_div">
+<div  class="content_div">
     <ion-grid >
         <ion-row>
             <ion-col sizeLg="4" sizeMd="4" sizeXs="6" tappable (click)="goto(item)" *ngFor="let item of items ">

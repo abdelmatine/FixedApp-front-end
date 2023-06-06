@@ -1,13 +1,3 @@
-ion-title{
-  margin-top: 5%;
-
-  font-size: 32px;
-  text-align: center;
-}
-
-
-
-
 ion-radio-group{
   margin-top: 10px;
   ion-radio{
@@ -86,4 +76,25 @@ form {
 .hidden {
   display: none;
 }
+
+swiper-container {
+  --swiper-pagination-bullet-inactive-color: var(--ion-color-step-200);
+  --swiper-pagination-color: var(--ion-color-primary);
+  --swiper-pagination-progressbar-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.25);
+  --swiper-scrollbar-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.1);
+  --swiper-scrollbar-drag-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.5);
+}
+
+
+.centered-item {
+  text-align: center;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
 

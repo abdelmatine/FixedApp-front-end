@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
@@ -16,7 +16,7 @@
         <ion-icon 
         name='camera'
         slot="end"
-        (click)="takePictureRecto()"
+        (click)="captureImages()"
         ></ion-icon>
 
         <!--
@@ -99,6 +99,36 @@
         {{ submissionType === 'CIN' ? 'Chercher par CIN' : submissionType === 'PASS' ? 'chercher par passeport' : 'chercher par sejour' }}
       </ion-button>
 
+      <div>
+        <h2>Contract Details</h2>
+        <ion-button (click)="fetchContractData()">Get Latest Contract</ion-button>
+        <div *ngIf="mage">
+          <ion-row>
+              <ion-col>
+                <img [src]="mage.image1" alt="Contract Image">
+
+              </ion-col>
+              <ion-col>
+                <img [src]="mage.image2" alt="Contract Image">
+
+              </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <img [src]="mage.image3" alt="Contract Image">
+
+            </ion-col>
+            <ion-col>
+              <img [src]="mage.image4" alt="Contract Image">
+
+            </ion-col>
+          </ion-row>
+
+
+        </div>
+      </div>
+      
 
 
 

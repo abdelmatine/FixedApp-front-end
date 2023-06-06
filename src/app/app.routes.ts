@@ -60,6 +60,30 @@ export const routes: Routes = [
     path: 'detailprosp',
     loadComponent: () => import('./pages/prospection/detailprosp/detailprosp.page').then( m => m.DetailprospPage)
   },
+  {
+    path: 'activer',
+    loadComponent: () => import('./pages/activation/activer/activer.page').then( m => m.ActiverPage)
+  },
+  {
+    path: 'interfaceactivation',
+    loadComponent: () => import('./pages/activation/interfaceactivation/interfaceactivation.page').then( m => m.InterfaceactivationPage)
+  },
+  {
+    path: 'offres',
+    loadComponent: () => import('./pages/activation/offres/offres.page').then( m => m.OffresPage)
+  },
+  {
+    path: 'fast-box',
+    loadComponent: () => import('./pages/activation/offres/fast-box/fast-box.page').then( m => m.FastBoxPage)
+  },
+  {
+    path: 'super-box',
+    loadComponent: () => import('./pages/activation/offres/super-box/super-box.page').then( m => m.SuperBoxPage)
+  },
+  {
+    path: 'confirmation',
+    loadComponent: () => import('./pages/reservations/components/confirmation/confirmation.page').then( m => m.ConfirmationPage)
+  },
 
 
 ];

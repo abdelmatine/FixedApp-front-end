@@ -1,0 +1,173 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Interface d'activation</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="prospector" (ngSubmit)="onSubmit()">
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <ion-input
+          label="Nom"
+          label-placement="floating"
+           fill="outline"
+            placeholder="Nom"
+            type="text"
+            name="name"
+            formControlName="nom"
+          required >
+        </ion-input>
+        <ion-input
+
+
+          label="Prenom"
+          label-placement="floating"
+          fill="outline"
+          placeholder="Prenom"
+          type="text"
+          formControlName="prenom"
+          required
+        >
+        </ion-input>
+
+        <ion-item>
+          <ion-select label="Type d'identité" placeholder="ID type" formControlName="numeroidentite" >
+            <ion-select-option value="CIN">CIN</ion-select-option>
+            <ion-select-option value="PASS">PASSEPORT</ion-select-option>
+            <ion-select-option value="SEJ">SEJOUR</ion-select-option>
+
+          </ion-select>
+        </ion-item>
+
+        <ion-input
+
+          label="Numero d'identite"
+          label-placement="floating"
+          fill="outline"
+          placeholder="Numero d identite"
+          type="text"
+          formControlName="numeroidentite"
+           required
+        >
+        </ion-input>
+
+        <ion-input
+
+          label="Date de naissance"
+          label-placement="floating"
+          fill="outline"
+          placeholder="Date de naissance"
+          type="Date"
+          formControlName="naissance"
+          required
+        >
+        </ion-input>
+
+        <ion-input
+
+          label="Gouvernorat"
+          label-placement="floating"
+          fill="outline"
+          placeholder="Gouvernorat"
+          type="text"
+          formControlName="gouvernorat"
+          required
+        >
+        </ion-input>
+        <ion-input
+
+
+          label="Nationalte"
+           label-placement="floating"
+            fill="outline" placeholder="Nationalite"
+            type="text"
+
+          formControlName="nationalite"
+          required >
+        </ion-input>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-input
+
+          label="Délégation"
+          label-placement="floating"
+          fill="outline"
+          placeholder="Délégation"
+          type="text"
+          formControlName="delegation"
+          required
+        >
+        </ion-input>
+
+        <ion-input
+
+          label="Localité"
+          label-placement="floating"
+          fill="outline"
+          placeholder="Localité"
+          type="text"
+          formControlName="localite"
+          required
+        >
+        </ion-input>
+
+        <ion-input
+
+          label="Adresse"
+          label-placement="floating"
+          fill="outline"
+          placeholder="Adresse"
+          type="text"
+          formControlName="adresse"
+          required
+        >
+        </ion-input>
+
+        <ion-input
+
+          label="Code postal"
+          label-placement="floating"
+          fill="outline"
+          placeholder="Code postal"
+          type="text"
+          formControlName="codepostale"
+          required
+        >
+        </ion-input>
+        <ion-input
+
+  label="Numéro de contact"
+  label-placement="floating"
+  fill="outline"
+  placeholder="Numéro de contact"
+  type="tel"
+  formControlName="numContact"
+  required
+>
+</ion-input>
+
+<ion-input
+  label="Adresse email"
+  label-placement="floating"
+  fill="outline"
+  placeholder="Adresse email"
+  type="email"
+  formControlName="email"
+  required
+>
+
+</ion-input>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+<ion-button (click)="navigateToOffres()" type="submit" shape="round" expand="block">Suivant</ion-button>
+
+
+</form>
+
+</ion-content>
