@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, IonModal, ModalController } from '@ionic/angular';
-import { NavigationExtras, Router } from '@angular/router';
+import { IonicModule, IonModal, ModalController, NavParams } from '@ionic/angular';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DetailprospPage } from './detailprosp/detailprosp.page';
 import { ProspectionService } from './services/prospection.service';
@@ -29,18 +29,20 @@ export class ProspectionPage implements OnInit {
 
   //searchResults: any[] | undefined;
  
-
+  latitude: number | undefined;
+  longitude: number | undefined;
   place: 'CIN' | 'PASS' | 'SEJ' = 'CIN';
 
   constructor(
 
         private prospectionService: ProspectionService,
-        private http: HttpClient, 
         private router:Router, 
-        private modalCtrl: ModalController)
+        private modalCtrl: ModalController,
+        private route: ActivatedRoute)
         
         
         { 
+
           this.getListProspection();
         }
 
@@ -48,8 +50,14 @@ export class ProspectionPage implements OnInit {
   prospections:any = [];
 
   ngOnInit() {
+
+    this.route.paramMap.subscribe(params => {
+      const state = window.history.state;
+      this.latitude = state.lat;
+      this.longitude = state.lng;
+    });
+    console.log(this.latitude, this.longitude);
     this.selectedAttribute = 'fullName';
- 
   }
 
   
@@ -76,12 +84,22 @@ export class ProspectionPage implements OnInit {
     }, 2000);
   }
 
+
+
   Search(){
-    console.log(this.place)
-    const params: NavigationExtras = {
-      queryParams: {type: this.place}
-    }
-    this.router.navigate(['/validation'], params);
+    const navigationExtras: NavigationExtras = {
+      state: {
+        lat: this.latitude,
+        lng: this.longitude,
+      },
+      queryParams: {
+        type: this.place,
+      },
+    };
+    console.log(this.place);
+    console.log(this.latitude, this.longitude);
+    this.router.navigate(['/validation'], navigationExtras);
+
   }
     
   searchProsp() { 

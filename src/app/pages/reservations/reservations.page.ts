@@ -5,13 +5,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { Geolocation } from '@capacitor/geolocation';
 import { Swiper } from 'swiper';
 import { ReservationService } from './services/reservation.service';
 import { ConfirmationPage } from './components/confirmation/confirmation.page';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-
+import { Geolocation } from '@capacitor/geolocation';
 
 @Component({
   selector: 'app-reservations',

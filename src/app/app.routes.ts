@@ -84,6 +84,10 @@ export const routes: Routes = [
     path: 'confirmation',
     loadComponent: () => import('./pages/reservations/components/confirmation/confirmation.page').then( m => m.ConfirmationPage)
   },
+  {
+    path: 'popover',
+    loadComponent: () => import('./pages/maps/popover/popover.page').then( m => m.PopoverPage)
+  },
 
 
 ];

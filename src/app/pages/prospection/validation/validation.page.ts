@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter, Output, Input, ContentChild } from '@a
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import {  Router } from '@angular/router';
+import {  NavigationExtras, Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { HttpClient } from '@angular/common/http';
@@ -33,6 +33,8 @@ export class ValidationPage implements OnInit {
 
   contractData: any;
   mage: any;
+  latitude: number | undefined;
+  longitude: number | undefined;
 
 
   constructor(
@@ -62,18 +64,30 @@ export class ValidationPage implements OnInit {
     }
 
   ngOnInit() {  
-    
-    const type = this.route.snapshot.queryParamMap.get('type');
-    this.submissionType = type;
-    console.log(type, this.submissionType);
+    const state = this.router.getCurrentNavigation()!.extras.state;
+    if (state) {
+      this.latitude = state['lat'];
+      this.longitude = state['lng'];
+      console.log(this.latitude, this.longitude);
+    }
+
+    this.route.queryParams.subscribe(params => {
+      this.submissionType = params['type'];
+      console.log(this.submissionType);
+    });
 
   }
 
+
     onSubmit(){
-
-
      // this.sendImageData(this.ImageSourceRecto);
-    this.router.navigateByUrl('/formulaire');
+     const navigationExtras: NavigationExtras = {
+      state: {
+        lat: this.latitude,
+        lng: this.longitude
+      }
+    };
+    this.router.navigate(['/formulaire'], navigationExtras); 
     }
 
     toggleInput() {
@@ -92,9 +106,69 @@ export class ValidationPage implements OnInit {
       this.scanfront = "is scanned";
     
     }
+    takePictureVerso = async () => {
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.DataUrl,
+        source:CameraSource.Prompt
+      });
+      this.ImageSourceVerso= image.dataUrl;
+      this.scanback = "is scanned";
+    
+    };
 
 
-    async captureImages() {
+}
+
+
+    /*async captureImage() {
+      try {
+        const image = await Camera.getPhoto({
+          resultType: CameraResultType.Base64,
+          source: CameraSource.Camera,
+          quality: 90
+        });
+    
+        const validImage = image.base64String;
+    
+        // Call the method to upload the contract with the image
+        this.uploadContract(validImage);
+      } catch (error) {
+        console.error('Error capturing image:', error);
+        // Handle error cases
+      }
+    }
+    
+    uploadContract(image: string | undefined) {
+      const url = 'http://localhost:8080/SpringMVC/Contract/addContract'; // Replace with your Spring Boot API endpoint
+    
+      if (image) {
+        const contractData = {
+          image1: image
+        };
+    
+        this.http.post(url, contractData).subscribe(
+          response => {
+            console.log('Contract uploaded successfully');
+            // Handle any additional logic after successful contract upload
+          },
+          error => {
+            console.error('Error uploading contract:', error);
+            // Handle error cases
+          }
+        );
+      } else {
+        console.error('No valid image captured');
+        // Handle case where no valid image is available
+      }
+    }
+    
+    
+    
+    
+    
+        async captureImages() {
     
       try {
         const images: (string | undefined)[] = [];
@@ -143,64 +217,4 @@ export class ValidationPage implements OnInit {
         }
       );
     }
-
-    /*async captureImage() {
-      try {
-        const image = await Camera.getPhoto({
-          resultType: CameraResultType.Base64,
-          source: CameraSource.Camera,
-          quality: 90
-        });
-    
-        const validImage = image.base64String;
-    
-        // Call the method to upload the contract with the image
-        this.uploadContract(validImage);
-      } catch (error) {
-        console.error('Error capturing image:', error);
-        // Handle error cases
-      }
-    }
-    
-    uploadContract(image: string | undefined) {
-      const url = 'http://localhost:8080/SpringMVC/Contract/addContract'; // Replace with your Spring Boot API endpoint
-    
-      if (image) {
-        const contractData = {
-          image1: image
-        };
-    
-        this.http.post(url, contractData).subscribe(
-          response => {
-            console.log('Contract uploaded successfully');
-            // Handle any additional logic after successful contract upload
-          },
-          error => {
-            console.error('Error uploading contract:', error);
-            // Handle error cases
-          }
-        );
-      } else {
-        console.error('No valid image captured');
-        // Handle case where no valid image is available
-      }
-    }*/
-    
-
-
-
-
-    takePictureVerso = async () => {
-      const image = await Camera.getPhoto({
-        quality: 90,
-        allowEditing: false,
-        resultType: CameraResultType.DataUrl,
-        source:CameraSource.Prompt
-      });
-      this.ImageSourceVerso= image.dataUrl;
-      this.scanback = "is scanned";
-    
-    };
-
-
-}
+    */

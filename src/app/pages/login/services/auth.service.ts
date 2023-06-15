@@ -72,30 +72,6 @@ export class AuthService {
   }
 
 
-  isTokenInStorage(): Observable<boolean | undefined | null> {
-    return from(
-      Preferences.get({
-        key: 'token',
-      })
-    ).pipe(
-      map((data: {value: string} | any) => {
-        if (!data || !data.value) return null;
-
-        const decodedToken: UserResponse = jwt_decode(data.value);
-        const jwtExpirationInMsSinceUnixEpoch = decodedToken.exp * 1000;
-        const isExpired =
-          new Date() > new Date(jwtExpirationInMsSinceUnixEpoch);
-
-        if (isExpired) return null;
-        if (decodedToken.user) {
-          this.user$.next(decodedToken.user);
-          return true;
-        }
-        return null;
-      })
-    );
-  }
-
   logout(): void {
     this.user$.next(null!);
     Preferences.remove({ key: 'token' });

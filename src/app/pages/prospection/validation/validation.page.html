@@ -16,7 +16,7 @@
         <ion-icon 
         name='camera'
         slot="end"
-        (click)="captureImages()"
+        (click)="takePictureRecto()"
         ></ion-icon>
 
         <!--
@@ -45,51 +45,6 @@
       </ng-container>
 
 
-
-
-      <!--
-
-      <ng-container *ngIf="showInput">  
-        <ion-input 
-        #firstName="ngModel"
-        label="nom complet" 
-        label-placement="floating" 
-        fill="outline"
-        placeholder="Enter your firs name"
-          ngModel
-          type="text"
-          name="firstName"
-          required>
-      </ion-input>
-      <ion-text
-      color="danger"
-      *ngIf="!firstName.valid && firstName.touched"
-      >Please enter your first Name.</ion-text>
-
-
-      <ion-input 
-      #numID="ngModel"
-      label="numero ID" 
-      label-placement="floating" 
-      fill="outline"
-      placeholder="numID"
-        ngModel
-        type="number"
-        name="numID"
-        required
-        >
-    </ion-input>
-    <ion-text
-    color="danger"
-    *ngIf="!numID.valid && numID.touched"
-    >CIN est obligatoire!</ion-text>
-
-
-</ng-container>
-
-        
-      -->
-
       <ion-button
         [disabled]="!form.valid"
         type="submit"
@@ -98,6 +53,20 @@
       >
         {{ submissionType === 'CIN' ? 'Chercher par CIN' : submissionType === 'PASS' ? 'chercher par passeport' : 'chercher par sejour' }}
       </ion-button>
+
+
+      
+
+
+
+    </ion-card>
+  </form>
+
+
+</ion-content>
+
+
+<!--
 
       <div>
         <h2>Contract Details</h2>
@@ -128,12 +97,5 @@
 
         </div>
       </div>
-      
 
-
-
-    </ion-card>
-  </form>
-
-
-</ion-content>
+-->

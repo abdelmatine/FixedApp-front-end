@@ -5,11 +5,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { Geolocation } from '@capacitor/geolocation';
 import { HttpClientModule} from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Swiper } from 'swiper';
 import { ProspectionService } from '../services/prospection.service';
+import { Geolocation } from '@capacitor/geolocation';
 
 
 
@@ -82,11 +82,15 @@ export class FormulairePage implements OnInit {
     ngOnInit() {
       Geolocation.requestPermissions();
 
-      this.latitude = this.route.snapshot.queryParamMap.get('latitude');
-      this.longitude = this.route.snapshot.queryParamMap.get('longitude');
-      this.adresse = this.route.snapshot.queryParamMap.get('adresse');
-
-      console.log(this.latitude, this.longitude, this.adresse);
+      this.route.paramMap.subscribe(params => {
+        const state = window.history.state;
+        this.latitude = state.lat;
+        this.longitude = state.lng;
+        this.prospector.controls['latitude'].setValue(state.lat);
+        this.prospector.controls['longitude'].setValue(state.lat);
+      
+      });
+      console.log(this.latitude, this.longitude);
     }
 
 
