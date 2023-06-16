@@ -57,6 +57,8 @@ export class ProspectionPage implements OnInit {
       this.longitude = state.lng;
     });
     console.log(this.latitude, this.longitude);
+
+    
     this.selectedAttribute = 'fullName';
   }
 

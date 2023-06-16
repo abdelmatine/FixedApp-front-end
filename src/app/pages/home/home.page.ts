@@ -19,6 +19,7 @@ export class HomePage implements OnInit {
 
   constructor(private router:Router,private modalController: ModalController) { }
   ngOnInit() {
+    
 
     this.items=[
       {

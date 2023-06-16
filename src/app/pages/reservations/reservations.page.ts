@@ -11,6 +11,7 @@ import { ConfirmationPage } from './components/confirmation/confirmation.page';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
+import { ModalmapPage } from './components/modalmap/modalmap.page';
 
 @Component({
   selector: 'app-reservations',
@@ -70,8 +71,8 @@ export class ReservationsPage implements OnInit {
       email: ['a@mail.tn', Validators.required],
       telOne: ['22222222', Validators.required],
       telTwo: ['55555555', Validators.required],
-      latitude: [this.latitude, Validators.required],
-      longitude: [this.longitude, Validators.required],
+      latitude: ['', Validators.required],
+      longitude: ['', Validators.required],
       signatureImage: ['']
 
     });
@@ -80,12 +81,12 @@ export class ReservationsPage implements OnInit {
   ngOnInit() {
     Geolocation.requestPermissions();
 
-      this.latitude = this.route.snapshot.queryParamMap.get('latitude');
-      this.longitude = this.route.snapshot.queryParamMap.get('longitude');
-      this.adresse = this.route.snapshot.queryParamMap.get('adresse');
+    this.route.paramMap.subscribe(params => {
+      const state = window.history.state;
+      this.myForm.controls['latitude'].setValue(state.lat);
+      this.myForm.controls['longitude'].setValue(state.lat);
+    });
 
-      console.log(this.latitude, this.longitude, this.adresse);
-    
   }
 
   cancel() {
@@ -123,6 +124,30 @@ export class ReservationsPage implements OnInit {
 
   
     await modal.present();
+  }
+
+  async openMap() {
+    const modal = await this.modalCtrl.create({
+      component: ModalmapPage,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    modal.onDidDismiss().then((data) => {
+      this.latitude = data.data.latitude;
+      this.longitude = data.data.longitude;
+
+      console.log(`${data}!`);
+      console.log(data);
+      console.log(this.longitude);
+      console.log(this.latitude);
+    });
+
+
+      console.log(`${data}!`);
+      console.log(data);
+
   }
 
 

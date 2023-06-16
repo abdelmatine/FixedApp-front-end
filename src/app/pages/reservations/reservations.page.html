@@ -370,14 +370,30 @@
               </ion-col>
             </ion-row>
 
-            <ion-item class="item-loc" button="" (click)="getCurrentLocation()">
-              <ion-buttons >
-                <ion-text>Récupérer les coordonnées du site actuel</ion-text>
-                <ion-icon     
-                 name="locate-outline" slot="end" color="success">
-                </ion-icon>
-              </ion-buttons> 
-            </ion-item>
+            <ion-row>
+              <ion-col>
+                <ion-item class="item-loc" button="" (click)="getCurrentLocation()">
+                  <ion-buttons >
+                    <ion-text>Récupérer les coordonnées du site actuel</ion-text>
+                    <ion-icon     
+                     name="locate-outline" slot="end" color="success">
+                    </ion-icon>
+                  </ion-buttons> 
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item class="item-loc" button="" (click)="getCurrentLocation()">
+                  <ion-buttons >
+                    <ion-text>Récupérer les coordonnées d'aprés la carte'</ion-text>
+                    <ion-icon     
+                     name="locate-outline" slot="end" color="success">
+                    </ion-icon>
+                  </ion-buttons> 
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+
 
 
             <ion-row>
@@ -421,24 +437,21 @@
           </ion-buttons>
         </ion-item>
 
-        <div class="center-container">
-          <ion-button 
-          shape="round"
-          id="confirmer"          
-          [disabled]="myForm.invalid">Suivant</ion-button>
-        </div>
 
-        <ion-button
-        id="confirm">
-          btn
-        </ion-button>
 
       </swiper-slide>
+
+
 
     </swiper-container>
 
 
-
+    <div class="center-container">
+      <ion-button 
+      shape="round"
+      id="confirmer"          
+      [disabled]="myForm.invalid">Suivant</ion-button>
+    </div>
 
  </form>
 

@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>modalmap</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+
+  <div id="map" style=" width: 100%; height: 100%;">
+  </div>
+
+  <div id="my-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-body">
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div id="container">
+    <ion-list *ngFor="let coordonee of coordonees">
+        <ion-item>
+            <h3>{{coordonee.longitude}}</h3> &nbsp; - &nbsp; <h5>{{coordonee.latitude}}</h5>
+        </ion-item>
+    </ion-list>
+</div>
+<div id="coordinates"></div>
+
+
+
+</ion-content>

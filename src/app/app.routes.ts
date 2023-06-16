@@ -1,7 +1,13 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './pages/login/guards/auth.guard';
 
-export const routes: Routes = [
+const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
   {
     path: 'login',
     loadComponent: () => import('./pages/login/login.page').then( m => m.LoginPage)
@@ -9,11 +15,6 @@ export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () => import('./pages/home/home.page').then((m) => m.HomePage),
-  },
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
   },
   {
     path: 'home',
@@ -56,7 +57,8 @@ export const routes: Routes = [
   {
     path: 'reservations',
     loadComponent: () => import('./pages/reservations/reservations.page').then( m => m.ReservationsPage)
-  },  {
+  },
+  {
     path: 'detailprosp',
     loadComponent: () => import('./pages/prospection/detailprosp/detailprosp.page').then( m => m.DetailprospPage)
   },
@@ -87,7 +89,21 @@ export const routes: Routes = [
   {
     path: 'popover',
     loadComponent: () => import('./pages/maps/popover/popover.page').then( m => m.PopoverPage)
+  },  {
+    path: 'modalmap',
+    loadComponent: () => import('./pages/reservations/components/modalmap/modalmap.page').then( m => m.ModalmapPage)
+  },
+  {
+    path: 'placeselect',
+    loadComponent: () => import('./pages/reservations/components/placeselect/placeselect.page').then( m => m.PlaceselectPage)
   },
 
 
+
 ];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
