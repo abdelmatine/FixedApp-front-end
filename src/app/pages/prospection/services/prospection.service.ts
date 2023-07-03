@@ -36,6 +36,11 @@ export class ProspectionService {
     return this.http.get(url);
   }
 
+  searchProspectionBynumID(numID: number) {
+    const url = `${environment.baseApiUrl}/Prospection/getProspectionBynumID?numID=${numID}`;
+    return this.http.get(url);
+  }
+
 }
 
 

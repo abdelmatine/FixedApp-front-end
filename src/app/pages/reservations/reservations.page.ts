@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule, IonModal, ModalController } from '@ionic/angular';
+import { AlertController, IonicModule, IonModal, ModalController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +12,8 @@ import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
 import { ModalmapPage } from './components/modalmap/modalmap.page';
+import { NativeGeocoder } from '@capgo/nativegeocoder';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-reservations',
@@ -44,6 +46,8 @@ export class ReservationsPage implements OnInit {
 
 
   constructor(   
+    private loadingController: LoadingController,
+    private alertCtrl: AlertController,
     private modalCtrl: ModalController, 
     private route: ActivatedRoute,
     private resService: ReservationService,
@@ -55,22 +59,22 @@ export class ReservationsPage implements OnInit {
       contractNum: [''],
       boxType: ['INDOOR', Validators.required],
       abbType: ['B2C', Validators.required],
-      civilite: ['Madame', Validators.required],
+      civilite: ['Monsieur', Validators.required],
       nationalite: ['TN', Validators.required],
-      prenom: [this.testval, Validators.required],
-      nom: ['test', Validators.required],
+      prenom: ['Abdelmatine', Validators.required],
+      nom: ['Sfar', Validators.required],
       idType: ['CIN', Validators.required],
-      numID: ['88888888', Validators.required],
+      numID: ['09627401', Validators.required],
       naissance: ['', Validators.required],
-      adresse: [this.adresse, Validators.required],
-      gouvernorat: ['ben arous', Validators.required],
-      delegation: ['boumhal', Validators.required],
-      localite: ['boumhal', Validators.required],
-      ville: ['boumhal', Validators.required],
+      adresse: ['exemple 154', Validators.required],
+      gouvernorat: ['Ben Arous', Validators.required],
+      delegation: ['Boumhal', Validators.required],
+      localite: ['Boumhal', Validators.required],
+      ville: ['Boumhal', Validators.required],
       codePostal: ['2097', Validators.required],
-      email: ['a@mail.tn', Validators.required],
-      telOne: ['22222222', Validators.required],
-      telTwo: ['55555555', Validators.required],
+      email: ['abdelmatinesfar@gmail.com', Validators.required],
+      telOne: ['56757140', Validators.required],
+      telTwo: [''],
       latitude: ['', Validators.required],
       longitude: ['', Validators.required],
       signatureImage: ['']
@@ -84,7 +88,7 @@ export class ReservationsPage implements OnInit {
     this.route.paramMap.subscribe(params => {
       const state = window.history.state;
       this.myForm.controls['latitude'].setValue(state.lat);
-      this.myForm.controls['longitude'].setValue(state.lat);
+      this.myForm.controls['longitude'].setValue(state.lng);
     });
 
   }
@@ -132,22 +136,64 @@ export class ReservationsPage implements OnInit {
     });
     modal.present();
 
-    const { data, role } = await modal.onWillDismiss();
+    const { data } = await modal.onWillDismiss();
 
     modal.onDidDismiss().then((data) => {
-      this.latitude = data.data.latitude;
-      this.longitude = data.data.longitude;
-
-      console.log(`${data}!`);
-      console.log(data);
-      console.log(this.longitude);
-      console.log(this.latitude);
     });
 
 
-      console.log(`${data}!`);
-      console.log(data);
+        console.log(data);
+        console.log(data.data.lat);
+        console.log(data.data.long);
 
+        const latitude = data.data.lat;
+        const longitude = data.data.long;
+
+        this.myForm.controls['latitude'].setValue(data.data.lat);
+        this.myForm.controls['longitude'].setValue(data.data.long);
+
+        const options = {
+          latitude, // Example latitude
+          longitude, // Example longitude
+        };
+        
+        const address = await NativeGeocoder.reverseGeocode(options);
+        console.log('l"adresse:'+address)
+        const ville = address.addresses[0].locality;
+        const codePostal = address.addresses[0].postalCode;
+        //const gouvernorat = 
+        this.myForm.controls['ville'].setValue(ville);
+        this.myForm.controls['codePostal'].setValue(codePostal);
+        this.myForm.controls['gouvernorat'].setValue(address.addresses[0].administrativeArea);
+        this.myForm.controls['localite'].setValue(address.addresses[0].locality);
+        this.myForm.controls['delegation'].setValue(address.addresses[0].administrativeArea);
+        console.log(ville)
+
+
+  }
+
+
+
+
+  async getActualPosAlert(header: string, message: string) {
+    const alert = await this.alertCtrl.create({
+      header,
+      message,
+      buttons: [      
+        {
+        text: 'Annuler',
+        role: 'cancel',
+        handler: () => {
+        }
+      },
+      {
+        text: 'Confirmer',
+        handler: () => {
+          this.getCurrentLocation();
+        }
+      }]
+    });
+    await alert.present();
   }
 
 
@@ -170,6 +216,71 @@ export class ReservationsPage implements OnInit {
   }
 
 
+
+
+
+  async onSubmit() {
+    const formData = this.myForm.value;
+    let loading;
+  
+    try {
+      loading = await this.showLoading();
+      
+      const response = await this.resService.getLastContractNumFromDatabase().toPromise();
+  
+      if (response) {
+        console.log('numero de contract response:', response.contractNum);
+        this.resService.lastContractNum = response.contractNum;
+        console.log('lastContractNum val:', response.contractNum);
+      } else {
+        this.resService.lastContractNum = '23-00000000';
+      }
+      formData.contractNum = this.resService.generateContractNum();
+      const result = await this.resService.addReservation(formData).toPromise();
+  
+      this.savedInstance = Number(result);
+      console.log(this.savedInstance);
+      console.log('Form submitted successfully');
+      this.openModal();
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    } finally {
+      if (loading) {
+        await this.hideLoading(loading);
+      }
+    }
+  }
+
+  getCurrentLocation = async () => {  
+    const coordinates = await Geolocation.getCurrentPosition();
+  
+    this.myForm.controls['latitude'].setValue(coordinates.coords.latitude);
+    this.myForm.controls['longitude'].setValue(coordinates.coords.longitude);
+
+  }
+
+
+  private async showLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Submitting form...',
+      spinner: 'crescent',
+      translucent: true,
+      backdropDismiss: false
+    });
+    await loading.present();
+    return loading;
+  }
+  
+  private async hideLoading(loading: HTMLIonLoadingElement) {
+    await loading.dismiss();
+  }
+
+
+}
+
+
+
+/*
   onSubmit() {
     const formData = this.myForm.value;
   
@@ -186,41 +297,6 @@ export class ReservationsPage implements OnInit {
         return this.resService.addReservation(formData);
       })
     ).subscribe(
-      (response: any) => {
-        this.savedInstance = Number(response);
-        console.log(this.savedInstance);
-        console.log('Form submitted successfully');
-        this.openModal();
-      },
-      (error) => {
-        console.error('Error submitting form:', error);
-      }
-    );
-  }
-
-  getCurrentLocation = async () => {  
-    const coordinates = await Geolocation.getCurrentPosition();
-  
-    this.myForm.controls['latitude'].setValue(coordinates.coords.latitude);
-    this.myForm.controls['longitude'].setValue(coordinates.coords.longitude);
-
-  }
-
-
-
-
-
-}
-
-
-
-/*
-  onSubmit() {
-    const formData = this.myForm.value;
-    this.contractService.getLastContractNumFromDatabase();
-    formData.contractNum = this.contractService.generateContractNum();
-    
-    this.contractService.addReservation(formData).subscribe(
       (response: any) => {
         this.savedInstance = Number(response);
         console.log(this.savedInstance);

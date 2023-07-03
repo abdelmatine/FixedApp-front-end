@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, PopoverController } from '@ionic/angular';
+import { AlertController, IonicModule, PopoverController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import * as Leaflet from 'leaflet';
 import { NavigationExtras, Router } from '@angular/router';
@@ -10,6 +10,7 @@ import GeocoderControl from 'leaflet-control-geocoder';
 import { LatLngTuple } from 'leaflet';
 import { PopoverPage } from 'src/app/pages/maps/popover/popover.page';
 import { ModalController } from '@ionic/angular';
+import { NativeGeocoder } from '@capgo/nativegeocoder';
 
 @Component({
   selector: 'app-modalmap',
@@ -34,6 +35,7 @@ export class ModalmapPage implements OnInit {
   private serviceUrl='http://localhost:8080/Maps/maps';
 
   constructor(
+    private alertCtrl: AlertController,
     private modalCtrl: ModalController,
     private http:HttpClient,
     private popoverController: PopoverController) {
@@ -55,6 +57,7 @@ export class ModalmapPage implements OnInit {
       map.on('click', (e: Leaflet.LeafletMouseEvent) => {
         this.latitude = e.latlng.lat;
         this.longitude = e.latlng.lng;
+        
         const coordinatesElement = document.getElementById('coordinates');
 if (coordinatesElement) {
   coordinatesElement.innerHTML = `Latitude: ${this.latitude}, Longitude: ${this.longitude}`;
@@ -127,7 +130,7 @@ if (coordinatesElement) {
     }
 
 
-    map.on('click', (e) => this.presentPopover(e, e.latlng));
+    map.on('click', (e) => this.ConfirmationFormSubmitAlert("Confirmation des coordonées", "Voulez vous confirmer les coordonées suivantes? "+this.latitude+", "+this.longitude));
 
 
 
@@ -170,31 +173,38 @@ circle.setStyle({ fillColor: 'yellow' });
 
 }
 
-async presentPopover(event: L.LeafletMouseEvent, coordinates: L.LatLng) {
-  const popoverData: NavigationExtras = {
-    state: {
-      lat: coordinates.lat,
-      lng: coordinates.lng
-    }
-  };
 
-  const popover = await this.popoverController.create({
-    component: PopoverPage,
-    event: this.createCustomEvent(event),
-    componentProps: popoverData,
-    translucent: true
-  });
 
-  await popover.present();
-}
-
-confirm() {
-  return this.modalCtrl.dismiss({lat: this.latitude, long: this.longitude}, 'confirm');
-}
 
 createCustomEvent(event: L.LeafletMouseEvent): Event {
   const customEvent = new CustomEvent('leafletClick', { detail: event });
   return customEvent as Event;
+}
+
+async ConfirmationFormSubmitAlert(header: string, message: string) {
+  const alert = await this.alertCtrl.create({
+    header,
+    message,
+    buttons: [      
+      {
+      text: 'Annuler',
+      role: 'cancel',
+      handler: () => {
+      }
+    },
+
+    {
+      text: 'Confirmer',
+      handler: () => {
+        const data = { lat: this.latitude, long: this.longitude };
+        this.modalCtrl.dismiss({ data }, 'confirm');      }
+    }]
+  });
+  await alert.present();
+}
+
+cancel() {
+  this.modalCtrl.dismiss(null, 'cancel');
 }
 
 }

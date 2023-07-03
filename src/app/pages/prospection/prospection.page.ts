@@ -1,9 +1,9 @@
-import { Component, ComponentFactoryResolver, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, IonModal, ModalController, NavParams } from '@ionic/angular';
+import { IonicModule, IonModal, ModalController } from '@ionic/angular';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { DetailprospPage } from './detailprosp/detailprosp.page';
 import { ProspectionService } from './services/prospection.service';
 
@@ -26,6 +26,7 @@ export class ProspectionPage implements OnInit {
   searchTerm: string | undefined;
   selectedAttribute: string | undefined;
   notFoundMessage: string | undefined;
+  searchNigga: number | undefined;
 
   //searchResults: any[] | undefined;
  
@@ -58,7 +59,7 @@ export class ProspectionPage implements OnInit {
     });
     console.log(this.latitude, this.longitude);
 
-    
+
     this.selectedAttribute = 'fullName';
   }
 
@@ -110,10 +111,21 @@ export class ProspectionPage implements OnInit {
       return;
     }
 
+    if(this.selectedAttribute === "numID"){
+      if(this.searchNigga){
+      console.log(this.searchNigga)
+      this.prospectionService.searchProspectionBynumID(this.searchNigga)
+      .subscribe(data =>{
+        this.prospections = data;
+        this.notFoundMessage = '';
+      });
+    }
+  }
+
     this.prospectionService.searchProspection(this.selectedAttribute!, this.searchTerm)
       .subscribe((data) => {
         this.prospections = data;
-        this.notFoundMessage = '';
+        this.notFoundMessage = 'n"existe pas';
       });
   }
 

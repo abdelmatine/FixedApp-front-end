@@ -71,29 +71,25 @@
         </ion-toolbar>
       <ion-content class="ion-padding">
 
-        <ion-item lines="none">
-          <ion-buttons  slot="start">
             <ion-searchbar
-            [(ngModel)]="searchTerm" 
+            [(ngModel)]="searchTerm"
+            [(ngModel)]="searchNigga"  
             (ionChange)="searchProsp()"
             show-clear-button="focus"
             animated="true" 
             placeholder="Chercher une demande de prospection par: {{selectedAttribute}}"
             ></ion-searchbar>
-          </ion-buttons>
-            
-            <ion-select 
-            label="Filtre:" 
-            [(ngModel)]="selectedAttribute" 
-            (ionChange)="searchProsp()">
-              <ion-select-option value="fullName">Nom complet</ion-select-option>
-              <ion-select-option value="numID">Numéro de l'identifiant</ion-select-option>
-              <ion-select-option value="adresse">Adresse</ion-select-option>
-              <ion-select-option value="zone">Couverture</ion-select-option>
-  
-            </ion-select>
-        </ion-item>
 
+        <ion-select 
+        label="Filtre:" 
+        [(ngModel)]="selectedAttribute" 
+        (ionChange)="searchProsp()">
+          <ion-select-option value="fullName">Nom complet</ion-select-option>
+          <ion-select-option value="numID">Numéro de l'identifiant</ion-select-option>
+          <ion-select-option value="adresse">Adresse</ion-select-option>
+          <ion-select-option value="zone">Couverture</ion-select-option>
+
+        </ion-select>
 
         <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
           <ion-refresher-content></ion-refresher-content>
@@ -101,7 +97,6 @@
 
 
 
-        <ion-card>
 
         <ion-list [inset]="true" *ngFor="let p of prospections">
             <ion-item
@@ -115,10 +110,11 @@
               <ion-badge
               label="zone"
               [color]="p.zone === 'Zone Couverte' ? 'success' : 'danger'" 
-              slot="end">{{p.adresse}}</ion-badge>
+              slot="end">Couverture</ion-badge>
               <ion-badge
               [color]="p.access === 'AVEC' ? 'success' : 'danger'" 
-              slot="end">{{p.access}}</ion-badge>
+              slot="end">Accès</ion-badge>
+              <!--  slot="end">{{p.access}}</ion-badge> -->
             <!--
               <ion-button             
               (click)="openDetails(p)"
@@ -138,7 +134,6 @@
       
         </ion-list>
         <p *ngIf="!prospections || prospections.length === 0">{{ notFoundMessage }}</p>
-      </ion-card>
 
       </ion-content>
     </ng-template>

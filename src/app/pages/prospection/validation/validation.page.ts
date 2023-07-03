@@ -84,8 +84,11 @@ export class ValidationPage implements OnInit {
      const navigationExtras: NavigationExtras = {
       state: {
         lat: this.latitude,
-        lng: this.longitude
-      }
+        lng: this.longitude,
+      },
+      queryParams: {
+        type: this.submissionType,
+      },
     };
     this.router.navigate(['/formulaire'], navigationExtras); 
     }

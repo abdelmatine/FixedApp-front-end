@@ -4,13 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
-  selector: 'app-placeselect',
-  templateUrl: './placeselect.page.html',
-  styleUrls: ['./placeselect.page.scss'],
+  selector: 'app-detail-reservation',
+  templateUrl: './detail-reservation.page.html',
+  styleUrls: ['./detail-reservation.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule]
 })
-export class PlaceselectPage implements OnInit {
+export class DetailReservationPage implements OnInit {
 
   constructor() { }
 

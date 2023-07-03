@@ -8,11 +8,14 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="content">
+  <ion-card>
+    <ion-title 
+    color="primary" 
+    class="class-title" 
+    size="large">FIXE JDID BOX</ion-title>
+  </ion-card>
 
-      <ion-title 
-      color="primary" 
-      class="class-title" 
-      size="large">FIXE JDID BOX</ion-title>
+
 
   <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
     <swiper-container
@@ -23,17 +26,25 @@
       <swiper-slide>
         <ion-card>
           <ng-container>
-            <ion-item lines="none"  button="" (click)="getCurrentLocation()">
-              
-              <ion-buttons >
-                <ion-text>Réservation FWBA</ion-text>
-              </ion-buttons> 
-              <ion-buttons>
-                <ion-icon     
-                name="location-sharp" slot="end" color="success">
-               </ion-icon>
-              </ion-buttons>
-            </ion-item>
+
+                <ion-item class="item-loc" button="" (click)="getActualPosAlert('Confirmation', 'Voulez vous vraiment récupérer vos coordonnées actuelles?')">
+                  <ion-buttons >
+                    <ion-text>Récupérer les coordonnées du site actuel</ion-text>
+                    <ion-icon     
+                     name="locate" slot="end" color="success">
+                    </ion-icon>
+                  </ion-buttons> 
+                </ion-item>
+
+                <ion-item class="item-loc" button="" (click)="openMap()">
+                  <ion-buttons >
+                    <ion-text>Récupérer les coordonnées d'aprés la carte</ion-text>
+                    <ion-icon     
+                     name="location" slot="end" color="success">
+                    </ion-icon>
+                  </ion-buttons> 
+                </ion-item>
+
 
             <!--
             <ion-input 
@@ -173,7 +184,59 @@
                 required>
               </ion-input>
               </ion-col>
-            </ion-row>    
+            </ion-row> 
+
+            <ion-row>
+              <ion-col>
+                <ion-input
+                label="Latitude*" 
+                label-placement="floating" 
+                fill="outline"
+                type="number"
+                formControlName="latitude"
+                errorText="latitude requise"
+                required>
+              </ion-input>
+              </ion-col>
+    
+              <ion-col>
+                <ion-input
+                label="Longitude*" 
+                label-placement="floating" 
+                fill="outline"
+                type="number"
+                formControlName="longitude" 
+                errorText="longitude requise"
+                required>
+              </ion-input>
+              </ion-col>
+    
+            </ion-row>
+
+ 
+        
+          </ng-container>
+        </ion-card>
+
+        <ion-item 
+        (click)="goNext()"
+        lines="none">
+          <ion-buttons  slot="end">
+              Page suivante
+            <ion-button color="success">
+              <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+
+      </swiper-slide>
+
+      <swiper-slide>
+        <!--SWIPER PAGE 2-->
+        <ion-card>
+          <ng-container>
+    
+
             <ion-row>
               <ion-col>
                 <ion-input
@@ -230,30 +293,6 @@
               </ion-input>
               </ion-col>
             </ion-row>
-        
-          </ng-container>
-        </ion-card>
-
-        <ion-item 
-        (click)="goNext()"
-        lines="none">
-          <ion-buttons  slot="end">
-              Page suivante
-            <ion-button color="success">
-              <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-        </ion-item>
-
-      </swiper-slide>
-
-      <swiper-slide>
-        <!--SWIPER PAGE 2-->
-        <ion-card>
-          <ng-container>
-    
-
-    
     
     
      <ion-row>
@@ -364,64 +403,17 @@
                 fill="outline"
                 type="number"
                 formControlName="telTwo"
-                errorText="Numero mobile 2 requis"
-                required>
+                errorText="Numero mobile 2 requis">
               </ion-input>
               </ion-col>
             </ion-row>
 
-            <ion-row>
-              <ion-col>
-                <ion-item class="item-loc" button="" (click)="getCurrentLocation()">
-                  <ion-buttons >
-                    <ion-text>Récupérer les coordonnées du site actuel</ion-text>
-                    <ion-icon     
-                     name="locate-outline" slot="end" color="success">
-                    </ion-icon>
-                  </ion-buttons> 
-                </ion-item>
-              </ion-col>
-              <ion-col>
-                <ion-item class="item-loc" button="" (click)="getCurrentLocation()">
-                  <ion-buttons >
-                    <ion-text>Récupérer les coordonnées d'aprés la carte'</ion-text>
-                    <ion-icon     
-                     name="locate-outline" slot="end" color="success">
-                    </ion-icon>
-                  </ion-buttons> 
-                </ion-item>
-              </ion-col>
-            </ion-row>
 
 
 
 
-            <ion-row>
-              <ion-col>
-                <ion-input
-                label="Latitude*" 
-                label-placement="floating" 
-                fill="outline"
-                type="number"
-                formControlName="latitude"
-                errorText="latitude requise"
-                required>
-              </ion-input>
-              </ion-col>
-    
-              <ion-col>
-                <ion-input
-                label="Longitude*" 
-                label-placement="floating" 
-                fill="outline"
-                type="number"
-                formControlName="longitude" 
-                errorText="longitude requise"
-                required>
-              </ion-input>
-              </ion-col>
-    
-            </ion-row>        
+
+        
           </ng-container>
         </ion-card>
         <!--ENDS HERE-->
@@ -480,88 +472,100 @@
       size="large">FIXE JDID BOX</ion-title>
 
 
-          <!--
-          <h1 class="class-center">Procéder au Règlement?</h1>
-          -->
 
-        <ion-item
-        fill="outline" 
-        lines="none" 
-        class="input-type">
-          <ion-label>
-            Type de box: 
-          </ion-label>
-          <ion-input
-          text-align="center" 
-          readonly
-          fill="outline" 
-          type="text" 
-          [value]="myForm.value.boxType"
-          ></ion-input>
-        </ion-item>
 
-        <ion-item 
-        fill="outline" 
-        lines="none" 
-        class="input-type">
-          <label>
-            Type d'abonnement:
-          </label>
-          <ion-input 
-          text-align="center" 
-          readonly
-          fill="outline" 
-          type="text" 
-          [value]="myForm.value.abbType"
-          ></ion-input>
-        </ion-item>
+          <ion-card  class="card-class">
 
-        <ion-item
-        fill="outline" 
-        lines="none" 
-        class="input-type">
-          <ion-label>
-            Prix TTC:
-          </ion-label>
-            <ion-input
-            text-align="center" 
-            readonly
+            <h1 >Procéder au Règlement?</h1>
+
+            <ion-item
             fill="outline" 
-            type="text" 
-            [value]="31.500"
-            ></ion-input>
-        </ion-item>
+            lines="none" 
+            class="input-type">
+              <ion-label>
+                Type de box: 
+              </ion-label>
+              <ion-input
+              text-align="center" 
+              readonly
+              fill="outline" 
+              type="text" 
+              [value]="myForm.value.boxType"
+              ></ion-input>
+            </ion-item>
+    
+            <ion-item 
+            fill="outline" 
+            lines="none" 
+            class="input-type">
+              <label>
+                Type d'abonnement:
+              </label>
+              <ion-input 
+              text-align="center" 
+              readonly
+              fill="outline" 
+              type="text" 
+              [value]="myForm.value.abbType"
+              ></ion-input>
+            </ion-item>
+    
+            <ion-item
+            fill="outline" 
+            lines="none" 
+            class="input-type">
+              <ion-label>
+                Prix TTC:
+              </ion-label>
+                <ion-input
+                text-align="center" 
+                readonly
+                fill="outline" 
+                type="text" 
+                [value]="31.500"
+                ></ion-input>
+            </ion-item>
+
+          </ion-card>
 
 
-        <ion-row>
-          <ion-col>
-            <div class="center-container">
-              <ion-button
-              (click)="handleClick()">
-                Règlement
-              </ion-button>
-            </div>
-          </ion-col>
-          <ion-col>
-            <div class="center-container">
-              <ion-button
-              (click)="handleClick()">
-                Annuler
-              </ion-button>
-            </div>
-          </ion-col>
-          <ion-col>
-            <div class="center-container">
-              <ion-button
-              (click)="handleClick()">
-                Modifier
-              </ion-button>
-            </div>
-          </ion-col>
-        </ion-row>
+
+        <ion-card class="card-class">
+
+          <ion-text class="class-center">Vous pouvez annuler ou modifier la demande en cliquant sur la button correspendante !</ion-text>
+
+          <ion-row>
+            <ion-col>
+              <div class="center-container">
+                <ion-button
+                (click)="handleClick()">
+                  Règlement
+                </ion-button>
+              </div>
+            </ion-col>
+            <ion-col>
+              <div class="center-container">
+                <ion-button
+                (click)="handleClick()">
+                  Annuler
+                </ion-button>
+              </div>
+            </ion-col>
+            <ion-col>
+              <div class="center-container">
+                <ion-button
+                (click)="handleClick()">
+                  Modifier
+                </ion-button>
+              </div>
+            </ion-col>
+          </ion-row>
+
+        </ion-card>
+
+ 
 
 
-        <ion-text>Vous pouvez annuler ou modifier la demande en cliquant sur la button correspendante !</ion-text>
 
 
 

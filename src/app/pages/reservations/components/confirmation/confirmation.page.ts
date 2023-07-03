@@ -61,6 +61,7 @@ export class ConfirmationPage implements OnInit {
   }
 
 
+
  /* submitForm() {
     if (this.resID.valid) {
       this.formSubmit.emit(this.resID);
@@ -88,6 +89,10 @@ export class ConfirmationPage implements OnInit {
       this.signatureImage = imageDataURL;
     };
     reader.readAsDataURL(imageBlob);
+  }
+
+  isCanvasEmpty(): boolean{
+    return this.signaturePadInstance.isEmpty();
   }
 
   

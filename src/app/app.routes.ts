@@ -89,13 +89,13 @@ const routes: Routes = [
   {
     path: 'popover',
     loadComponent: () => import('./pages/maps/popover/popover.page').then( m => m.PopoverPage)
-  },  {
-    path: 'modalmap',
-    loadComponent: () => import('./pages/reservations/components/modalmap/modalmap.page').then( m => m.ModalmapPage)
   },
   {
-    path: 'placeselect',
-    loadComponent: () => import('./pages/reservations/components/placeselect/placeselect.page').then( m => m.PlaceselectPage)
+    path: 'modalmap',
+    loadComponent: () => import('./pages/reservations/components/modalmap/modalmap.page').then( m => m.ModalmapPage)
+  },  {
+    path: 'detail-reservation',
+    loadComponent: () => import('./pages/reservations/components/detail-reservation/detail-reservation.page').then( m => m.DetailReservationPage)
   },
 
 

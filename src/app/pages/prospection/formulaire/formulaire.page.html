@@ -1,6 +1,6 @@
 <ion-toolbar color="primary">
   <ion-buttons slot="start">
-    <ion-back-button  defaultHref="prospection"></ion-back-button>
+    <ion-back-button  defaultHref="/prospection"></ion-back-button>
   </ion-buttons>
   <ion-title>Fiche de prospection</ion-title>
 
@@ -11,14 +11,16 @@
   </ion-buttons>
 </ion-toolbar>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="content">
+
+  <ion-card>
+    <ion-title 
+    color="primary" 
+    class="class-title" 
+    size="large">Prospection Fibre</ion-title>
+  </ion-card>
 
     <form  [formGroup]="prospector" (ngSubmit)="onSubmit()">
-
-
-
-
-
       <swiper-container
       #swiper
       (afterinit)="swiperReady()"
@@ -30,6 +32,7 @@
             <ng-container>
   
   
+
       
       
                 <ion-select
@@ -81,6 +84,10 @@
             errorText="Numero de 'identifiant requis"
             >
           </ion-input>
+
+          <!--
+            
+          -->
   
       
   
@@ -99,6 +106,58 @@
           errorText="Numéro de contact requis"
             >
         </ion-input>
+
+        <ion-row>
+          <ion-col>
+            <ion-item class="item-loc" button="" (click)="getActualPosAlert('Confirmation', 'Voulez vous vraiment récupérer vos coordonnées actuelles?')">
+              <ion-buttons >
+                <ion-text>Récupérer les coordonnées du site actuel</ion-text>
+                <ion-icon     
+                 name="locate" slot="end" color="success">
+                </ion-icon>
+              </ion-buttons>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item class="item-loc" button="" (click)="openMap()">
+              <ion-buttons >
+                <ion-text>Récupérer les coordonnées d'aprés la carte</ion-text>
+                <ion-icon     
+                 name="location" slot="end" color="success">
+                </ion-icon>
+              </ion-buttons> 
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-input
+            label="Latitude *" 
+            label-placement="floating" 
+            fill="outline"
+            type="number"
+            readonly
+            formControlName="latitude"
+            errorText="latitude requise"
+            >
+          </ion-input>
+          </ion-col>
+    
+          <ion-col>
+            <ion-input
+            label="Longitude *" 
+            label-placement="floating" 
+            fill="outline"
+            type="number"
+            readonly
+            formControlName="longitude" 
+            errorText="longitude requise"
+            >
+          </ion-input>
+          </ion-col>
+    
+        </ion-row>
       
   <!--
         <ion-row>
@@ -126,43 +185,9 @@
         </ion-row>
   
   -->
-  <ion-item>
-    <ion-buttons button=""  (click)="getActualPosAlert('Confirmation', 'Voulez vous vraiment récupérer vos coordonnées actuelles?')">
-      <ion-text>Récupérer ma position actuelle</ion-text>
-      <ion-icon
-       name="locate" slot="end" color="success">
-      </ion-icon>
-    </ion-buttons> 
-  </ion-item>
 
-      <ion-row>
-        <ion-col>
-          <ion-input
-          label="Latitude *" 
-          label-placement="floating" 
-          fill="outline"
-          type="number"
-          readonly
-          formControlName="latitude"
-          errorText="latitude requise"
-          >
-        </ion-input>
-        </ion-col>
-  
-        <ion-col>
-          <ion-input
-          label="Longitude *" 
-          label-placement="floating" 
-          fill="outline"
-          type="number"
-          readonly
-          formControlName="longitude" 
-          errorText="longitude requise"
-          >
-        </ion-input>
-        </ion-col>
-  
-      </ion-row>
+
+
 
 
           <ion-input 
@@ -240,7 +265,7 @@
                   
                   
                   <ion-input 
-                  label="Nom de la residence *" 
+                  label="Nom de la residence" 
                   label-placement="floating" 
                   fill="outline"
                   type="text"
@@ -250,7 +275,7 @@
                   </ion-input>
                   
                   <ion-input 
-                  label="Bloc *" 
+                  label="Bloc" 
                   label-placement="floating" 
                   fill="outline"
                   type="number"
@@ -261,7 +286,7 @@
   
       
                   <ion-input 
-                  label="Etage *" 
+                  label="Etage" 
                   label-placement="floating" 
                   fill="outline"
                   type="number"
@@ -273,7 +298,7 @@
   
       
                   <ion-input 
-                  label="N° appartement *" 
+                  label="N° appartement" 
                   label-placement="floating" 
                   fill="outline"
                   type="number"

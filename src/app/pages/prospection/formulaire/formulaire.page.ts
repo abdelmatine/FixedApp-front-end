@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlertController, IonicModule, IonModal, LoadingController } from '@ionic/angular';
+import { AlertController, IonicModule, IonModal, LoadingController, ModalController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -10,7 +10,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Swiper } from 'swiper';
 import { ProspectionService } from '../services/prospection.service';
 import { Geolocation } from '@capacitor/geolocation';
-
+import { NativeGeocoder } from '@capgo/nativegeocoder';
+import { ModalmapPage } from '../../reservations/components/modalmap/modalmap.page';
 
 
 @Component({
@@ -34,17 +35,16 @@ export class FormulairePage implements OnInit {
 
 
 
-
   latitude: any ;  
   longitude: any ;  
   adresse: any;
-
   prospector: FormGroup ;
 
   showBackdrop = true;
 
 
   constructor(
+    private modalCtrl: ModalController, 
     private prospectionService: ProspectionService,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
@@ -55,9 +55,9 @@ export class FormulairePage implements OnInit {
     {
       this.prospector = this.formBuilder.group({
         offreType: ['Fibre Optique'],
-        fullName: ['', Validators.required],
-        numID: ['', Validators.required],
-        contactNum: ['', Validators.required],
+        fullName: ['Abdelmatine Sfar', Validators.required],
+        numID: ['09627401', Validators.required],
+        contactNum: ['56757140', Validators.required],
         latitude: [this.latitude, Validators.required],
         longitude: [this.longitude, Validators.required],
         adresse: [this.adresse, Validators.required],
@@ -91,7 +91,15 @@ export class FormulairePage implements OnInit {
       
       });
       console.log(this.latitude, this.longitude);
+
+
+
+      /////////// ID input type ///////////
+
+
     }
+
+
 
 
     swiperSlideChanged(e: any) {
@@ -138,11 +146,6 @@ export class FormulairePage implements OnInit {
         if (group.controls['access'].value === 'SANS') {
           const raisonControl = group.controls['raison'];
           raisonControl.setValidators([Validators.required]);
-
-          if(group.controls['raison'].value === 'Autres'){
-            const autresControl = group.controls['autres'];
-            autresControl.setValidators([Validators.required]);
-          }
         }
     }
   }
@@ -153,10 +156,54 @@ export class FormulairePage implements OnInit {
    getCurrentLocation = async () => {  
     const coordinates = await Geolocation.getCurrentPosition();
 
+    const latitude = coordinates.coords.latitude;
+    const longitude = coordinates.coords.longitude;
+
     this.prospector.controls['latitude'].setValue(coordinates.coords.latitude);
     this.prospector.controls['longitude'].setValue(coordinates.coords.longitude);
-  
+    
+    const options = {
+      latitude, // Example latitude
+      longitude, // Example longitude
+    };
+    const address = await NativeGeocoder.reverseGeocode(options);
+    console.log(address)
+
   }
+
+
+  async openMap() {
+    const modal = await this.modalCtrl.create({
+      component: ModalmapPage,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    modal.onDidDismiss().then((data) => {
+    });
+
+
+        console.log(data);
+        console.log(data.data.lat);
+        console.log(data.data.long);
+
+        const latitude = data.data.lat;
+        const longitude = data.data.long;
+
+        this.prospector.controls['latitude'].setValue(data.data.lat);
+        this.prospector.controls['longitude'].setValue(data.data.long);
+  
+        const options = {
+          latitude, // Example latitude
+          longitude, // Example longitude
+        };
+        const address = await NativeGeocoder.reverseGeocode(options);
+        console.log(address)
+        const locality = address.addresses[0].locality;
+        console.log(locality)
+
+        }
 
 
   customCounterFormatter(inputLength: number, maxLength: number) {
@@ -197,6 +244,7 @@ export class FormulairePage implements OnInit {
           this.prospector.reset();
           this.presentAlert('Succès', 'Votre demande de prospection a été envoyée avec succès.');
           console.log('Form submitted successfully');
+          this.gotoHome();
         },
         (error) => {
           loading.dismiss();
