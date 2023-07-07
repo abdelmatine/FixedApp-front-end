@@ -2,6 +2,16 @@
     --ion-background-color:#E0E0E0;
   }*/
   
+  .square-image {
+    width: 300px;
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    object-fit: contain;
+
+  }
 
 
   form {
@@ -26,6 +36,11 @@
   
       }
   }
+
+  form ion-card.photo-taken {
+    margin-top: 10%;
+  }
+  
 
   .inputs{
     margin-top: 25px;

@@ -5,6 +5,7 @@ import {  IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import SignaturePad from 'signature_pad';
 import { ReservationService } from '../../services/reservation.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -46,6 +47,7 @@ export class ConfirmationPage implements OnInit {
   cancel() {
     this.modalController!.dismiss(null, 'cancel');
   }
+
 
 
   public clear() {
@@ -124,7 +126,6 @@ export class ConfirmationPage implements OnInit {
   handleClick(){
     this.Valider();
     this.cancel();
-    //myForm.reset();
   }
   
 

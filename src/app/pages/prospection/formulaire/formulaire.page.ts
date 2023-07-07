@@ -38,6 +38,7 @@ export class FormulairePage implements OnInit {
   latitude: any ;  
   longitude: any ;  
   adresse: any;
+  
   prospector: FormGroup ;
 
   showBackdrop = true;
@@ -87,7 +88,7 @@ export class FormulairePage implements OnInit {
         this.latitude = state.lat;
         this.longitude = state.lng;
         this.prospector.controls['latitude'].setValue(state.lat);
-        this.prospector.controls['longitude'].setValue(state.lat);
+        this.prospector.controls['longitude'].setValue(state.lng);
       
       });
       console.log(this.latitude, this.longitude);
@@ -163,12 +164,14 @@ export class FormulairePage implements OnInit {
     this.prospector.controls['longitude'].setValue(coordinates.coords.longitude);
     
     const options = {
-      latitude, // Example latitude
-      longitude, // Example longitude
+      latitude: latitude, // Example latitude
+      longitude: longitude // Example longitude
     };
-    const address = await NativeGeocoder.reverseGeocode(options);
-    console.log(address)
-
+    console.log(options);
+    //const adress = await NativeGeocoder.reverseGeocode(options);
+    //console.log(adress)
+    const adress = await NativeGeocoder.reverseGeocode(options);
+    console.log(adress)
   }
 
 
@@ -191,17 +194,23 @@ export class FormulairePage implements OnInit {
         const latitude = data.data.lat;
         const longitude = data.data.long;
 
+        const options = {
+          latitude, 
+          longitude 
+        };
+
+        console.log('options: '+options);
+
+
+
+        const address = await NativeGeocoder.reverseGeocode(options);
+        console.log(address);
+        const locality = address.addresses[0].locality;
+        console.log(locality);
+
         this.prospector.controls['latitude'].setValue(data.data.lat);
         this.prospector.controls['longitude'].setValue(data.data.long);
   
-        const options = {
-          latitude, // Example latitude
-          longitude, // Example longitude
-        };
-        const address = await NativeGeocoder.reverseGeocode(options);
-        console.log(address)
-        const locality = address.addresses[0].locality;
-        console.log(locality)
 
         }
 

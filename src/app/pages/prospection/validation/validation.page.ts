@@ -1,12 +1,13 @@
-import { Component, OnInit, EventEmitter, Output, Input, ContentChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import {  NavigationExtras, Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { HttpClient } from '@angular/common/http';
 import { ReservationService } from '../../reservations/services/reservation.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-validation',
@@ -15,6 +16,7 @@ import { ReservationService } from '../../reservations/services/reservation.serv
   standalone: true,
   providers: [ReservationService],
   imports: [
+    ReactiveFormsModule,
     IonicModule, 
     CommonModule,
     FormsModule]
@@ -22,10 +24,13 @@ import { ReservationService } from '../../reservations/services/reservation.serv
 export class ValidationPage implements OnInit {
 
 
+  validationID: FormGroup;
+
 
   submissionType: any ;
-  scanfront: any;
-  scanback: any;
+  scanfront:  boolean = false;
+  scanback:  boolean = false;
+  photoTaken: boolean = false;
 
   showInput = false;
   ImageSourceRecto:any;
@@ -38,15 +43,19 @@ export class ValidationPage implements OnInit {
 
 
   constructor(
-    private resService: ReservationService,
+    private formBuilder: FormBuilder,
     private route: ActivatedRoute, 
-    private http:HttpClient,
-    private router: Router ){   }
+    private router: Router )  {  
+      this.validationID = this.formBuilder.group({
+        imageRec: ['', Validators.required],
+        imageVers: ['', Validators.required]
+      });
+     }
 
 
 
   
-    fetchContractData() {
+    /*fetchContractData() {
       this.resService.getContractData()
         .then(data => {
           this.mage = data;
@@ -61,7 +70,7 @@ export class ValidationPage implements OnInit {
         .catch(error => {
           console.error('Error fetching contract data:', error);
         });
-    }
+    }*/
 
   ngOnInit() {  
     const state = this.router.getCurrentNavigation()!.extras.state;
@@ -101,12 +110,16 @@ export class ValidationPage implements OnInit {
       const image = await Camera.getPhoto({
         quality: 90,
         allowEditing: false,
-        resultType: CameraResultType.Base64,
+        resultType: CameraResultType.DataUrl,
         source:CameraSource.Prompt
       });
-      this.ImageSourceRecto= image.base64String;
+      this.ImageSourceRecto= image.dataUrl;
+      console.log(this.ImageSourceRecto);
       
-      this.scanfront = "is scanned";
+      this.scanfront = true;
+      this.photoTaken = true;
+      this.validationID.get('imageRec')!.markAsTouched();
+
     
     }
     takePictureVerso = async () => {
@@ -117,8 +130,12 @@ export class ValidationPage implements OnInit {
         source:CameraSource.Prompt
       });
       this.ImageSourceVerso= image.dataUrl;
-      this.scanback = "is scanned";
-    
+      this.scanback = true;
+      this.photoTaken = true;
+      this.validationID.get('imageVers')!.markAsTouched();
+
+      console.log(this.ImageSourceVerso);
+
     };
 
 

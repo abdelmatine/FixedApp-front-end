@@ -9,7 +9,7 @@ import { Swiper } from 'swiper';
 import { ReservationService } from './services/reservation.service';
 import { ConfirmationPage } from './components/confirmation/confirmation.page';
 import { switchMap } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
 import { ModalmapPage } from './components/modalmap/modalmap.page';
 import { NativeGeocoder } from '@capgo/nativegeocoder';
@@ -38,6 +38,7 @@ export class ReservationsPage implements OnInit {
   adresse: any;
   savedInstance!: number;
 
+  selectedIdType: string | undefined;
 
   myForm: FormGroup;
   testval: string = "test";
@@ -46,6 +47,7 @@ export class ReservationsPage implements OnInit {
 
 
   constructor(   
+    private router: Router,
     private loadingController: LoadingController,
     private alertCtrl: AlertController,
     private modalCtrl: ModalController, 
@@ -64,7 +66,7 @@ export class ReservationsPage implements OnInit {
       prenom: ['Abdelmatine', Validators.required],
       nom: ['Sfar', Validators.required],
       idType: ['CIN', Validators.required],
-      numID: ['09627401', Validators.required],
+      numID: ['', Validators.required],
       naissance: ['', Validators.required],
       adresse: ['exemple 154', Validators.required],
       gouvernorat: ['Ben Arous', Validators.required],
@@ -93,6 +95,24 @@ export class ReservationsPage implements OnInit {
 
   }
 
+  onIdTypeChange(event: any) {
+    this.selectedIdType = event.detail.value;
+
+    switch (this.selectedIdType) {
+      case 'PASS':
+        this.myForm.get('numID')!.setValidators([Validators.minLength(10), Validators.maxLength(10)]);
+        this.myForm.get('numID')!.updateValueAndValidity();
+        break;
+      case 'CIN':
+        this.myForm.get('numID')!.setValidators([Validators.minLength(8), Validators.maxLength(8)]);
+        this.myForm.get('numID')!.updateValueAndValidity();
+        break;
+      // Add more cases for other ID types if needed
+    }
+  }
+
+
+
   cancel() {
     this.modal!.dismiss(null, 'cancel');
   }
@@ -114,6 +134,9 @@ export class ReservationsPage implements OnInit {
   }
 
 
+  gotoHome() {
+    this.router.navigate(['/home']);
+  }
   async openModal() {
     const modal = await this.modalCtrl.create({
       component: ConfirmationPage,
@@ -123,7 +146,8 @@ export class ReservationsPage implements OnInit {
     });
 
     modal.onDidDismiss().then(() => {
-      this.myForm.reset();
+      this.gotoHome();
+
     });
 
   
@@ -203,14 +227,20 @@ export class ReservationsPage implements OnInit {
   }
 
 
-  customCounterFormatter(inputLength: number, maxLength: number) {
+  customCounterFormatter(inputLength: number, maxLength: number): string {
     return `${maxLength - inputLength} caractères restants`;
   }
 
+  getInputType(): string {
+    return this.selectedIdType === 'CIN' ? 'number' : 'text';
+  }
+
   onInput(event: any) {
+    const x = this.selectedIdType === 'CIN' ? 8 : 10;
     const inputValue: string = event.target.value;
-    if (inputValue.length >= 8) {
-      event.target.value = inputValue.slice(0, 8);
+
+    if (inputValue.length >= x) {
+      event.target.value = inputValue.slice(0, x);
       event.target.blur();
     }
   }
@@ -254,8 +284,30 @@ export class ReservationsPage implements OnInit {
   getCurrentLocation = async () => {  
     const coordinates = await Geolocation.getCurrentPosition();
   
+    const latitude = coordinates.coords.latitude;
+    const longitude = coordinates.coords.longitude;
+
     this.myForm.controls['latitude'].setValue(coordinates.coords.latitude);
     this.myForm.controls['longitude'].setValue(coordinates.coords.longitude);
+    const options = {
+      latitude: latitude, // Example latitude
+      longitude: longitude // Example longitude
+    };
+    console.log(options);
+    //const adress = await NativeGeocoder.reverseGeocode(options);
+    //console.log(adress)
+    const adress = await NativeGeocoder.reverseGeocode(options);
+    console.log(adress)
+
+    const ville = adress.addresses[0].locality;
+    const codePostal = adress.addresses[0].postalCode;
+    //const gouvernorat = 
+    this.myForm.controls['ville'].setValue(ville);
+    this.myForm.controls['codePostal'].setValue(codePostal);
+    this.myForm.controls['gouvernorat'].setValue(adress.addresses[0].administrativeArea);
+    this.myForm.controls['localite'].setValue(adress.addresses[0].locality);
+    this.myForm.controls['delegation'].setValue(adress.addresses[0].administrativeArea);
+    console.log(ville)
 
   }
 

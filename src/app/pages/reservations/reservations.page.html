@@ -156,12 +156,14 @@
             <ion-row>
               <ion-col>
                 <ion-select 
+                (ionChange)="onIdTypeChange($event)"
                 placeholder="CIN" 
                 label="Type de l'identifiant*" 
                 label-placement="floating" 
                 fill="outline" 
                 formControlName="idType"
-                required>
+                required
+                >
                   <ion-select-option value="CIN">CIN</ion-select-option>
                   <ion-select-option value="PASS">PASSEPORT</ion-select-option>
                   <ion-select-option value="SEJ">SEJOUR</ion-select-option>
@@ -171,17 +173,16 @@
               <ion-col>
                 <ion-input
                 (input)="onInput($event)"
-                maxlength="8"
                 [counter]="true"
                 [counterFormatter]="customCounterFormatter"
                 placeholder="00000000"   
                 label="numéro de l'identifiant*"
                 label-placement="floating" 
                 fill="outline"
-                type="number"
+                [type]="getInputType()"
                 formControlName="numID"
                 errorText="Numero ID invalid"
-                required>
+                >
               </ion-input>
               </ion-col>
             </ion-row> 

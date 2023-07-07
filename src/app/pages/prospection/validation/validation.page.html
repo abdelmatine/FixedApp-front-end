@@ -9,8 +9,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <form #form="ngForm" (ngSubmit)="onSubmit()">
-    <ion-card>
+ 
+<form [formGroup]="validationID" (ngSubmit)="onSubmit()">
+
+    <ion-card [class.photo-taken]="photoTaken">
       <ion-item>
         <ion-text slot="start">Scanner recto</ion-text>
         <ion-icon 
@@ -24,10 +26,13 @@
         -->
 
       </ion-item>
-      <ng-container *ngIf="scanfront === 'is scanned'">
-        <ion-img src="{{ImageSourceRecto}}">
+      <ng-container *ngIf="scanfront == true">
+        <div class="square-image">
+          <ion-img formControlName="imageRec" src="{{ImageSourceRecto}}">
+          </ion-img>
 
-        </ion-img>
+        </div>
+
       </ng-container>
 
       <ng-container *ngIf="submissionType === 'CIN'">
@@ -36,17 +41,20 @@
           <ion-icon (click)="takePictureVerso()" 
           name='camera'slot="end"></ion-icon>
         </ion-item>
-        <ng-container *ngIf="scanback === 'is scanned'">
-          <ion-img src="{{ImageSourceVerso}}">
+        <ng-container *ngIf="scanback == true">
+          <div class="square-image">
+            <ion-img formControlName="imageVers" src="{{ImageSourceVerso}}">
 
-          </ion-img>
+            </ion-img>
+          </div>
+
         </ng-container>
 
       </ng-container>
 
 
       <ion-button
-        [disabled]="!form.valid"
+        [disabled]="!scanfront || !scanback"
         type="submit"
         shape="round"
         expand="block"
@@ -61,7 +69,6 @@
 
     </ion-card>
   </form>
-
 
 </ion-content>
 
