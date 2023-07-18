@@ -1,15 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { Observable, of } from 'rxjs';
 import { AlertController } from '@ionic/angular';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReservationService {
    lastContractNum: string ='';
+   
 
+   //apiUrl = 'http://172.19.3.47:8080/SpringMVC';
   constructor(
     private http: HttpClient,
     private alertController: AlertController,
@@ -19,12 +21,12 @@ export class ReservationService {
 
   validerSignature(resID: number, signatureData: string) {
     const obj = { res: resID }; // Create an object with the resID
-    return this.http.post('http://localhost:8080/SpringMVC/Reservation/addSignature', { signature: signatureData, ...obj });
+    return this.http.post(`${environment.baseApiUrl}/Reservation/addSignature`, { signature: signatureData, ...obj });
   }
 
 
   getLastContractNumFromDatabase(): Observable<any> {
-    return this.http.get('http://localhost:8080/SpringMVC/Reservation/getLastReservation');
+    return this.http.get(`${environment.baseApiUrl}/Reservation/getLastReservation`);
   }
   
 
@@ -52,14 +54,14 @@ export class ReservationService {
 
 
   addReservation(formData: any) {
-    return this.http.post('http://localhost:8080/SpringMVC/Reservation/addReservation', formData);
+    return this.http.post(`${environment.baseApiUrl}/Reservation/addReservation`, formData);
   }
 
 
-//http://172.19.3.38:8080/SpringMVC
+//172.19.3.47
 
   getContractData(): Promise<any> {
-    const url = 'http://192.168.1.56:8080/SpringMVC/Contract/getContract/25'; // Replace with your API endpoint
+    const url = `${environment.baseApiUrl}/Contract/getContract/25`; // Replace with your API endpoint
 
     return this.http.get(url).toPromise();
   }

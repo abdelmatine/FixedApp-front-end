@@ -47,8 +47,8 @@ export class ValidationPage implements OnInit {
     private route: ActivatedRoute, 
     private router: Router )  {  
       this.validationID = this.formBuilder.group({
-        imageRec: ['', Validators.required],
-        imageVers: ['', Validators.required]
+        imageRec: [''],
+        imageVers: ['']
       });
      }
 

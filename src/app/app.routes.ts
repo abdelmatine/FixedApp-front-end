@@ -93,7 +93,8 @@ const routes: Routes = [
   {
     path: 'modalmap',
     loadComponent: () => import('./pages/reservations/components/modalmap/modalmap.page').then( m => m.ModalmapPage)
-  },  {
+  },
+  {
     path: 'detail-reservation',
     loadComponent: () => import('./pages/reservations/components/detail-reservation/detail-reservation.page').then( m => m.DetailReservationPage)
   },

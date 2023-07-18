@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { ValidationPage } from '../prospection/validation/validation.page';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,9 @@ export class HomePage implements OnInit {
   items: any;
   selections: any;
 
-  constructor(private router:Router,private modalController: ModalController) { }
+  constructor(
+    private router:Router,
+    private modalController: ModalController) { }
   ngOnInit() {
     
 
@@ -130,7 +133,6 @@ export class HomePage implements OnInit {
       this.router.navigate(['/'+item.route])
 
     }
-
   }
 
 isModalOpen = false;
@@ -139,18 +141,12 @@ setOpen(isOpen: boolean) {
 }
 
 
-
-
-
-
-
-
-
 goToOffer(selection : {route: string;}) {
   /////////// bug here //////////////
   this.modalController.dismiss();
   this.isModalOpen = false;
   this.router.navigate(['/'+selection.route]);
 }
+
 
 }

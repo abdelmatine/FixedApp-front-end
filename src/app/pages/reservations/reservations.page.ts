@@ -183,17 +183,39 @@ export class ReservationsPage implements OnInit {
         
         const address = await NativeGeocoder.reverseGeocode(options);
         console.log('l"adresse:'+address)
-        const ville = address.addresses[0].locality;
-        const codePostal = address.addresses[0].postalCode;
+
         //const gouvernorat = 
-        this.myForm.controls['ville'].setValue(ville);
-        this.myForm.controls['codePostal'].setValue(codePostal);
+        this.myForm.controls['ville'].setValue(address.addresses[0].subLocality);
+        this.myForm.controls['codePostal'].setValue(address.addresses[0].postalCode);
         this.myForm.controls['gouvernorat'].setValue(address.addresses[0].administrativeArea);
         this.myForm.controls['localite'].setValue(address.addresses[0].locality);
-        this.myForm.controls['delegation'].setValue(address.addresses[0].administrativeArea);
-        console.log(ville)
+        this.myForm.controls['delegation'].setValue(address.addresses[0].subAdministrativeArea);
+        this.myForm.controls['adresse'].setValue(address.addresses[0].subThoroughfare+' '+address.addresses[0].thoroughfare);
 
-
+/*
+      contractNum: [''],
+      boxType: ['INDOOR', Validators.required],
+      abbType: ['B2C', Validators.required],
+      civilite: ['Monsieur', Validators.required],
+      nationalite: ['TN', Validators.required],
+      prenom: ['Abdelmatine', Validators.required],
+      nom: ['Sfar', Validators.required],
+      idType: ['CIN', Validators.required],
+      numID: ['', Validators.required],
+      naissance: ['', Validators.required],
+      adresse: ['exemple 154', Validators.required],
+      gouvernorat: ['Ben Arous', Validators.required],
+      delegation: ['Boumhal', Validators.required],
+      localite: ['Boumhal', Validators.required],
+      ville: ['Boumhal', Validators.required],
+      codePostal: ['2097', Validators.required],
+      email: ['abdelmatinesfar@gmail.com', Validators.required],
+      telOne: ['56757140', Validators.required],
+      telTwo: [''],
+      latitude: ['', Validators.required],
+      longitude: ['', Validators.required],
+      signatureImage: ['']
+*/
   }
 
 
@@ -302,11 +324,11 @@ export class ReservationsPage implements OnInit {
     const ville = adress.addresses[0].locality;
     const codePostal = adress.addresses[0].postalCode;
     //const gouvernorat = 
-    this.myForm.controls['ville'].setValue(ville);
+    this.myForm.controls['ville'].setValue(adress.addresses[0].subLocality);
     this.myForm.controls['codePostal'].setValue(codePostal);
     this.myForm.controls['gouvernorat'].setValue(adress.addresses[0].administrativeArea);
     this.myForm.controls['localite'].setValue(adress.addresses[0].locality);
-    this.myForm.controls['delegation'].setValue(adress.addresses[0].administrativeArea);
+    this.myForm.controls['delegation'].setValue(adress.addresses[0].subLocality);
     console.log(ville)
 
   }
