@@ -1,0 +1,34 @@
+
+<ion-header [translucent]="true" class="ion-no-border">
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-button>
+                    <ion-img src="assets/images/head.png"/>
+			</ion-button>
+		</ion-buttons>
+        <ion-title>Fixed App</ion-title>
+		<ion-buttons slot="end">
+			<ion-button class="bordered" color="dark">
+                <ion-icon name="notifications"></ion-icon>            
+            </ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+
+
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+<div  class="content_div">
+    <ion-grid >
+        <ion-row>
+            <ion-col sizeLg="4" sizeMd="4" sizeXs="6" tappable (click)="goto(item)" *ngFor="let item of items ">
+                <div class="col_div">
+                    <img src="{{item.img}}">
+                    <ion-label>{{item.name}}</ion-label>
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</div>

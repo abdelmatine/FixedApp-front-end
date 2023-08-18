@@ -1,0 +1,221 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="offres"></ion-back-button>
+    </ion-buttons>
+    <ion-title>FIXE JDID BOX</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <form [formGroup]="fixe" (ngSubmit)="submit()">
+    <swiper-container
+    #swiper
+    (afterinit)="swiperReady()"
+    (slidechange)="swiperSlideChanged($event)"
+    [pagination]="true"
+    >
+      <swiper-slide>
+        <ion-card>
+          <ion-select
+            formControlName="type"
+            label="Type de Box"
+            label-placement="floating"
+            fill="outline"
+            name="Type de Box"
+            (ionChange)="updateTypeDeBox()"
+
+          >
+            <ion-select-option value="outdoor">Outdoor</ion-select-option>
+            <ion-select-option value="indoor">Indoor</ion-select-option>
+          </ion-select>
+
+          <ion-select
+            formControlName="abonnement"
+            label="Abonnement"
+            label-placement="floating"
+            fill="outline"
+            name="Abonnement"
+            (ionChange)="updateAbonnement()"
+          >
+            <ion-select-option value="mensuelle">mensuelle</ion-select-option>
+            <ion-select-option value="semestrielle">semestrielle</ion-select-option>
+            <ion-select-option value="annuelle">annuelle</ion-select-option>
+
+          </ion-select>
+          <ion-select
+            formControlName="debit"
+            label="Debit"
+            label-placement="floating"
+            fill="outline"
+            name="Debit"
+            errorText="Debit complet requis"
+
+          >
+            <ion-select-option value="8G">8G</ion-select-option>
+            <ion-select-option value="12G">12G</ion-select-option>
+          </ion-select>
+          <ion-input
+            label="IMEI"
+            label-placement="floating"
+            fill="outline"
+            type="text"
+            formControlName="imei"
+            errorText="imei complet requis"
+          ></ion-input>
+          <ion-input
+            label="KIT CODE"
+            label-placement="floating"
+            fill="outline"
+            type="text"
+            formControlName="kitcode"
+            errorText="Kit Code complet requis"
+          ></ion-input>
+          <ion-searchbar formControlName="msisdn" (ionChange)="searchMsisdn($event)"></ion-searchbar>
+          <ion-list *ngIf="searchResults">
+            <ion-item *ngFor="let item of searchResults" (click)="selectMsisdn(item.msisdn)">
+              <ion-label>{{ item.msisdn }}</ion-label>
+            </ion-item>
+          </ion-list>
+          <ion-label *ngIf="selectedMsisdn">Numéro sélectionné : {{ selectedMsisdn }}</ion-label>
+          <ion-label *ngIf="error" color="danger">{{ error }}</ion-label>
+          <ion-item
+          (click)="goNext()"
+          lines="none">
+            <ion-buttons  slot="end">
+                Page suivante
+              <ion-button color="success">
+                <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+             </ion-card>
+
+      </swiper-slide>
+      <swiper-slide>
+        <ion-item>
+          <ion-text slot="start">Formulaire d'abonnement</ion-text>
+          <ion-icon name='camera' slot="end" (click)="captureImage('formulaire')"></ion-icon>
+          <ion-button slot="end" (click)="exitCapture('formulaire')">Exit</ion-button>
+        </ion-item>
+        <div *ngIf="formulaireImageSource">
+          <img [src]="formulaireImageSource" alt="Captured Image with Date and Time">
+        </div>
+        <ion-item>
+          <ion-text slot="start">Conditions Générales</ion-text>
+          <ion-icon name='camera' slot="end" (click)="captureImage('conditions')"></ion-icon>
+          <ion-button slot="end" (click)="exitCapture('conditions')">Exit</ion-button>
+        </ion-item>
+        <div *ngIf="conditionsImageSource">
+          <img [src]="conditionsImageSource" alt="Captured Image with Date and Time">
+        </div>
+        <ion-item>
+          <ion-text slot="start">Preuve d'adresse</ion-text>
+          <ion-icon name='camera' slot="end" (click)="captureImage('preuve')"></ion-icon>
+          <ion-button slot="end" (click)="exitCapture('preuve')">Exit</ion-button>
+        </ion-item>
+        <div *ngIf="preuveImageSource">
+          <img [src]="preuveImageSource" alt="Captured Image with Date and Time">
+        </div>
+        <ion-item>
+          <ion-text slot="start">Contrat Signé</ion-text>
+          <ion-icon name='camera' slot="end" (click)="captureImage('contrat')"></ion-icon>
+          <ion-button slot="end" (click)="exitCapture('contrat')">Exit</ion-button>
+        </ion-item>
+        <div *ngIf="contratImageSource">
+          <img [src]="contratImageSource" alt="Captured Image with Date and Time">
+        </div>
+            <div *ngIf="imageSource">
+              <img [src]="imageSource" alt="Captured Image with Date and Time">
+            </div>
+
+
+        <div class="ion-text-center">
+          <ion-button (click)="submitForm()"
+          type="button"
+          shape="round"
+          expand="block"
+          >Upload</ion-button>
+          </div>
+          <ion-item
+          (click)="goNext()"
+          lines="none">
+            <ion-buttons  slot="end">
+                Page suivante
+              <ion-button color="success">
+                <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+          <ion-item
+          (click)="goPrev()"
+          lines="none">
+         <ion-buttons  slot="start">
+        <ion-button color="success">
+         <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+          </ion-button>
+          Page précédente
+          </ion-buttons>
+          </ion-item>
+      </swiper-slide>
+      <swiper-slide>
+<ion-card>
+  <ion-input
+        label="Type de box"
+        fill="outline"
+        type="text"
+        formControlName="type"
+        [value]="typeDeBoxValue"
+        readonly
+      ></ion-input>
+      <ion-input
+        label="Msisdn"
+        fill="outline"
+        type="text"
+        formControlName="msisdn"
+        [value]="msisdnValue"
+        readonly
+      ></ion-input>
+      <ion-input
+        label="Engagement"
+        fill="outline"
+        type="text"
+        formControlName="abonnement"
+        [value]="abonnementValue"
+        readonly
+      ></ion-input>
+</ion-card>
+          <swiper-slide>
+            <ion-card>
+              <ion-item >
+                <label for="nom">Signature Client :</label>
+                <canvas #signaturePad></canvas>
+                <div class="ion-text-center">
+                  <ion-buttons>
+                    <ion-button (click)="clear()">Clear</ion-button>
+                  </ion-buttons>
+                </div>
+        </ion-item>
+              </ion-card>
+              <div class="ion-text-center">
+                <ion-button (click)="reglement()"
+                type="button"
+                shape="round"
+                expand="block" >Reglement</ion-button>
+                </div>
+                <ion-item
+                (click)="goPrev()"
+                lines="none">
+               <ion-buttons  slot="start">
+              <ion-button color="success">
+               <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+                </ion-button>
+                Page précédente
+                </ion-buttons>
+                </ion-item>
+
+          </swiper-slide>
+
+      </swiper-slide>
+    </swiper-container>
+  </form>
+</ion-content>

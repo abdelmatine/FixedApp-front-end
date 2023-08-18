@@ -1,0 +1,305 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="offres"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Flash BOX</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <form [formGroup]="flashbox" (ngSubmit)="submit()">
+    <swiper-container
+    #swiper
+    (afterinit)="swiperReady()"
+    (slidechange)="swiperSlideChanged($event)"
+    [pagination]="true"
+    >
+      <swiper-slide>
+        <ion-card>
+          <ion-row>
+            <ion-col>
+          <ion-input
+            label="Nom"
+            label-placement="floating"
+            fill="outline"
+            type="text"
+            formControlName="nom"
+            errorText="nom complet requis"
+          ></ion-input>
+          </ion-col>
+          <ion-col>
+          <ion-input
+          label=" Prenom"
+          label-placement="floating"
+          fill="outline"
+          type="text"
+          formControlName="prenom"
+          errorText="nom complet requis"
+
+        ></ion-input>
+        </ion-col>
+        </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-input
+                formControlName="dateNaissance"
+                label="Date de Naissance"
+                type="date"
+                label-placement="floating"
+                fill="outline"
+              ></ion-input>
+            </ion-col>
+            <ion-col>
+              <ion-select
+          formControlName="civilite"
+          label="Civilite"
+          label-placement="floating"
+          fill="outline"
+          name="civilite"
+
+        >  <ion-select formControlName="civilite" placeholder="Sélectionnez votre civilité">
+          <ion-select-option *ngFor="let civ of civilites"[value]="civ">{{ civ }}</ion-select-option>
+        </ion-select>
+        </ion-select>
+            </ion-col>
+          </ion-row>
+
+
+          <ion-input
+            formControlName="adresseFacturation"
+            label="Adresse de Facturation"
+            type="text"
+            label-placement="floating"
+            fill="outline"
+
+            (click)="showAddressFields = true"
+          ></ion-input>
+          <ion-row>
+            <ion-col>
+              <ion-select *ngIf="showAddressFields" formControlName="gouvernorat" [(ngModel)]="selectedGouvernorat"
+              label="Gouvernorats" required (ionChange)="updateCodePostal()">
+              <ion-select-option *ngFor="let gouvernorat of gouvernorats" [value]="gouvernorat">
+                {{ gouvernorat }}
+              </ion-select-option>
+            </ion-select>
+
+
+            </ion-col>
+            <ion-col>
+              <ion-input *ngIf="showAddressFields" formControlName="localite" label="Localité" type="text"
+                label-placement="floating" fill="outline" ></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-input *ngIf="showAddressFields" formControlName="codepostal" label="Code postal"
+  label-placement="floating" fill="outline" readonly="readonly"></ion-input>
+
+            </ion-col>
+            <ion-col>
+              <ion-input *ngIf="showAddressFields" formControlName="delegation" label="Delegation" type="text"
+                label-placement="floating" fill="outline" ></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-input formControlName="rdv" label="Date de rendez-vous" type="date" label-placement="floating"
+            fill="outline" ></ion-input>
+          <ion-input
+            formControlName="adresseInstallation"
+            label="Adresse d'Installation"
+            type="text"
+            label-placement="floating"
+            fill="outline"
+            (click)="showAddressFields = true"
+          ></ion-input>
+
+          <ion-row>
+            <ion-col>
+              <ion-select *ngIf="showAddressFields"
+               formControlName="gouvernoratInstallation"
+                [(ngModel)]="selectedGouvernoratInstallation"
+               label="Gouvernorats Installation"
+               (ionChange)="updateCodepostalInstallation()">
+  <ion-select-option *ngFor="let gouvernorat of gouvernorats" [value]="gouvernorat">
+    {{ gouvernorat }}
+  </ion-select-option>
+</ion-select>
+
+            </ion-col>
+            <ion-col>
+              <ion-input *ngIf="showAddressFields" formControlName="localiteInstallation" label="Localité" type="text"
+                label-placement="floating" fill="outline" ></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-input *ngIf="showAddressFields" formControlName="codepostalInstallation" label="Code postal" type="number"
+                label-placement="floating" fill="outline" readonly="readonly">
+              </ion-input>
+            </ion-col>
+            <ion-col>
+              <ion-input *ngIf="showAddressFields" formControlName="delegationInstallation" label="Delegation" type="text"
+                label-placement="floating" fill="outline" ></ion-input>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+        <ion-item
+        (click)="goNext()"
+        lines="none">
+          <ion-buttons  slot="end">
+              Page suivante
+            <ion-button color="success">
+              <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      </swiper-slide>
+
+      <swiper-slide>
+        <ion-card>
+        <ion-row>
+          <ion-col>
+        <ion-input
+        formControlName="email"
+        label="E-mail"
+        type="text"
+        label-placement="floating"
+        fill="outline"
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+
+        ></ion-input>
+        </ion-col>
+        <ion-col>
+        <ion-input
+        formControlName="contact"
+        (input)="onInput($event)"
+
+        label="Numero de Telephone"
+        type="number"
+        label-placement="floating"
+        fill="outline"
+
+        ></ion-input>
+        </ion-col>
+        </ion-row>
+        <ion-item>
+          <ion-buttons button="" (click)="getActualPosAlert('Confirmation', 'Voulez vous vraiment récupérer vos coordonnées actuelles?')">
+            <ion-text>Récupérer ma position actuelle</ion-text>
+            <ion-icon name="locate" slot="end" color="success"></ion-icon>
+          </ion-buttons>
+        </ion-item>
+        <ion-row>
+          <ion-col>
+            <ion-input
+              label="Latitude *"
+              label-placement="floating"
+              fill="outline"
+              type="number"
+              readonly
+              formControlName="latitude"
+              errorText="latitude requise"
+
+            ></ion-input>
+          </ion-col>
+          <ion-col>
+            <ion-input
+              label="Longitude *"
+              label-placement="floating"
+              fill="outline"
+              type="number"
+              readonly
+              formControlName="longitude"
+              errorText="longitude requise"
+            ></ion-input>
+          </ion-col>
+        </ion-row>
+          <ion-row>
+          <ion-col>
+            <ion-input
+              label="Offres"
+              label-placement="floating"
+              fill="outline"
+              type="text"
+
+              formControlName="offres"
+              errorText="offres requise"
+            ></ion-input>
+          </ion-col>
+          <ion-col>
+            <ion-select
+            formControlName="debit"
+            label="Debit"
+            label-placement="floating"
+            fill="outline"
+            type="number"
+            name="Debit"
+            errorText="Debit complet requis"
+
+          >
+            <ion-select-option value="8G">8G</ion-select-option>
+            <ion-select-option value="12G">12G</ion-select-option>
+            <ion-select-option value="24G">24G</ion-select-option>
+
+          </ion-select>
+          </ion-col>
+          <ion-searchbar formControlName="msisdn" (ionChange)="searchMsisdn($event)"></ion-searchbar>
+          <ion-list *ngIf="searchResults">
+            <ion-item *ngFor="let item of searchResults" (click)="selectMsisdn(item.msisdn)">
+              <ion-label>{{ item.msisdn }}</ion-label>
+            </ion-item>
+          </ion-list>
+          <ion-label *ngIf="selectedMsisdn">Numéro sélectionné : {{ selectedMsisdn }}</ion-label>
+          <ion-label *ngIf="error" color="danger">{{ error }}</ion-label>
+
+          </ion-row>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-text slot="start">SN</ion-text>
+                  <ion-icon name='camera' slot="end" (click)="captureImage('sn')"></ion-icon>
+                  <ion-button slot="end" (click)="exitCapture('sn')">Exit</ion-button>
+                </ion-item>
+                <div *ngIf="snImageSource">
+                  <img [src]="snImageSource" alt="Captured Image with Date and Time">
+                </div>
+              </ion-col>
+              <ion-col *ngIf="isChecked === 'Level 4'">
+                <ion-item>
+                  <ion-text slot="start">ONT</ion-text>
+                  <ion-icon name='camera' slot="end" (click)="captureImage('ont')"></ion-icon>
+                  <ion-button slot="end" (click)="exitCapture('ont')">Exit</ion-button>
+                </ion-item>
+                <div *ngIf="ontImageSource">
+                  <img [src]="ontImageSource" alt="Captured Image with Date and Time">
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <div class="ion-text-center">
+            <ion-checkbox formControlName="isChecked" name="checkbox" (ionChange)="toggleLevel4()"></ion-checkbox>
+            <label for="checkbox">Level 4</label>
+          </div>
+          <ion-button (click)="suivant()"
+          type="button"
+           shape="round"
+           expand="block"
+           [disabled]="!flashbox.valid"
+
+           >Suivant</ion-button>
+
+        </ion-card>
+        <ion-item
+            (click)="goPrev()"
+            lines="none">
+           <ion-buttons  slot="start">
+          <ion-button color="success">
+           <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+            </ion-button>
+            Page précédente
+            </ion-buttons>
+        </ion-item>
+      </swiper-slide>
+
+    </swiper-container>
+  </form>
+</ion-content>

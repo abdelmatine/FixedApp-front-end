@@ -18,8 +18,10 @@ export class OffresPage implements OnInit {
 
   ngOnInit() {
   }
-  onClickFIXEJDIDBOX(){}
-  onClickFLASHBOX(){}
+  onClickFIXEJDIDBOX(){
+    this.router.navigateByUrl('/fixe-jdid')}
+  onClickFLASHBOX(){    this.router.navigateByUrl('/flashbox')}
+
   onClickSUPERBOX(){
     this.router.navigateByUrl('/super-box');
 

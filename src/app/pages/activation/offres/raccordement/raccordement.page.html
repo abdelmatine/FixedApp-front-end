@@ -1,0 +1,16 @@
+<ion-toolbar color="primary">
+  <ion-buttons slot="start">
+    <ion-back-button defaultHref="home"></ion-back-button>
+  </ion-buttons>
+  <ion-title>Raccordement</ion-title>
+</ion-toolbar>
+
+
+<ion-content [fullscreen]="true">
+    <ion-content>
+      <ion-card>
+        <p class="raccordement-text">Souhaitez-vous passer une demande de raccordement ?</p>
+      </ion-card>
+      <ion-button (click)="Retour()">Retour</ion-button>
+      <ion-button (click)="Valider()">Valider</ion-button>
+    </ion-content>

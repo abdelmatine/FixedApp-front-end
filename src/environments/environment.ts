@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseApiUrl: 'http://172.19.3.47:8080/SpringMVC',
+  baseApiUrl: 'http://localhost:8080/SpringMVC',
 };
 
 /*

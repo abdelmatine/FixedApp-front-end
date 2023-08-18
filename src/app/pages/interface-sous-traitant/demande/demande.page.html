@@ -1,0 +1,124 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>demande</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-searchbar
+  (ionChange)="Search()"
+  show-clear-button="focus"
+  animated="true"
+  [debounce]="1000"
+  ></ion-searchbar>
+
+  <ion-list [inset]="true">
+    <ion-list-header>
+        <ion-col size="4" size-md="2" size-lg="1">
+          Date de demande
+        </ion-col>
+        <ion-col size="1" class="ion-hide-lg-down">
+          Nature        
+        </ion-col>
+        <ion-col size="1" class="ion-hide-lg-down">
+          Type
+        </ion-col>
+        <ion-col size="1" class="ion-hide-lg-down">
+          Abonnement
+        </ion-col>
+        <ion-col size="1" class="ion-hide-md-down">
+          MSISDN        
+        </ion-col>
+        <ion-col size="1" class="ion-hide-md-down">
+          Nom et prénom
+        </ion-col>
+        <ion-col size="2" size-md="2" size-lg="1" class="ion-hide-md-down">
+          adresse
+        </ion-col>
+        <ion-col size="2" size-md="2" size-lg="1" class="ion-hide-lg-down">
+          CGPS
+        </ion-col>        
+        <ion-col size="3" size-md="2" size-lg="1" >
+          Contact 1 
+
+        </ion-col>
+        
+        <ion-col size="2" size-md="2" size-lg="1" class="ion-hide-lg-down">
+        Contact 2 
+        </ion-col>        
+        
+        <ion-col size="4" size-md="2" size-lg="2">
+          Date d'intervention planifié
+        </ion-col>
+      </ion-list-header>
+  
+    <ion-item button
+    (click)="openDetails(d)"
+    *ngFor="let d of demandes; let i = index;" class="data-row">
+    
+      <ion-col size="4" size-md="2" size-lg="1">
+        {{ d.dateDemande }}
+      </ion-col>
+
+      <ion-col size="1" class="ion-hide-lg-down">
+      {{ d.nature }}
+      </ion-col>
+      <ion-col size="1" class="ion-hide-lg-down">
+        {{ d.type }}
+      </ion-col>
+      <ion-col size="1" class="ion-hide-lg-down">
+        {{ d.abonnement }}
+      </ion-col>
+      <ion-col size="1" class="ion-hide-md-down">
+        {{ d.msisdn }}
+      </ion-col>
+      <ion-col size="1" class="ion-hide-md-down">
+        {{ d.fullName }}
+      </ion-col>
+      <ion-col size="3" size-md="2" size-lg="1" class="ion-hide-md-down">
+        {{ d.adresse }}
+      </ion-col>
+      <ion-col size="2" size-md="2" size-lg="1" class="ion-hide-lg-down">
+        {{ d.latitude }} , {{d.longitude}}
+      </ion-col>
+      <ion-col size="3" size-md="2" size-lg="1" >
+        {{ d.contact }}
+      </ion-col>
+      <ion-col size="2" size-md="2" size-lg="1" class="ion-hide-lg-down">
+      </ion-col>
+      <ion-col size="4" size-md="2" size-lg="2">
+
+        <ng-container *ngIf="d.datePlanif">
+          {{ d.datePlanif}}
+        </ng-container>
+        <ng-container *ngIf="!d.datePlanif">
+          <ion-input 
+          size="small"
+          type="date" 
+          max="2005"
+          label=""
+          errorText="La date planifié dépasse les 48 heures"
+          color="light" 
+          fill="clear">
+
+        </ion-input>
+        </ng-container>
+
+          <!--(click)="changeDate(i)"
+                  <ion-icon color="medium" name="calendar-sharp" slot="icon-only">
+        </ion-icon>
+      -->
+
+      </ion-col>
+    
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content
+    loadingSpinner="circles"
+    loadingText="Loading data">
+
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

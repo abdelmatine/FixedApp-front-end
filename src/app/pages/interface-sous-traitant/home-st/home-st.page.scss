@@ -1,0 +1,179 @@
+
+
+/*ion-content {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  ion-content::before,
+  ion-content::after {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 200px;
+    height: 200px;
+    background-color: red;
+    border-radius: 50%;
+    opacity: 0.5;
+  }*/
+
+
+  
+  ion-avatar {
+    --border-radius: 4px;
+  }
+
+ion-item{
+    margin-top: 10%;
+}
+ion-title{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
+    ion-img{
+        height: 200px;
+        width: 180px;
+      }
+
+
+.offre_div{
+    background: white;
+}
+
+.content_div{
+    margin-top: 10%;
+
+
+    .col_div{
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background: var(--ion-color-grey200);
+        height: 150px;
+        box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
+        border-radius: 25px;
+        margin: 15px;
+
+        img{
+            width: 70px;
+        }
+
+        ion-label{
+            color: var(--ion-color-primary);
+            margin-top: 10px;
+        }
+
+        ion-grid{
+            --ion-background-color: black;
+        }
+
+
+    }
+}
+
+
+/* Default styles for mobile devices */
+ion-header {
+    ion-toolbar {
+        /* Add your styles for mobile here */
+    }
+}
+
+/* Media query for larger screens */
+@media (min-width: 768px) {
+    ion-header {
+        ion-toolbar {
+            /* Add your styles for larger screens (e.g., PC) here */
+            width: 100%; /* Set the toolbar width to 100% */
+            justify-content: space-between; /* Align items on the toolbar */
+            align-items: center;
+            height: 60px; /* Set the height of the toolbar */
+            background-color: #ff0000; /* Set a background color for the toolbar */
+        }
+
+        ion-buttons[slot="start"] {
+            margin-right: 15%; /* Adjust the margin of the start button */
+
+        }
+
+        ion-title {
+            font-size: 40px; /* Increase the font size of the title */
+        }
+
+        ion-buttons[slot="end"] {
+            margin-right: 20px; /* Adjust the margin of the end button */
+        }
+
+        ion-icon{
+            width: 30px;
+            height: 30px;
+        }
+        
+
+            ion-img{
+                height: 300px;
+                width: 230px;
+              }
+        
+    }
+}
+
+
+/*.animated{
+    --webkit-animation-duration:10s;
+    animation: duration 10s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+
+}
+
+@-webkit-keyframes bounceInUp{
+    0%{
+        opacity: 0;
+        -webkit-transform: translateY(2000px);
+    }
+    60%{
+        opacity: 0;
+        -webkit-transform: translateY(-30px);
+    }
+    80%{
+        -webkit-transform: translateY(10px);
+    }
+    100%{
+        -webkit-transform: translateY(0);
+    }
+}
+
+.bounceInUp{
+
+    -webkit-animation-name: bounceInUp;
+    animation-name: bounceInUp;
+
+}
+
+
+@keyframes bounceInUp{
+    0%{
+        opacity: 0;
+        -webkit-transform: translateY(2000px);
+    }
+    60%{
+        opacity: 0;
+        -webkit-transform: translateY(-30px);
+    }
+    80%{
+        -webkit-transform: translateY(10px);
+    }
+    100%{
+        -webkit-transform: translateY(0);
+    }
+}*/
+
+
+

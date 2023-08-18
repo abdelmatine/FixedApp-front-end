@@ -1,0 +1,26 @@
+
+.container {
+    height: 100vh;
+  }
+  form {
+    ion-card {
+      margin-left: 5%;
+      margin-right: 5%;
+      margin-top: 10%;
+      //max-width: 400px;
+      box-shadow: none;
+      border: 1px solid #e1e1e1;
+      padding: 24px;
+      ion-select{
+        margin-top: 10px;
+      }
+      ion-input{
+        margin-top: 10px;
+      }
+      ion-item{
+        margin-top: 10px;
+      }
+  
+  
+    }
+  }

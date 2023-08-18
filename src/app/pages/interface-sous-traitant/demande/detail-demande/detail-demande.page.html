@@ -1,0 +1,113 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>detail demande : {{ itemDetails?.fullName }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="cancel()">Retour</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-button>fixer date d'intervention</ion-button>
+
+  </ion-card>
+<ion-card>
+  <ion-row>
+    <ion-col>
+      <ion-input               label-placement="floating" 
+ label="Date de demande" disabled fill="outline">
+        {{ itemDetails.dateDemande }}
+      </ion-input>
+    </ion-col>
+    <ion-col>
+      <ion-input               label-placement="floating" 
+      label="Nature" disabled fill="outline">
+        {{ itemDetails.nature }}
+      </ion-input>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-input               label-placement="floating" 
+      label="Type" disabled fill="outline">
+        {{ itemDetails.type }}
+      </ion-input>
+    </ion-col>
+    <ion-col>
+      <ion-input               label-placement="floating" 
+      label="Abonnement" disabled fill="outline">
+        {{ itemDetails.Abonnement }}
+      </ion-input>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-input               label-placement="floating" 
+     label="MSISDN" disabled fill="outline">
+      {{ itemDetails.msisdn }}
+    </ion-input>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-input               label-placement="floating" 
+       label="Nom et prénom" disabled fill="outline">
+        {{ itemDetails.fullName }}
+      </ion-input>
+    </ion-col>
+    <ion-col>
+      <ion-input               
+      label-placement="floating" 
+      label="Adresse" 
+      disabled 
+      fill="outline">
+      </ion-input>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-input               
+      label-placement="floating" 
+      label="CGPS" 
+      disabled 
+      fill="outline">
+    </ion-input>
+    </ion-col>
+    <ion-col>
+      <ion-input 
+      label-placement="floating" 
+      label="Contact 1" 
+      disabled fill="outline">
+      </ion-input>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-input               
+      label-placement="floating" 
+      label="Contact 2"
+      disabled 
+      fill="outline">
+
+      </ion-input>
+    </ion-col>
+    <ion-col>
+      <ion-input               
+      label-placement="floating" 
+      label="Date d'intervention planifié" 
+      disabled 
+      fill="outline">
+      </ion-input>
+    </ion-col>
+  </ion-row>
+</ion-card>
+
+
+</ion-content>
+
+<!--
+
+  value={{ itemDetails.contact }}              
+      value={{ itemDetails.adresse }}
+      value={{ itemDetails.datePlanif }}
+
+-->

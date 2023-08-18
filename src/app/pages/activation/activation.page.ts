@@ -27,4 +27,3 @@ export class ActivationPage implements OnInit {
     this.router.navigate(['/activer'], params);
   }
   }
-

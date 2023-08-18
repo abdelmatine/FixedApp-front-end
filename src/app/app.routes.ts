@@ -97,7 +97,47 @@ const routes: Routes = [
   {
     path: 'detail-reservation',
     loadComponent: () => import('./pages/reservations/components/detail-reservation/detail-reservation.page').then( m => m.DetailReservationPage)
+  },  {
+    path: 'fixe-jdid',
+    loadComponent: () => import('./pages/activation/offres/fixe-jdid/fixe-jdid.page').then( m => m.FixeJdidPage)
   },
+  {
+    path: 'flashbox',
+    loadComponent: () => import('./pages/activation/offres/flashbox/flashbox.page').then( m => m.FlashboxPage)
+  },
+  {
+    path: 'raccordement',
+    loadComponent: () => import('./pages/activation/offres/raccordement/raccordement.page').then( m => m.RaccordementPage)
+  },
+  {
+    path: 'reglement',
+    loadComponent: () => import('./pages/activation/offres/fixe-jdid/reglement/reglement.page').then( m => m.ReglementPage)
+  },
+  {
+    path: 'rac-fast-box',
+    loadComponent: () => import('./pages/activation/offres/raccordement/rac-fast-box/rac-fast-box.page').then( m => m.RacFastBoxPage)
+  },
+  {
+    path: 'home-st',
+    loadComponent: () => import('./pages/interface-sous-traitant/home-st/home-st.page').then( m => m.HomeStPage)
+  },
+  {
+    path: 'demande',
+    loadComponent: () => import('./pages/interface-sous-traitant/demande/demande.page').then( m => m.DemandePage)
+  },
+  {
+    path: 'planning',
+    loadComponent: () => import('./pages/interface-sous-traitant/planning/planning.page').then( m => m.PlanningPage)
+  },
+  {
+    path: 'traitement',
+    loadComponent: () => import('./pages/interface-sous-traitant/traitement/traitement.page').then( m => m.TraitementPage)
+  },
+  {
+    path: 'detail-demande',
+    loadComponent: () => import('./pages/interface-sous-traitant/demande/detail-demande/detail-demande.page').then( m => m.DetailDemandePage)
+  },
+
 
 
 

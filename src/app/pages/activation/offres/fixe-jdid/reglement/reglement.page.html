@@ -1,0 +1,161 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="fixe-jdid"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Reglement</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <form [formGroup]="reg" (ngSubmit)="submit()">
+    <swiper-container [pagination]="true">
+      <swiper-slide>
+        <ion-card>
+          <ion-select
+            formControlName="paiement"
+            label="Moyens de paiement"
+            label-placement="floating"
+            fill="outline"
+            name="moyens de paiement"
+            [(ngModel)]="selectedPayment"
+            required
+          >
+            <ion-select-option value="cheques">Cheques</ion-select-option>
+            <ion-select-option value="especes">Especes</ion-select-option>
+            <ion-select-option value="carteB">Carte Bancaire</ion-select-option>
+            <ion-select-option value="carte">Sodexo</ion-select-option>
+          </ion-select>
+
+          <ion-input *ngIf="selectedPayment === 'especes'"
+            formControlName="montant"
+            [(ngModel)]="montant"
+            label="Montant"
+            label-placement="floating"
+            fill="outline"
+            required
+          ></ion-input>
+
+          <ion-input *ngIf="selectedPayment === 'cheques'"
+            formControlName="rib"
+            [(ngModel)]="rib"
+            label="RIB"
+            label-placement="floating"
+            fill="outline"
+            required
+          ></ion-input>
+
+          <ion-input *ngIf="selectedPayment === 'cheques'"
+            formControlName="numeroCheque"
+            [(ngModel)]="numeroCheque"
+            label="Numéro de chèque"
+            label-placement="floating"
+            fill="outline"
+            required
+          ></ion-input>
+
+          <ion-input *ngIf="selectedPayment === 'cheques'"
+            formControlName="codeBanque"
+            [(ngModel)]="codeBanque"
+            label="Code banque"
+            label-placement="floating"
+            fill="outline"
+            required
+          ></ion-input>
+
+          <ion-input *ngIf="selectedPayment === 'cheques'"
+            formControlName="codeAgence"
+            [(ngModel)]="codeAgence"
+            label="Code agence"
+            label-placement="floating"
+            fill="outline"
+            required
+          ></ion-input>
+
+          <ion-input *ngIf="selectedPayment === 'cheques'"
+            formControlName="dateEcheance"
+            [(ngModel)]="dateEcheance"
+            label="Date d'échéance"
+            type="date"
+            label-placement="floating"
+            fill="outline"
+            required
+          ></ion-input>
+          <ion-input *ngIf="selectedPayment === 'carteB'"
+          formControlName="numerocarte"
+          [(ngModel)]="dateEcheance"
+          label="Numero carte"
+          type="number"
+          label-placement="floating"
+          fill="outline"
+          required
+          class="ion-item"
+        ></ion-input>
+
+        <ion-item *ngIf="selectedPayment === 'carteB'" class="ion-item">
+          <ion-label>Date d'expiration</ion-label>
+          <ion-select formControlName="expirationMonth" placeholder="Mois" interface="popover" class="ion-select">
+            <ion-select-option *ngFor="let month of months" [value]="month">{{ month }}</ion-select-option>
+          </ion-select>
+          <ion-select formControlName="expirationYear" placeholder="Année" interface="popover" class="ion-select">
+            <ion-select-option *ngFor="let year of years" [value]="year">{{ year }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+    <ion-input *ngIf="selectedPayment === 'carteB'"
+    formControlName="nomdetenteur"
+    label="nom du détenteur"
+    type="text"
+    label-placement="floating"
+    fill="outline"
+    required
+  ></ion-input>
+  <ion-input *ngIf="selectedPayment === 'carteB'"
+  formControlName="ccv"
+  label="CVV2/CVC2"
+  type="number"
+  label-placement="floating"
+  fill="outline"
+  required
+></ion-input>
+<ion-input *ngIf="selectedPayment === 'carteB'"
+formControlName="email"
+label="Email"
+type="email"
+label-placement="floating"
+fill="outline"
+required
+></ion-input>
+
+          <ion-select *ngIf="selectedPayment === 'cheques'"
+            formControlName="typeIdentite"
+            [(ngModel)]="typeIdentite"
+            label="Type d'identité"
+            label-placement="floating"
+            fill="outline"
+            required
+          >
+            <ion-select-option value="cin">CIN</ion-select-option>
+            <ion-select-option value="passport">Passport</ion-select-option>
+          </ion-select>
+
+<ion-input *ngIf="selectedPayment === 'cheques' && (typeIdentite === 'cin' || typeIdentite === 'passport')" formControlName="numeroIdentite" [(ngModel)]="numeroIdentite" label="Numéro d'identité"label-placement="floating"fill="outline"></ion-input>
+
+<ion-input *ngIf="selectedPayment === 'carte'" formControlName="code" [(ngModel)]="code" label="Code généré" type="number"label-placement="floating"fill="outline"></ion-input>
+
+
+</ion-card>
+
+  <div class="ion-text-center"(click)="Valider()">
+    <ion-button type="button"
+    type="submit"
+    shape="round"
+    expand="block" >Valider</ion-button>
+    </div>
+    <div class="ion-text-center">
+      <ion-button type="button" (click)="retour()" shape="round" expand="block">
+        Retour
+      </ion-button>
+    </div>
+      </swiper-slide>
+    </swiper-container>
+    </form>
+</ion-content>
