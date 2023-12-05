@@ -5,6 +5,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { IonicModule } from "@ionic/angular";
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app.routes";
+import { httpInterceptorProviders } from "./pages/login/_helpers/auth.interceptor";
 
 @NgModule({
     imports: [
@@ -16,7 +17,7 @@ import { AppRoutingModule } from "./app.routes";
 
     ],
     declarations: [AppComponent],
-    providers: [],
+    providers: [httpInterceptorProviders],
     bootstrap: [AppComponent]
   })
 

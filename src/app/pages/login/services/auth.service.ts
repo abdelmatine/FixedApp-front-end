@@ -10,10 +10,55 @@ import jwt_decode from 'jwt-decode';
 import { GetResult, Preferences } from '@capacitor/preferences';
 
 
+const AUTH_API = 'http://localhost:8080/FixedApp/api/authCon/';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  constructor(private http:HttpClient, private router:Router) { }
+
+
+  login(username: string, password: string): Observable<any> {
+    return this.http.post(
+      AUTH_API + 'signin',
+      {
+        username,
+        password,
+      },
+      httpOptions
+    );
+  }
+
+  register(fullName: string,username: string, email: string, password: string, numTel: number,zone: string, nomB: string): Observable<any> {
+    return this.http.post(
+      AUTH_API + 'signup',
+      {
+        fullName,
+        username,
+        email,
+        password,
+        numTel,
+        zone,
+        nomB,
+      },
+      httpOptions
+    );
+  }
+
+  logout(): Observable<any> {
+    return this.http.post(AUTH_API + 'signout', { }, httpOptions);
+  }
+
+}
+
+
+/*
 
   private user$ = new BehaviorSubject<User>(null!);
 
@@ -34,13 +79,13 @@ export class AuthService {
     )
   }
 
-  /*get userRole(): Observable<Role> {
-    return this.user$.asObservable().pipe(
-      switchMap((user: User) => {
-        return of(user?.role); // for after signed out, but still subscribed
-      })
-    );
-  }*/
+  // get userRole(): Observable<Role> {
+  //   return this.user$.asObservable().pipe(
+  //     switchMap((user: User) => {
+  //       return of(user?.role); // for after signed out, but still subscribed
+  //     })
+  //   );
+  // }
 
   register(newUser: NewUser): Observable<User>{
 
@@ -78,4 +123,4 @@ export class AuthService {
     this.router.navigateByUrl('/auth');
   }
 
-}
+*/

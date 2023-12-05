@@ -14,6 +14,7 @@ import { Geolocation } from '@capacitor/geolocation';
 import { ModalmapPage } from './components/modalmap/modalmap.page';
 import { NativeGeocoder } from '@capgo/nativegeocoder';
 import { LoadingController } from '@ionic/angular';
+import { StorageService } from '../login/services/storage.service';
 
 @Component({
   selector: 'app-reservations',
@@ -46,7 +47,8 @@ export class ReservationsPage implements OnInit {
 
 
 
-  constructor(   
+  constructor( 
+    private storageService: StorageService,  
     private router: Router,
     private loadingController: LoadingController,
     private alertCtrl: AlertController,
@@ -273,6 +275,8 @@ export class ReservationsPage implements OnInit {
 
   async onSubmit() {
     const formData = this.myForm.value;
+    const userId = this.storageService.getUserId();
+
     let loading;
   
     try {
@@ -288,7 +292,7 @@ export class ReservationsPage implements OnInit {
         this.resService.lastContractNum = '23-00000000';
       }
       formData.contractNum = this.resService.generateContractNum();
-      const result = await this.resService.addReservation(formData).toPromise();
+      const result = await this.resService.addReservation(userId,formData).toPromise();
   
       this.savedInstance = Number(result);
       console.log(this.savedInstance);

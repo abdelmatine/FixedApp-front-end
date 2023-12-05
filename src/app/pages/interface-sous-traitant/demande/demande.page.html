@@ -52,11 +52,12 @@
         </ion-col>
       </ion-list-header>
   
-    <ion-item button
-    (click)="openDetails(d)"
+    <ion-item 
     *ngFor="let d of demandes; let i = index;" class="data-row">
     
-      <ion-col size="4" size-md="2" size-lg="1">
+      <ion-col button
+      (click)="openDetails(d)"
+       size="4" size-md="2" size-lg="1">
         {{ d.dateDemande }}
       </ion-col>
 

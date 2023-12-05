@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ReservationService {
-   lastContractNum: string ='';
+   lastContractNum: string ='00';
    
 
    //apiUrl = 'http://172.19.3.47:8080/SpringMVC';
@@ -19,14 +19,14 @@ export class ReservationService {
   }
 
 
-  validerSignature(resID: number, signatureData: string) {
+  validerSignature(userId:number | null, resID: number, signatureData: string) {
     const obj = { res: resID }; // Create an object with the resID
-    return this.http.post(`${environment.baseApiUrl}/Reservation/addSignature`, { signature: signatureData, ...obj });
+    return this.http.post(`${environment.baseApiUrl}/api/Reservation/addSignature/${userId}`, { signature: signatureData, ...obj });
   }
 
 
   getLastContractNumFromDatabase(): Observable<any> {
-    return this.http.get(`${environment.baseApiUrl}/Reservation/getLastReservation`);
+    return this.http.get(`${environment.baseApiUrl}/api/Reservation/getLastReservation`);
   }
   
 
@@ -53,15 +53,15 @@ export class ReservationService {
 
 
 
-  addReservation(formData: any) {
-    return this.http.post(`${environment.baseApiUrl}/Reservation/addReservation`, formData);
+  addReservation(userId:number | null, formData: any) {
+    return this.http.post(`${environment.baseApiUrl}/api/Reservation/addReservation/${userId}`, formData);
   }
 
 
 //172.19.3.47
 
   getContractData(): Promise<any> {
-    const url = `${environment.baseApiUrl}/Contract/getContract/25`; // Replace with your API endpoint
+    const url = `${environment.baseApiUrl}/api/Contract/getContract/25`; // Replace with your API endpoint
 
     return this.http.get(url).toPromise();
   }
@@ -73,14 +73,26 @@ export class ReservationService {
       header: 'Success',
       message: message,
       backdropDismiss: false,
-      buttons: []
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Alert canceled');
+          },
+        },
+        {
+          text: 'OK',
+          role: 'confirm',
+          handler: () => {
+            console.log('Alert confirmed');
+          },
+        },
+      ]
     });
 
     await alert.present();
 
-    setTimeout(async () => {
-      await alert.dismiss();
-    }, 2000);
   }
 
 }

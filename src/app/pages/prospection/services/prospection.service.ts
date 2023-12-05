@@ -23,21 +23,21 @@ export class ProspectionService {
     headers: new HttpHeaders({'Content-Type': 'application/json'}),
   };
 
-  addProspection(formData: any) {
-    return this.http.post(`${environment.baseApiUrl}/Prospection/addProspection`, formData);
+  addProspection(userId:number | null, formData: any) {
+    return this.http.post(`${environment.baseApiUrl}/api/Prospection/addProspection/${userId}`, formData);
   }
 
   getAllProspection() {
-    return this.http.get(`${environment.baseApiUrl}/Prospection/getallprospections`);
+    return this.http.get(`${environment.baseApiUrl}/api/Prospection/getallprospections`);
   }
 
   searchProspection(attribute: string, query: string) {
-    const url = `${environment.baseApiUrl}/Prospection/search?attribute=${attribute}&query=${query}`;
+    const url = `${environment.baseApiUrl}/api/Prospection/search?attribute=${attribute}&query=${query}`;
     return this.http.get(url);
   }
 
   searchProspectionBynumID(numID: number) {
-    const url = `${environment.baseApiUrl}/Prospection/getProspectionBynumID?numID=${numID}`;
+    const url = `${environment.baseApiUrl}/api/Prospection/getProspectionBynumID?numID=${numID}`;
     return this.http.get(url);
   }
 

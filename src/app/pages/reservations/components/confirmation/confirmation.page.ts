@@ -6,6 +6,7 @@ import { ModalController } from '@ionic/angular';
 import SignaturePad from 'signature_pad';
 import { ReservationService } from '../../services/reservation.service';
 import { Router } from '@angular/router';
+import { StorageService } from 'src/app/pages/login/services/storage.service';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class ConfirmationPage implements OnInit {
   signatureImage!: string;
 
   constructor(
+    private storageService: StorageService,
     private resService: ReservationService,
     private modalController: ModalController,) 
     { }
@@ -101,9 +103,11 @@ export class ConfirmationPage implements OnInit {
   async Valider() {
     const dataURL = this.signaturePadInstance.toDataURL();
     const resID = this.resID; 
+    const userId = this.storageService.getUserId();
+
   
     try {
-      await this.resService.validerSignature(resID, dataURL).toPromise();
+      await this.resService.validerSignature(userId,resID, dataURL).toPromise();
       console.log('Signature saved successfully!');
   
       // Show success alert using AlertService

@@ -17,12 +17,12 @@
       <ng-container *ngIf="submissionType === 'join'">  
         <ion-input 
         #firstName="ngModel"
-        label="Nom" 
+        label="Nom et Prenom" 
         label-placement="floating" 
         fill="outline"
           ngModel
           type="text"
-          name="firstName"
+          name="fullName"
           errorText="le nom est obligatoire"
           required>
           
@@ -43,20 +43,7 @@
     </ion-input>
 
 
-      <ng-container *ngIf="submissionType === 'join'"> 
-        <ion-input 
-        label="Prénom" 
-        label-placement="floating" 
-        fill="outline"
-          #lastNameInput="ngModel"
-          ngModel
-          type="text"
-          name="lastName"
-          errorText="Le prenom est obligatoire"
-          required>
-      </ion-input>
 
-      </ng-container>
 
 
       
@@ -75,21 +62,7 @@
 
       </ng-container>
 
-      <ng-container *ngIf="submissionType === 'join'"> 
-        <ion-input 
-        label="Numéro telephone" 
-        label-placement="floating" 
-        fill="outline"
-          #phoneInput="ngModel"
-          ngModel
-          type="number"
-          name="phoneNumber"
-          errorText="Numéro de telephone obligatoire"
-          required>
-      </ion-input>
 
-
-      </ng-container>
 
 
 
@@ -107,33 +80,83 @@
           required
           ></ion-input>
 
+          <ng-container *ngIf="submissionType === 'join'"> 
+              <div class="div">
+                <ion-input
+                label="confirmer mots de passe"
+                label-placement="floating" 
+                #confirmPasswordInput="ngModel"
+                ngModel
+                type="{{ showPassword ? 'text' : 'password' }}"
+                name="confirmPassword"
+                fill="outline"
+                required
+                icon="eye-off-outline"
+                errorText="Confirmation obligatoire"
+                (ionChange)="validatePassword()"
+                >
+              </ion-input>
+                  <span>
+                      <ion-icon (click)="toggleShowPassword()" slot="icon-only" [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+                  </span>
+              </div>
+
+
+      <ion-text color="danger" *ngIf="passwordMismatch">mots de passe incorrect</ion-text>
+      </ng-container>
 
 
       <ng-container *ngIf="submissionType === 'join'"> 
-        <ion-item
-        fill="outline">
-          <ion-input
-          label="confirmer mots de passe"
-          label-placement="floating" 
-          #confirmPasswordInput="ngModel"
+        <ion-input 
+        label="Numéro telephone" 
+        label-placement="floating" 
+        fill="outline"
+          #phoneInput="ngModel"
           ngModel
-          type="{{ showPassword ? 'text' : 'password' }}"
-          name="confirmPassword"
-          fill="solid"
-          required
-          icon="eye-off-outline"
-          errorText="Confirmation obligatoire"
-          (ionChange)="validatePassword()"
-          ></ion-input>
-          <ion-buttons slot="end">
-            <button ion-button clear (click)="toggleShowPassword()">
-              <ion-icon slot="icon-only" [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
-            </button>
-          </ion-buttons>
-        </ion-item>
+          type="number"
+          name="numTel"
+          errorText="Numéro de telephone obligatoire"
+          required>
+      </ion-input>
 
-  <ion-text color="danger" *ngIf="passwordMismatch">mots de passe incorrect</ion-text>
-  </ng-container>
+
+      </ng-container>
+
+      
+          <ng-container *ngIf="submissionType === 'join'"> 
+            <ion-input 
+            label="Région" 
+            label-placement="floating" 
+            fill="outline"
+              #zone="ngModel"
+              ngModel
+              type="text"
+              name="zone"
+              errorText="veuillez indiqué votre region"
+              required>
+          </ion-input>
+    
+          </ng-container>
+
+
+          <ng-container *ngIf="submissionType === 'join'"> 
+            <ion-input 
+            label="Nom de la société" 
+            label-placement="floating" 
+            fill="outline"
+              #nomSt="ngModel"
+              ngModel
+              type="text"
+              name="nomSt"
+              errorText="veuillez indiqué votre region"
+              required>
+          </ion-input>
+    
+          </ng-container>
+
+
+
+
 
 
       <p *ngIf="submissionType === 'join'" class="terms-and-conditions">

@@ -12,6 +12,7 @@ import { ProspectionService } from '../services/prospection.service';
 import { Geolocation } from '@capacitor/geolocation';
 import { NativeGeocoder } from '@capgo/nativegeocoder';
 import { ModalmapPage } from '../../reservations/components/modalmap/modalmap.page';
+import { StorageService } from '../../login/services/storage.service';
 
 
 @Component({
@@ -45,6 +46,7 @@ export class FormulairePage implements OnInit {
 
 
   constructor(
+    private storageService: StorageService,
     private modalCtrl: ModalController, 
     private prospectionService: ProspectionService,
     private loadingCtrl: LoadingController,
@@ -93,9 +95,6 @@ export class FormulairePage implements OnInit {
       });
       console.log(this.latitude, this.longitude);
 
-
-
-      /////////// ID input type ///////////
 
 
     }
@@ -245,15 +244,16 @@ export class FormulairePage implements OnInit {
     });
     await loading.present();
     const formData = this.prospector.value;
+    const userId = this.storageService.getUserId();
 
-    this.prospectionService.addProspection(formData)
+    
+    this.prospectionService.addProspection(userId,formData)
       .subscribe(
         (response) => {
           loading.dismiss();
           this.prospector.reset();
           this.presentAlert('Succès', 'Votre demande de prospection a été envoyée avec succès.');
           console.log('Form submitted successfully');
-          this.gotoHome();
         },
         (error) => {
           loading.dismiss();
@@ -271,13 +271,19 @@ export class FormulairePage implements OnInit {
     const alert = await this.alertCtrl.create({
       header,
       message,
-      buttons: []
+      buttons: [      
+        {
+        text: 'Confirmer',
+        handler: () => {
+          this.gotoHome();
+        }
+      }]
     });
     await alert.present();
 
-    setTimeout(() => {
-      alert.dismiss();
-    }, 1000);
+    // setTimeout(() => {
+    //   alert.dismiss();
+    // }, 1000);
   }
 
   cancel() {
