@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { AlertController, IonicModule } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { AlertController, IonicModule, NavController, Platform } from '@ionic/angular';
 import { AuthService } from './services/auth.service';
 import { StorageService } from './services/storage.service';
+import { App } from '@capacitor/app';
 
 @Component({
   selector: 'app-login',
@@ -40,17 +40,48 @@ export class LoginPage implements OnInit {
 
   constructor(
     private storageService: StorageService,
-    private router:Router, 
     private alertController: AlertController,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private navCtrl: NavController,
+    private platform: Platform,
+
+    ) { }
 
   ngOnInit(): void {
+
+    this.setupBackButtonListener();
+
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
       this.roles = this.storageService.getUser().roles;
     }
   }
 
+  private setupBackButtonListener() {
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      this.presentExitAlert();
+    });
+  }
+
+  async presentExitAlert() {
+    const alert = await this.alertController.create({
+      header: 'Quitter l"application',
+      message: 'Êtes-vous sûr de vouloir quitter?',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel'
+        },
+        {
+          text: 'Quitter',
+          handler: () => {
+            App.exitApp(); // Close the app
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
 
   async presentLoading(message: string) {
     const loading = await this.alertController.create({
@@ -98,7 +129,7 @@ export class LoginPage implements OnInit {
           this.isLoginFailed = false;
           this.isLoggedIn = true;
           this.roles = this.storageService.getUser().roles;
-          this.router.navigateByUrl('/home');
+          this.navCtrl.navigateRoot('/home');
 
         },
         error: err => {
@@ -133,7 +164,7 @@ export class LoginPage implements OnInit {
                 this.isLoginFailed = false;
                 this.isLoggedIn = true;
                 this.roles = this.storageService.getUser().roles;
-                this.router.navigateByUrl('/home');
+                this.navCtrl.navigateRoot('/home');
       
               },
               error: err => {
