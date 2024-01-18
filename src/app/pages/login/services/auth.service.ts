@@ -10,7 +10,7 @@ import jwt_decode from 'jwt-decode';
 import { GetResult, Preferences } from '@capacitor/preferences';
 
 
-const AUTH_API = 'http://localhost:8080/FixedApp/api/authCon/';
+const AUTH_API = `${environment.baseApiUrl}/api/authCon/`;
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

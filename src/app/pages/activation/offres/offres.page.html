@@ -8,36 +8,29 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">offres</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-list>
-    <ion-col>
-      <div class="ion-text-center">
-        <ion-button (click)="onClickFIXEJDIDBOX()">FIXE JDID BOX</ion-button>
-      </div>
-    </ion-col>
-    <ion-col>
-      <div class="ion-text-center">
-      <ion-button (click)="onClickFLASHBOX()">FLASH BOX</ion-button>
+  <ion-header >
+    <div>
+        <ion-row>
+            <ion-col>
+                <div>
+                    <img src="assets/images/daisy.png">
+                </div>
+            </ion-col>
+   
+        </ion-row>
     </div>
-    </ion-col>
-    <ion-col>
-      <div class="ion-text-center">
-        <ion-button (click)="onClickSUPERBOX()">Super BOX</ion-button>
-      </div>
-    </ion-col>
-    <ion-col>
-      <div class="ion-text-center">
-        <ion-button (click)="onClickFBOX()">FAST+BOX</ion-button>
-      </div>
-    </ion-col>
-    <ion-col>
-      <div class="ion-text-center">
-        <ion-button (click)="onClickFASTBOX()">FASTBOX</ion-button>
-      </div>
-    </ion-col>
-  </ion-list>
+</ion-header>
+
+<div class="content_div">
+<ion-grid >
+    <ion-row>
+        <ion-col sizeLg="4" sizeMd="4" sizeXs="6" tappable (click)="goToOffer(selection)" *ngFor="let selection of selections ">
+            <div class="col_div">
+                <img src="{{selection.img}}">
+                <ion-label>{{selection.name}}</ion-label>
+            </div>
+        </ion-col>
+    </ion-row>
+</ion-grid>
+</div>
 </ion-content>

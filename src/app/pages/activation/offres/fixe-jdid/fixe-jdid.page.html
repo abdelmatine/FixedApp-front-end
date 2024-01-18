@@ -13,6 +13,8 @@
     (afterinit)="swiperReady()"
     (slidechange)="swiperSlideChanged($event)"
     [pagination]="true"
+    [noSwipingSelector]="'.no-swipe'"
+
     >
       <swiper-slide>
         <ion-card>
@@ -92,6 +94,7 @@
 
       </swiper-slide>
       <swiper-slide>
+        <ion-card>
         <ion-item>
           <ion-text slot="start">Formulaire d'abonnement</ion-text>
           <ion-icon name='camera' slot="end" (click)="captureImage('formulaire')"></ion-icon>
@@ -156,6 +159,7 @@
           Page précédente
           </ion-buttons>
           </ion-item>
+        </ion-card>
       </swiper-slide>
       <swiper-slide>
 <ion-card>

@@ -4,8 +4,9 @@ import { FormsModule,ReactiveFormsModule,FormGroup, FormBuilder, Validators, Abs
 import { AlertController, IonicModule, LoadingController } from '@ionic/angular';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -54,11 +55,15 @@ export class ReglementPage implements OnInit {
   });
 
 
+  id : number = 0;
 
 
 
 
-  constructor(private formBuilder: FormBuilder,private http: HttpClient,
+  constructor(
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private http: HttpClient,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
     private router: Router) { }
@@ -66,6 +71,10 @@ export class ReglementPage implements OnInit {
 
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.id = params['actId'];
+      console.log(this.id);
+    });
   }
 
 
@@ -87,11 +96,16 @@ export class ReglementPage implements OnInit {
         },
         {
           text: 'Confirmer',
-          handler: () => {
-            this.http.post('http://localhost:8080/Reglement/add', formData)
+          handler: async () => {
+            const loading = await this.loadingCtrl.create({
+              message: 'Veuillez patienter...',
+            });
+            await loading.present();
+            this.http.post(`${environment.baseApiUrl}/api/Reglement/addReg/${this.id}`, formData)
               .subscribe(
                 response => {
-                  alert('succès !');
+                  
+                  loading.dismiss();
                   this.router.navigate(['/home']);
                 },
                 error => {
@@ -109,12 +123,12 @@ export class ReglementPage implements OnInit {
 
 
   this.submit();
-    const emailEndpoint = 'http://localhost:8080/email/send';
-    const smsEndpoint = 'http://localhost:8080/ooredoo/SMS';
+    const emailEndpoint = 'http://localhost:8080/api/email/send';
+    const smsEndpoint = 'http://localhost:8080/api/ooredoo/SMS';
 
     const emailData = new FormData();
-    emailData.append('to', 'amina.tarkhanitarkhani@gmail.com');
-    emailData.append('cc', 'amina.tarkhanitarkhani@gmail.com');
+    emailData.append('to', 'abdelmatinesfar@gmail.com');
+    emailData.append('cc', 'abdelmatinesfar@gmail.com');
     emailData.append('subject', 'ACTIVATION FORFAIT');
     emailData.append('body', 'Félicitation votre forfait a été activé avec succès');
 
@@ -126,8 +140,8 @@ export class ReglementPage implements OnInit {
     }
 
     const smsData = {
-      smsMessages: 'Congratulations! Your account has been activated successfully.',
-      destinationSMSNumber: '+21624437860'
+      smsMessages: 'Félicitation votre forfait a été activé avec succès.',
+      destinationSMSNumber: '+21656757140'
     };
 
     const emailRequest = this.http.post(emailEndpoint, emailData);

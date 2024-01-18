@@ -9,8 +9,10 @@ import { Swiper } from 'swiper';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import SignaturePad from 'signature_pad';
+import { FixService } from './service/fix.service';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -19,12 +21,15 @@ import SignaturePad from 'signature_pad';
   templateUrl: './fixe-jdid.page.html',
   styleUrls: ['./fixe-jdid.page.scss'],
   standalone: true,
+  providers: [FixService],
   imports: [IonicModule, CommonModule, FormsModule,ReactiveFormsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
 })
 export class FixeJdidPage implements OnInit {
+  id : number = 0;
+  fixId : number = 0;
   searchResults: any | null = null;
   selectedMsisdn: string | undefined;
   availableMsisdns: string[] = [];
@@ -49,14 +54,15 @@ export class FixeJdidPage implements OnInit {
   swiperRef: ElementRef | undefined;
   swiper?: Swiper;
   fixe: FormGroup = this.formBuilder.group({
-    debit: ['', Validators.required],
-    type: ['', Validators.required],
-    abonnement: ['', Validators.required],
-    imei: ['', Validators.required],
-    kitcode: ['', Validators.required],
-    recherche: ['', Validators.required],
+    contractNum: [''],
+    debit: ['12GO', Validators.required],
+    type: ['outdoor', Validators.required],
+    abonnement: ['mensuelle', Validators.required],
+    imei: ['0008759856756', Validators.required],
+    kitcode: ['541200064854', Validators.required],
+    recherche: [''],
     formulaire: [''],
-    msisdn: ['',Validators.required],
+    msisdn: ['36555140',Validators.required],
     conditions: [''],
     preuves: [''],
     contrats: ['']
@@ -65,12 +71,18 @@ export class FixeJdidPage implements OnInit {
 
 
 
-  constructor(private formBuilder: FormBuilder,private http: HttpClient,  private loadingCtrl: LoadingController,
+  constructor(   
+    private fixService: FixService, 
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,private http: HttpClient,  private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,private router: Router) { }
 
   ngOnInit() {
     this.fetchAvailableMsisdns();
-
+    this.route.queryParams.subscribe(params => {
+      this.id = params['actId'];
+      console.log(this.id);
+    });
   }
   areFieldsValid(): boolean {
     const imageFields = [
@@ -89,12 +101,7 @@ export class FixeJdidPage implements OnInit {
     return true; // Tous les champs d'image sont vides, retourne true
   }
   submit() {
-    if (this.fixe.valid && this.fixe.value.msisdn) {
-      const formData = this.fixe.value;
-
-    } else {
-    }
-    this.swiper?.slideNext();
+console.log("hi");
   }
 
 
@@ -102,7 +109,7 @@ export class FixeJdidPage implements OnInit {
     const msisdnControl = this.fixe.get('msisdn');
 
     const msisdn = event.target.value || '';
-    const url = `http://localhost:8080/FixeJdid/search?msisdn=${msisdn}`;
+    const url = `${environment.baseApiUrl}/api/FixeJdid/search?msisdn=${msisdn}`;
 
     this.http.get(url).subscribe((result: any) => {
       this.searchResults = result || [];
@@ -148,7 +155,7 @@ export class FixeJdidPage implements OnInit {
   }
 
   fetchAvailableMsisdns() {
-    const url = 'http://localhost:8080/FixeJdid/getAvailableMsisdns'; // Replace with the appropriate API endpoint
+    const url = 'http://localhost:8080/FixedApp/api/FixeJdid/getAvailableMsisdns'; // Replace with the appropriate API endpoint
 
     this.http.get(url)
       .toPromise()
@@ -162,7 +169,7 @@ export class FixeJdidPage implements OnInit {
   }
 
   checkMsisdnAvailability(msisdn: string): Promise<boolean> {
-    const url = `http://localhost:8080/FixeJdid/search?msisdn=${msisdn}`;
+    const url = `http://localhost:8080/FixedApp/api/FixeJdid/search?msisdn=${msisdn}`;
 
     return this.http.get(url)
       .toPromise()
@@ -203,7 +210,7 @@ private captureImages = async () => {
     quality: 90,
     allowEditing: false,
     resultType: CameraResultType.DataUrl,
-    source: CameraSource.Prompt,
+    source: CameraSource.Camera,
   });
 
 };
@@ -596,62 +603,70 @@ async captureFormulaire() {
 isSubmitting = false;
 
 async submitForm() {
-  // Vérifiez si le formulaire est déjà en cours de soumission
-  if (this.isSubmitting) {
-    return;
-  }
-
-  this.isSubmitting = true;
-
   const loading = await this.loadingCtrl.create({
     message: 'Veuillez patienter...',
   });
-  await loading.present();
 
-  // Enregistrer les valeurs des attributs dans des variables locales
-  const typeDeBoxValue = this.fixe.get('type')?.value;
-  const msisdnValue = this.fixe.get('msisdn')?.value;
-  const abonnementValue = this.fixe.get('abonnement')?.value;
-  const formulaireImage = this.fixe.get('formulaire')?.value;
-  const conditionsImage = this.fixe.get('conditions')?.value;
-  const preuvesImage = this.fixe.get('preuves')?.value;
-  const contratsImage = this.fixe.get('contrats')?.value;
+  try {
+    await loading.present();
 
-  const formulaireBlob = btoa(formulaireImage);
-  const conditionsBlob = btoa(conditionsImage);
-  const preuvesBlob = btoa(preuvesImage);
-  const contratsBlob = btoa(contratsImage);
+    const response = await this.fixService.getLastContractNumFromDatabase().toPromise();
 
-  const formData = this.fixe.value;
-  console.log(formData);
-  this.http.post('http://localhost:8080/FixeJdid/ajouter', formData)
-    .subscribe(
-      (response) => {
-        loading.dismiss();
-        this.presentAlert('Succès', 'Votre demande a été envoyée avec succès.');
-        console.log('Form submitted successfully');
+    if (response) {
+      console.log('Numero de contract response:', response.contractNum);
+      this.fixService.lastContractNum = response.contractNum;
+      console.log('LastContractNum val:', response.contractNum);
+    } else {
+      this.fixService.lastContractNum = '24-00000000';
+    }
 
-        // Réaffecter les valeurs des attributs après la soumission du formulaire
-        this.typeDeBoxValue = typeDeBoxValue;
-        this.msisdnValue = msisdnValue;
-        this.abonnementValue = abonnementValue;
+    console.log('submitForm called');
 
-        // Réinitialiser le formulaire
-        this.fixe.reset();
+    // Enregistrer les valeurs des attributs dans des variables locales
+    const typeDeBoxValue = this.fixe.get('type')?.value;
+    const msisdnValue = this.fixe.get('msisdn')?.value;
+    const abonnementValue = this.fixe.get('abonnement')?.value;
+    const formulaireImage = this.fixe.get('formulaire')?.value;
+    const conditionsImage = this.fixe.get('conditions')?.value;
+    const preuvesImage = this.fixe.get('preuves')?.value;
+    const contratsImage = this.fixe.get('contrats')?.value;
 
-        // Rétablir l'état de soumission du formulaire à false
-        this.isSubmitting = false;
-      },
-      (error) => {
-        loading.dismiss();
-        this.presentAlert('Erreur', 'Échec de l\'enregistrement des données dans la base de données. Veuillez réessayer plus tard.');
-        console.error('Error submitting form:', error);
+    const formulaireBlob = btoa(formulaireImage);
+    const conditionsBlob = btoa(conditionsImage);
+    const preuvesBlob = btoa(preuvesImage);
+    const contratsBlob = btoa(contratsImage);
 
-        // Rétablir l'état de soumission du formulaire à false en cas d'erreur
-        this.isSubmitting = false;
-      }
-    );
+    const actId = this.id;
+    const formData = this.fixe.value;
+    formData.contractNum = this.fixService.generateContractNum();
+
+    console.log(formData);
+
+    const postResponse = await this.http.post(`${environment.baseApiUrl}/api/FixeJdid/addfixe/${actId}`, formData).toPromise();
+
+    this.fixId = Number(postResponse);
+    console.log(this.fixId);
+
+    this.presentAlert('Succès', 'Votre demande a été envoyée avec succès.');
+    console.log('Form submitted successfully');
+    this.goNext();
+
+    // Réaffecter les valeurs des attributs après la soumission du formulaire
+    this.typeDeBoxValue = typeDeBoxValue;
+    this.msisdnValue = msisdnValue;
+    this.abonnementValue = abonnementValue;
+
+    // Réinitialiser le formulaire
+    this.fixe.reset();
+
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    this.presentAlert('Erreur', 'Échec de l\'enregistrement des données dans la base de données. Veuillez réessayer plus tard.');
+  } finally {
+    loading.dismiss();
+  }
 }
+
 
 
 
@@ -666,7 +681,6 @@ async presentAlert(header: string, message: string) {
     buttons: []
   });
   await alert.present();
-
   setTimeout(() => {
     alert.dismiss();
   }, 1000);
@@ -706,7 +720,6 @@ displayAttributeValues() {
 goNext() {
   this.swiper?.slideNext();
   this.displayAttributeValues();
-
 }
 swiperSlideChanged(e: any) {
   console.log('changed: ', e);
@@ -742,8 +755,23 @@ reglement() {
   if (this.signaturePadInstance.isEmpty()) {
     alert('Veuillez signer avant de continuer.');
   } else {
+    const dataURL = this.signaturePadInstance.toDataURL();
+    const signatureData = { signature: dataURL };
+    this.http.put(`${environment.baseApiUrl}/api/FixeJdid/add/${this.fixId}`, { signature: dataURL })
+    .subscribe(response => {
+      console.log('Signature saved successfully!');
+    
+    }, error => {
+      console.error('Failed to save the signature:', error);
+    });
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        actId: this.id,
+        source: 'fixe-jdid'
+      }
+    };
     this.router.navigate(['/reglement'], {
-      queryParams: { source: 'fixe-jdid' }
+      queryParams: { source: 'fixe-jdid', actId:this.id }
     });
 }
 }
@@ -752,7 +780,7 @@ reglement() {
 Submit(){
 const dataURL = this.signaturePadInstance.toDataURL();
 const signatureData = { signature: dataURL };
-this.http.post('http://localhost:8080/FixeJdid/add', { signature: dataURL })
+this.http.post(`${environment.baseApiUrl}/api/FixeJdid/add/${this .fixId}`, { signature: dataURL })
 .subscribe(response => {
   console.log('Signature saved successfully!');
 

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { AlertController, IonicModule, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ValidationPage } from '../prospection/validation/validation.page';
+import { AuthService } from '../login/services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,11 @@ export class HomePage implements OnInit {
 
   constructor(
     private router:Router,
-    private modalController: ModalController) { }
+    private modalController: ModalController,
+    private authService: AuthService,
+    private alertController: AlertController,
+    private navCtrl: NavController
+    ) { }
   ngOnInit() {
     
 
@@ -146,6 +151,43 @@ goToOffer(selection : {route: string;}) {
   this.modalController.dismiss();
   this.isModalOpen = false;
   this.router.navigate(['/'+selection.route]);
+}
+
+
+async onLogout() {
+  const loadingAlert = await this.presentLoading(); // Show loading spinner for logout
+
+  this.authService.logout().subscribe(
+    () => {
+      loadingAlert.dismiss(); // Dismiss loading spinner
+      this.navCtrl.navigateRoot('/login'); // Navigate to login page
+    },
+    error => {
+      loadingAlert.dismiss(); // Dismiss loading spinner
+      // Handle error if logout fails
+      this.presentErrorAlert('Logout failed'); // Show error alert
+    }
+  );
+}
+
+
+async presentLoading() {
+  const loading = await this.alertController.create({
+    message: 'Déconnexion en cours...',
+    translucent: true,
+    backdropDismiss: false,
+  });
+  await loading.present();
+  return loading;
+}
+
+async presentErrorAlert(message: string) {
+  const alert = await this.alertController.create({
+    header: 'Error',
+    message: message,
+    buttons: ['OK']
+  });
+  await alert.present();
 }
 
 

@@ -120,7 +120,6 @@ export class ValidationPage implements OnInit {
       this.photoTaken = true;
       this.validationID.get('imageRec')!.markAsTouched();
 
-    
     }
     takePictureVerso = async () => {
       const image = await Camera.getPhoto({

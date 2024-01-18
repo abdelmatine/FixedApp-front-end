@@ -97,7 +97,8 @@ const routes: Routes = [
   {
     path: 'detail-reservation',
     loadComponent: () => import('./pages/reservations/components/detail-reservation/detail-reservation.page').then( m => m.DetailReservationPage)
-  },  {
+  },
+  {
     path: 'fixe-jdid',
     loadComponent: () => import('./pages/activation/offres/fixe-jdid/fixe-jdid.page').then( m => m.FixeJdidPage)
   },

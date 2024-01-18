@@ -9,8 +9,10 @@
 
 <ion-content [fullscreen]="true">
 
-<ion-content [fullscreen]="true">
-    <ion-toolbar>
+  <ion-card>
+
+    <h2 class="h2-class">procéder en choisissant le type d'identité du client</h2>
+ 
       <ion-item>
         <ion-select label="Type d'identité" placeholder="ID type" [(ngModel)]="place">
           <ion-select-option value="CIN">CIN</ion-select-option>
@@ -19,6 +21,6 @@
         </ion-select>
       </ion-item>
       <ion-button type="submit" shape="round" expand="block" (click)="valider()">valider</ion-button>
+    </ion-card>
 
-    </ion-toolbar>
 </ion-content>

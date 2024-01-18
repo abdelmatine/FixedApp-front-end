@@ -8,9 +8,19 @@
 		</ion-buttons>
         <ion-title>Fixed App</ion-title>
 		<ion-buttons slot="end">
-			<ion-button class="bordered" color="dark">
-                <ion-icon name="notifications"></ion-icon>            
+			<ion-button id="popover-button" class="bordered" color="dark">
+                <ion-icon name="ellipsis-vertical"></ion-icon>            
             </ion-button>
+            <ion-popover trigger="popover-button" [dismissOnSelect]="true">
+                <ng-template>
+                  <ion-content>
+                    <ion-list>
+                      <ion-item [button]="true" [detail]="false">Notifications</ion-item>
+                      <ion-item button (click)="onLogout()" [button]="true" [detail]="false" >Déconnection</ion-item>
+                    </ion-list>
+                  </ion-content>
+                </ng-template>
+              </ion-popover>
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>

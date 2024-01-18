@@ -171,6 +171,18 @@ export class FormulairePage implements OnInit {
     //console.log(adress)
     const adress = await NativeGeocoder.reverseGeocode(options);
     console.log(adress)
+
+    //const address = await NativeGeocoder.reverseGeocode(options);
+
+    const ville = adress.addresses[0].locality;
+    const avenue = adress.addresses[0].thoroughfare;
+    const deleg = adress.addresses[0].administrativeArea;
+    const postal = adress.addresses[0].postalCode;
+
+    const adress_final = `${avenue} ${ville} ${deleg} ${postal}`;
+
+    this.prospector.controls['adresse'].setValue(adress_final);
+
   }
 
 
@@ -234,13 +246,13 @@ export class FormulairePage implements OnInit {
 
 
   async onSubmit(){
-    this.ConfirmationFormSubmitAlert('Confirmation', 'Confirmer la submission ?');
+    this.ConfirmationFormSubmitAlert('Confirmation', 'Etes-vous sur de vouloir confirmer ?');
   }
 
 
   async submitForm() {
     const loading = await this.loadingCtrl.create({
-      message: 'Veuillez patienter...',
+      message: 'Veuillez patienter ...',
     });
     await loading.present();
     const formData = this.prospector.value;

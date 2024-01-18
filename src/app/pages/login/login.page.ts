@@ -37,7 +37,7 @@ export class LoginPage implements OnInit {
 
   submissionType: 'login' | 'join' = 'login';
   showPassword = false;
-
+  showPasswordConf = false;
   constructor(
     private storageService: StorageService,
     private alertController: AlertController,

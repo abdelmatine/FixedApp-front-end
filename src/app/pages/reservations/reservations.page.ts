@@ -288,8 +288,12 @@ export class ReservationsPage implements OnInit {
         console.log('numero de contract response:', response.contractNum);
         this.resService.lastContractNum = response.contractNum;
         console.log('lastContractNum val:', response.contractNum);
+        await this.hideLoading(loading);
+
       } else {
         this.resService.lastContractNum = '23-00000000';
+        await this.hideLoading(loading);
+
       }
       formData.contractNum = this.resService.generateContractNum();
       const result = await this.resService.addReservation(userId,formData).toPromise();

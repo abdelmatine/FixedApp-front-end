@@ -1,13 +1,46 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="activer"></ion-back-button>
+    </ion-buttons>
     <ion-title>Interface d'activation</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+
+
+  <ion-card>
+    <ion-title 
+    color="primary" 
+    class="class-title" 
+    size="large">Activation</ion-title>
+  </ion-card>
+
   <form [formGroup]="prospector" (ngSubmit)="onSubmit()">
 
-  <ion-grid>
+  <ion-card>
+
+    <h2>Remplir les données necéssaires du client:</h2>
+
+    <ion-item class="item-loc" button="" (click)="getActualPosAlert('Confirmation', 'Voulez vous vraiment récupérer vos coordonnées actuelles?')">
+      <ion-buttons >
+        <ion-text>Récupérer les coordonnées du site actuel</ion-text>
+        <ion-icon     
+         name="locate" slot="end" color="success">
+        </ion-icon>
+      </ion-buttons> 
+    </ion-item>
+
+    <ion-item class="item-loc" button="" (click)="openMap()">
+      <ion-buttons >
+        <ion-text>Récupérer les coordonnées d'aprés la carte</ion-text>
+        <ion-icon     
+         name="location" slot="end" color="success">
+        </ion-icon>
+      </ion-buttons> 
+    </ion-item>
+
     <ion-row>
       <ion-col size="6">
         <ion-input
@@ -77,17 +110,18 @@
           required
         >
         </ion-input>
-        <ion-input
+        <ion-select 
+        placeholder="Tunisien(ne)" 
+        label="Nationalité*" 
+        label-placement="floating" 
+        fill="outline" 
+        formControlName="nationalite"
+        required>
+        <ion-select-option value="TN">Tunisien(ne)</ion-select-option>
+        <ion-select-option value="AG">Algerien(ne)</ion-select-option>
+        <ion-select-option value="LB">lybien(ne)</ion-select-option>
 
-
-          label="Nationalte"
-           label-placement="floating"
-            fill="outline" placeholder="Nationalite"
-            type="text"
-
-          formControlName="nationalite"
-          required >
-        </ion-input>
+        </ion-select>
       </ion-col>
 
       <ion-col size="6">
@@ -159,14 +193,43 @@
   formControlName="email"
   required
 >
+<ion-row>
+  <ion-col>
+    <ion-input
+    label="Latitude*" 
+    label-placement="floating" 
+    fill="outline"
+    type="number"
+    readonly
+    formControlName="latitude"
+    errorText="latitude requise"
+    required>
+  </ion-input>
+  </ion-col>
+
+  <ion-col>
+    <ion-input
+    label="Longitude*" 
+    label-placement="floating" 
+    fill="outline"
+    type="number"
+    readonly
+    formControlName="longitude" 
+    errorText="longitude requise"
+    required>
+  </ion-input>
+  </ion-col>
+
+</ion-row>
 
 </ion-input>
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-card>
+  <div class="center-container">
 
-<ion-button (click)="navigateToOffres()" type="submit" shape="round" expand="block">Suivant</ion-button>
-
+<ion-button [disabled]="prospector.invalid" type="submit" shape="round" expand="block">Suivant</ion-button>
+</div>
 
 </form>
 
