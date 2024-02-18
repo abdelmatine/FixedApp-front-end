@@ -650,6 +650,9 @@ async submitForm() {
     this.presentAlert('Succès', 'Votre demande a été envoyée avec succès.');
     console.log('Form submitted successfully');
     this.goNext();
+    this.goNext();
+    this.goNext();
+
 
     // Réaffecter les valeurs des attributs après la soumission du formulaire
     this.typeDeBoxValue = typeDeBoxValue;

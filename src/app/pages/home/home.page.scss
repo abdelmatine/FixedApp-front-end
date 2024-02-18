@@ -18,7 +18,9 @@
     opacity: 0.5;
   }*/
 
-
+  ion-content {
+    background-color: var(--ion-color-grey700);
+  }
   
 ion-avatar {
     --border-radius: 4px;

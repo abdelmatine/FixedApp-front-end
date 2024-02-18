@@ -66,6 +66,7 @@ export class ReglementPage implements OnInit {
     private http: HttpClient,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
+
     private router: Router) { }
 
 
@@ -79,6 +80,8 @@ export class ReglementPage implements OnInit {
 
 
   submit(){}
+
+
   async Valider() {
     const formData = this.reg.value;
 
@@ -106,7 +109,9 @@ export class ReglementPage implements OnInit {
                 response => {
                   
                   loading.dismiss();
+                  this.Success('L\'opération a été établie avec succés');
                   this.router.navigate(['/home']);
+
                 },
                 error => {
                   alert('Une erreur s\'est produite lors de l\'enregistrement des données :');
@@ -160,5 +165,27 @@ export class ReglementPage implements OnInit {
 
 }
 retour(){this.router.navigate(['/fixe-jdid'])}
+
+
+async Success(message: string) {
+  const alert = await this.alertCtrl.create({
+    header: 'Success',
+    message: message,
+    backdropDismiss: false,
+    buttons: [
+
+      {
+        text: 'OK',
+        role: 'confirm',
+        handler: () => {
+          console.log('Alert confirmed');
+        },
+      },
+    ]
+  });
+
+  await alert.present();
+
+}
 
   }
