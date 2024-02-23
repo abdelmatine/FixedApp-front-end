@@ -32,3 +32,34 @@
   // @import "~swiper/scss/pagination";
   // @import "~swiper/scss/scrollbar";
   // @import "~swiper/scss/zoom";
+  ion-header {
+    font-weight: bold;
+    ion-toolbar {
+      padding: 10px;
+      border-radius: 0 0 40px 40px;
+      overflow: hidden;
+    }
+  }
+  ion-content {
+  --ion-background-color:#E0E0E0;
+  font-weight: bold;
+
+  }
+
+  ion-title{
+    font-weight: bold;
+  }
+
+  ion-button{
+    font-weight: bold;
+
+  }
+
+  ion-text{
+    font-weight: bold;
+
+  }
+
+  ion-buttons{
+    font-weight: bold;
+  }

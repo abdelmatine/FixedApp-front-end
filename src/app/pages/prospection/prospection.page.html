@@ -1,6 +1,6 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar color="primary">
-    <ion-buttons slot="start">
+    <ion-buttons  slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
         <ion-title>Prospection</ion-title>
@@ -19,12 +19,14 @@
 
   <ion-card>
 
-    <h2 class="h2-class">procéder en choisissant le type d'identité du client</h2>
+    <ion-card class="cardi">
+      <h2 class="h2-class">procéder en choisissant le type d'identité du client</h2>
+    </ion-card>
  
 
   
 
-    <ion-item>
+    <ion-item >
       <ion-select label="Type d'identité" placeholder="CIN" [(ngModel)]="place" >
         <ion-select-option value="CIN">CIN</ion-select-option>
         <ion-select-option value="PASS">PASSEPORT</ion-select-option>
@@ -59,6 +61,7 @@
 
   <ion-modal trigger="open-modal">
     <ng-template>
+      <ion-header style="background-color: #E0E0E0;"  class="ion-no-border">
         <ion-toolbar color="primary">
           <ion-buttons slot="start">
             <ion-button (click)="cancel()">
@@ -69,7 +72,10 @@
           <ion-title>Liste des prospections</ion-title>
 
         </ion-toolbar>
+      </ion-header>
       <ion-content class="ion-padding">
+
+
 
             <ion-searchbar
             [(ngModel)]="searchTerm"
@@ -79,6 +85,7 @@
             animated="true" 
             placeholder="Chercher une demande de prospection par: {{selectedAttribute}}"
             ></ion-searchbar>
+
 
         <ion-select 
         label="Filtre:" 
@@ -96,15 +103,14 @@
         </ion-refresher>
 
 
-
-
         <ion-list [inset]="true" *ngFor="let p of prospections">
-            <ion-item
+            <ion-item 
             long-press>
           
             
-              <ion-label>
-                <h2>{{ p.fullName }} </h2>
+              <ion-label
+              >
+                <h2 style="font-weight: bold;">{{ p.fullName }} </h2>
                 <p>{{ p.numID }}</p>
               </ion-label>
               <ion-badge

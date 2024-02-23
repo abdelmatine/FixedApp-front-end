@@ -23,9 +23,9 @@
         margin-left: 5%;
         margin-right: 5%;
         margin-top: 30%;
-        //max-width: 400px;
-        box-shadow: none;
+        box-shadow: 0 10px 30px 0px rgba(57, 71, 82, 0.12);;
         border: 1px solid #e1e1e1;
+        border-radius: 40px 40px 40px 40px;
         padding: 24px;
         ion-item{
           margin-top: 10px;
@@ -67,5 +67,7 @@
     --background: rgb(14 116 144);
     --color: white;
   }
+
+
 
   

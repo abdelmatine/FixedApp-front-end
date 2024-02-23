@@ -8,8 +8,7 @@ form {
       margin-left: 5%;
       margin-right: 5%;
       margin-top: 2%;
-      //max-width: 400px;
-      box-shadow: none;
+      box-shadow: 0 10px 30px 0px rgba(57, 71, 82, 0.12);;
       border: 1px solid #e1e1e1;
       padding: 24px;
       ion-select{
@@ -29,24 +28,20 @@ form {
     }
 }
     
-    
-    ion-card {
-      margin-left: 5%;
-      margin-right: 5%;
-      margin-top: 5%;
-      //max-width: 400px;
-      box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
-      border: 1px solid #e1e1e1;
-      padding: 24px;
-      ion-select{
-        margin-top: 10px;
-      }
-      ion-input{
-        margin-top: 10px;
-      }
 
-    }
+.item-loc{
+  border-radius: 5px 5px 5px 5px;
+}
 
+ion-item{
+  background-color:#a5a4a4;
+  box-shadow: 0 10px 30px 0px rgba(57, 71, 82, 0.12);;
+  border: 1px solid #e1e1e1;
+  border-radius: 40px 40px 40px 40px;
+  margin-left: 3%;
+  margin-right: 3%;
+
+}
 
 .input-type{
   margin-left: 5%;
@@ -81,10 +76,13 @@ form {
 
 
   .center-container {
-    margin-top: 5%;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100%;
+    box-shadow: 0 10px 30px 0px rgba(57, 71, 82, 0.12);;
+    background: #d4d4d4;
+  
   }
 
   .content {
@@ -117,7 +115,15 @@ form {
     --swiper-scrollbar-drag-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.5);
   }
 
-
+  .final{
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 5%;
+    box-shadow: 0 10px 30px 0px rgba(57, 71, 82, 0.12);
+    border: 1px solid #e1e1e1;
+    border-radius: 40px 40px 40px 40px;
+    padding: 24px;
+  }
 
 
 

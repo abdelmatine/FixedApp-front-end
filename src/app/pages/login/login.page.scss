@@ -7,13 +7,23 @@ ion-content{
   display: inline
 }
 
+.cardi{
+
+  //max-width: 400px;
+  box-shadow: 0 10px 30px 0px rgba(57, 71, 82, 0.12);;
+  border: 1px solid #e1e1e1;
+  border-radius: 40px 40px 40px 40px;
+
+}
+
 form {
   max-width: 400px;
   margin: auto;
   ion-card {
-    box-shadow: none;
+    box-shadow: 0 10px 30px 0px rgba(57, 71, 82, 0.12);;
     border: 1px solid #e1e1e1;
     padding: 24px;
+    
     ion-input{
       margin-top: 10px;
       
@@ -23,9 +33,10 @@ form {
     .terms-and-conditions {
       font-size: 12px;
       text-align: center;
+      font-weight: bold;
       margin-top: 16px;
       ion-text {
-        font-weight: 500;
+        font-weight: 700;
       }
     }
     ion-button {
@@ -58,6 +69,7 @@ form {
   align-items: center;
   margin-top: 50px;
   margin-bottom: 20px;
+  font-weight: bold;
 
 }
 

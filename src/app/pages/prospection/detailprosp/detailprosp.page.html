@@ -1,7 +1,7 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-button color="medium" (click)="cancel()">Retour</ion-button>
+      <ion-button color="medium"  style="font-weight: bold;" (click)="cancel()">Retour</ion-button>
     </ion-buttons>
     <ion-title>Detail fiche prospection de: {{ itemDetails?.fullName }}</ion-title>
   </ion-toolbar>
@@ -14,51 +14,51 @@
     <ion-card>
       <ion-list>
 
-        <ion-item>
+        <ion-item lines="none"  style="font-weight: bold;">
           <ion-label>Type de l'offre:</ion-label>
           <ion-note slot="end">{{ itemDetails?.offreType }}</ion-note>
         </ion-item>
 
-        <ion-item>
+        <ion-item lines="none"  style="font-weight: bold;">
           <ion-label>Nom Complet:</ion-label>
           <ion-note slot="end">{{ itemDetails?.fullName }}</ion-note>
         </ion-item>
     
-        <ion-item>
+        <ion-item lines="none"  style="font-weight: bold;">
           <ion-label>Numéro de contact:</ion-label>
           <ion-note slot="end">{{ itemDetails?.contactNum }}</ion-note>
         </ion-item>
     
-        <ion-item>
+        <ion-item lines="none"  style="font-weight: bold;">
           <ion-label>Numéro pièce d'identité:</ion-label>
           <ion-note slot="end">{{ itemDetails?.numID }}</ion-note>
         </ion-item>
 
-        <ion-item>
+        <ion-item lines="none"  style="font-weight: bold;">
           <ion-label>Date de demande:</ion-label>
           <ion-note slot="end">{{ itemDetails?.dateCreation }}</ion-note>
         </ion-item>
     
 
 
-        <ion-item>
+        <ion-item lines="none"  style="font-weight: bold;">
           <ion-label>Adresse:</ion-label>
           <ion-note slot="end">{{ itemDetails?.adresse }}</ion-note>
         </ion-item>
 
-        <ion-item>
+        <ion-item lines="none"  style="font-weight: bold;">
           <ion-label>Date de demande:</ion-label>
           <ion-note slot="end">{{ itemDetails?.dateCreation }}</ion-note>
         </ion-item>
 
-        <ion-item>
+        <ion-item lines="none"  style="font-weight: bold;">
           <ion-label>Couverture:</ion-label>
           <ion-note slot="end">{{ itemDetails?.zone }}</ion-note>
         </ion-item>
 
         <ng-container *ngIf="itemDetails?.zone === 'Zone Couverte'">
 
-          <ion-item >
+          <ion-item lines="none"   style="font-weight: bold;">
             <ion-label>Accès à l'immeuble:</ion-label>
             <ion-note slot="end">{{ itemDetails?.access }}</ion-note>
           </ion-item>
@@ -66,22 +66,22 @@
           <ng-container *ngIf="itemDetails?.access === 'AVEC'">
 
   
-            <ion-item>
+            <ion-item lines="none"  style="font-weight: bold;">
               <ion-label>Nom de la residence:</ion-label>
               <ion-note slot="end">{{ itemDetails?.residenceName }}</ion-note>
             </ion-item>
     
-            <ion-item>
+            <ion-item lines="none"  style="font-weight: bold;">
               <ion-label>bloc:</ion-label>
               <ion-note slot="end">{{ itemDetails?.bloc }}</ion-note>
             </ion-item>
     
-            <ion-item>
+            <ion-item lines="none"  style="font-weight: bold;">
               <ion-label>Etage:</ion-label>
               <ion-note slot="end">{{ itemDetails?.etage }}</ion-note>
             </ion-item>
     
-            <ion-item>
+            <ion-item lines="none"  style="font-weight: bold;">
               <ion-label>Appartement:</ion-label>
               <ion-note slot="end">{{ itemDetails?.appartement }}</ion-note>
             </ion-item>
@@ -90,7 +90,7 @@
 
           <ng-container *ngIf="itemDetails?.access === 'SANS'">
  
-            <ion-item>
+            <ion-item lines="none"  style="font-weight: bold;">
               <ion-label>Raison:</ion-label>
               <ion-note slot="end">{{ itemDetails?.raison }}</ion-note>
             </ion-item>
@@ -99,7 +99,7 @@
 
         </ng-container>
 
-        <ion-item>
+        <ion-item lines="none"  style="font-weight: bold;">
           <ion-label>Etat:</ion-label>
           <ion-note slot="end">{{ itemDetails?.etat }}</ion-note>
         </ion-item>

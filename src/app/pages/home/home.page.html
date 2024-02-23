@@ -1,6 +1,7 @@
 
 <ion-header [translucent]="true" class="ion-no-border">
 	<ion-toolbar>
+    <div class="back-circle"></div>
 		<ion-buttons slot="start">
 			<ion-button>
                     <ion-img src="assets/images/head.png"/>
@@ -30,7 +31,12 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
-  
+  <svg class="back-blob" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#ED1C24" d="M68.6,-33.5C81.6,-17.2,79.6,13.8,65.7,37.6C51.8,61.3,25.9,77.8,2.1,76.6C-21.7,75.4,-43.5,56.5,-54.2,34.6C-65,12.7,-64.8,-12.3,-53.9,-27.4C-43,-42.4,-21.5,-47.6,3.2,-49.4C27.9,-51.2,55.7,-49.7,68.6,-33.5Z" transform="translate(100 100)" />
+  </svg>
+
+
+
 <div  class="content_div">
     <ion-grid >
         <ion-row>
@@ -42,13 +48,14 @@
             </ion-col>
         </ion-row>
     </ion-grid>
+
 </div>
 
 
 <ion-modal #modal [isOpen]="isModalOpen">
     <ng-template>
-      <ion-header class="ion-no-border">
-        <ion-toolbar>
+      <ion-header style="background-color: #E0E0E0;"  class="ion-no-border">
+        <ion-toolbar color="primary">
           <ion-title>Choisir le type d'offre</ion-title>
           <ion-buttons slot="end">
             <ion-button (click)="setOpen(false)">Fermer</ion-button>
@@ -57,18 +64,17 @@
       </ion-header>
 
       <ion-content class="ion-padding">
-        <ion-header >
+
                 <div>
                     <ion-row>
                         <ion-col>
                             <div>
-                                <img src="assets/images/daisy.png">
+                                <img class="pub" src="assets/images/daisy.png">
                             </div>
                         </ion-col>
                
                     </ion-row>
                 </div>
-        </ion-header>
 
         <div class="content_div">
             <ion-grid >

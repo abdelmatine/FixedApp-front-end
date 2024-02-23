@@ -137,7 +137,15 @@ const routes: Routes = [
   {
     path: 'detail-demande',
     loadComponent: () => import('./pages/interface-sous-traitant/demande/detail-demande/detail-demande.page').then( m => m.DetailDemandePage)
+  },  {
+    path: 'val',
+    loadComponent: () => import('./pages/reservations/val/val.page').then( m => m.ValPage)
   },
+  {
+    path: 'scan',
+    loadComponent: () => import('./pages/reservations/val/scan/scan.page').then( m => m.ScanPage)
+  },
+
 
 
 

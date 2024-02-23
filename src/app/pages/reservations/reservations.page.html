@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true"  class="ion-no-border">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="content">
-  <ion-card>
+  <ion-card class="final">
     <ion-title 
     color="primary" 
     class="class-title" 
@@ -27,7 +27,7 @@
         <ion-card>
           <ng-container>
 
-                <ion-item class="item-loc" button="" (click)="getActualPosAlert('Confirmation', 'Voulez vous vraiment récupérer vos coordonnées actuelles?')">
+                <ion-item lines="none" class="item-loc" button="" (click)="getActualPosAlert('Confirmation', 'Voulez vous vraiment récupérer vos coordonnées actuelles?')">
                   <ion-buttons >
                     <ion-text>Récupérer les coordonnées du site actuel</ion-text>
                     <ion-icon     
@@ -36,7 +36,7 @@
                   </ion-buttons> 
                 </ion-item>
 
-                <ion-item class="item-loc" button="" (click)="openMap()">
+                <ion-item lines="none" class="item-loc" button="" (click)="openMap()">
                   <ion-buttons >
                     <ion-text>Récupérer les coordonnées d'aprés la carte</ion-text>
                     <ion-icon     
