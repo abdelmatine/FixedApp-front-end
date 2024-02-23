@@ -50,6 +50,8 @@
       padding: 10px;
       border-radius: 0 0 40px 40px;
       overflow: hidden;
+      --ion-background-color:#a5a4a4;
+
     }
   }
 
@@ -131,12 +133,6 @@ ion-title{
 }
 
 
-/* Default styles for mobile devices */
-ion-header {
-    ion-toolbar {
-        --ion-background-color:#a5a4a4;
-    }
-}
 
 /* Media query for larger screens */
 @media (min-width: 768px) {

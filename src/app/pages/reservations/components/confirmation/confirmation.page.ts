@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {  FormsModule } from '@angular/forms';
-import {  IonicModule } from '@ionic/angular';
+import {  AlertController, IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import SignaturePad from 'signature_pad';
 import { ReservationService } from '../../services/reservation.service';
@@ -35,6 +35,7 @@ export class ConfirmationPage implements OnInit {
   signatureImage!: string;
 
   constructor(
+    private alertController: AlertController,
     private storageService: StorageService,
     private resService: ReservationService,
     private modalController: ModalController,) 
@@ -99,17 +100,29 @@ export class ConfirmationPage implements OnInit {
     return this.signaturePadInstance.isEmpty();
   }
 
+  async presentLoading(message: string) {
+    const loading = await this.alertController.create({
+      message: message,
+      translucent: true,
+      backdropDismiss: false,
+      //spinner: 'crescent'
+    });
+    await loading.present();
+    return loading;
+  }
   
   async Valider() {
     const dataURL = this.signaturePadInstance.toDataURL();
     const resID = this.resID; 
     const userId = this.storageService.getUserId();
 
-  
+    const loadingAlert = await this.presentLoading('Enregistrement...'); // Show loading spinner for login
+
     try {
       await this.resService.validerSignature(userId,resID, dataURL).toPromise();
       console.log('Signature saved successfully!');
-  
+      loadingAlert.dismiss(); // Dismiss loading spinner
+
       // Show success alert using AlertService
       this.resService.FormPlusSignatureValidAlert('Félicitation! Votre demande de réservation a été soumise avec succès');
   
@@ -120,6 +133,8 @@ export class ConfirmationPage implements OnInit {
     } catch (error) {
       console.error('Failed to save the signature:', error);
       // Handle errors if necessary
+      loadingAlert.dismiss(); // Dismiss loading spinner
+
     }
 
 

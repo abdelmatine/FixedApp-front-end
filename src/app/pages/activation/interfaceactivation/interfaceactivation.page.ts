@@ -25,6 +25,7 @@ export class InterfaceactivationPage implements OnInit {
   selectedNationalite: any;
   otherNationalite: any;
   prospector: FormGroup ;
+  myDate: String = new Date("1997-03-07").toISOString();
 
   actId: number = 0;
 

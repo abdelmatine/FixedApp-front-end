@@ -14,7 +14,6 @@ import { NavigationExtras, Router } from '@angular/router';
 export class ActivationPage implements OnInit {
   place: 'CIN' | 'PASSEPORT' | 'SEJ' = 'CIN';
 
-
   constructor(private router:Router) { }
 
   ngOnInit() {
