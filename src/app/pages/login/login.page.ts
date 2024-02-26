@@ -88,7 +88,9 @@ export class LoginPage implements OnInit {
       message: message,
       translucent: true,
       backdropDismiss: false,
-      //spinner: 'crescent'
+      //cssClass: 'custom-loading-class',
+      //content: '<div class="custom-loading-container"><img src="assets/loading.svg"></div>',
+
     });
     await loading.present();
     return loading;
@@ -96,9 +98,12 @@ export class LoginPage implements OnInit {
   
   async presentSuccessAlert(message: string) {
     const alert = await this.alertController.create({
-      header: 'Success',
+      header: 'Succès',
       message: message,
     });
+    setTimeout(() => {
+      alert.dismiss();
+    }, 1000);
     await alert.present();
   }
   

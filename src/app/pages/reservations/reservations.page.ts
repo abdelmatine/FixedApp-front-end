@@ -15,6 +15,7 @@ import { ModalmapPage } from './components/modalmap/modalmap.page';
 import { NativeGeocoder } from '@capgo/nativegeocoder';
 import { LoadingController } from '@ionic/angular';
 import { StorageService } from '../login/services/storage.service';
+import { ReglementPage } from './components/reglement/reglement.page';
 
 @Component({
   selector: 'app-reservations',
@@ -65,10 +66,10 @@ export class ReservationsPage implements OnInit {
       abbType: ['B2C', Validators.required],
       civilite: ['Monsieur', Validators.required],
       nationalite: ['TN', Validators.required],
-      prenom: ['Abdelmatine', Validators.required],
-      nom: ['Sfar', Validators.required],
+      prenom: ['Test', Validators.required],
+      nom: ['Test', Validators.required],
       idType: ['CIN', Validators.required],
-      numID: ['', Validators.required],
+      numID: ['07451289', Validators.required],
       naissance: ['', Validators.required],
       adresse: ['exemple 154', Validators.required],
       gouvernorat: ['Ben Arous', Validators.required],
@@ -139,6 +140,8 @@ export class ReservationsPage implements OnInit {
   gotoHome() {
     this.router.navigate(['/home']);
   }
+
+
   async openModal() {
     const modal = await this.modalCtrl.create({
       component: ConfirmationPage,
@@ -155,6 +158,26 @@ export class ReservationsPage implements OnInit {
   
     await modal.present();
   }
+
+
+  async openModalReg() {
+    const modal = await this.modalCtrl.create({
+      component: ReglementPage,
+      componentProps: {
+        resID: Number(this.savedInstance)
+      }
+    });
+
+    modal.onDidDismiss().then(() => {
+     // this.gotoHome();
+     console.log("dissmised");
+
+    });
+
+  
+    await modal.present();
+  }
+
 
   async openMap() {
     const modal = await this.modalCtrl.create({
@@ -194,30 +217,6 @@ export class ReservationsPage implements OnInit {
         this.myForm.controls['delegation'].setValue(address.addresses[0].subAdministrativeArea);
         this.myForm.controls['adresse'].setValue(address.addresses[0].subThoroughfare+' '+address.addresses[0].thoroughfare);
 
-/*
-      contractNum: [''],
-      boxType: ['INDOOR', Validators.required],
-      abbType: ['B2C', Validators.required],
-      civilite: ['Monsieur', Validators.required],
-      nationalite: ['TN', Validators.required],
-      prenom: ['Abdelmatine', Validators.required],
-      nom: ['Sfar', Validators.required],
-      idType: ['CIN', Validators.required],
-      numID: ['', Validators.required],
-      naissance: ['', Validators.required],
-      adresse: ['exemple 154', Validators.required],
-      gouvernorat: ['Ben Arous', Validators.required],
-      delegation: ['Boumhal', Validators.required],
-      localite: ['Boumhal', Validators.required],
-      ville: ['Boumhal', Validators.required],
-      codePostal: ['2097', Validators.required],
-      email: ['abdelmatinesfar@gmail.com', Validators.required],
-      telOne: ['56757140', Validators.required],
-      telTwo: [''],
-      latitude: ['', Validators.required],
-      longitude: ['', Validators.required],
-      signatureImage: ['']
-*/
   }
 
 
@@ -301,7 +300,7 @@ export class ReservationsPage implements OnInit {
       this.savedInstance = Number(result);
       console.log(this.savedInstance);
       console.log('Form submitted successfully');
-      this.openModal();
+      this.openModalReg();
     } catch (error) {
       console.error('Error submitting form:', error);
     } finally {

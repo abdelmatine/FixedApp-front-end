@@ -67,25 +67,7 @@ export class ConfirmationPage implements OnInit {
 
 
 
- /* submitForm() {
-    if (this.resID.valid) {
-      this.formSubmit.emit(this.resID);
-    }
-  }*/
 
-  /*Valider(){
-    this.formData.value.signatureImage = this.signaturePad.toDataURL();
-    const dataURL = this.signaturePadInstance.toDataURL();
-    const signatureData = { signature: dataURL };
-    this.http.post('http://localhost:8080/FastBox/add', { signature: dataURL })
-    .subscribe(response => {
-     alert('Signature saved successfully!');
-
-    }, error => {
-      alert('Erreur');
-      // Gérez les erreurs si nécessaire
-    });
-  }*/
 
   public displaySignatureImage(imageBlob: Blob) {
     const reader = new FileReader();

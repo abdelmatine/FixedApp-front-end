@@ -145,6 +145,10 @@ const routes: Routes = [
     path: 'scan',
     loadComponent: () => import('./pages/reservations/val/scan/scan.page').then( m => m.ScanPage)
   },
+  {
+    path: 'reglement',
+    loadComponent: () => import('./pages/reservations/components/reglement/reglement.page').then( m => m.ReglementPage)
+  },
 
 
 
