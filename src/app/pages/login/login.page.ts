@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { AlertController, IonicModule, NavController, Platform } from '@ionic/angular';
+import { AlertController, IonicModule, LoadingController, NavController, Platform } from '@ionic/angular';
 import { AuthService } from './services/auth.service';
 import { StorageService } from './services/storage.service';
 import { App } from '@capacitor/app';
@@ -41,11 +41,14 @@ export class LoginPage implements OnInit {
   constructor(
     private storageService: StorageService,
     private alertController: AlertController,
+    private loadingCtrl: LoadingController,
     private authService: AuthService,
     private navCtrl: NavController,
     private platform: Platform,
 
     ) { }
+
+
 
   ngOnInit(): void {
 
@@ -84,10 +87,12 @@ export class LoginPage implements OnInit {
   }
 
   async presentLoading(message: string) {
-    const loading = await this.alertController.create({
+    const loading = await this.loadingCtrl.create({
       message: message,
       translucent: true,
       backdropDismiss: false,
+      mode: "ios"
+      //spinner: circles,
       //cssClass: 'custom-loading-class',
       //content: '<div class="custom-loading-container"><img src="assets/loading.svg"></div>',
 

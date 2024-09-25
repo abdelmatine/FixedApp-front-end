@@ -150,22 +150,23 @@ goToOffer(selection : {route: string;}) {
   /////////// bug here //////////////
   this.modalController.dismiss();
   this.isModalOpen = false;
-  this.router.navigate(['/'+selection.route]);
+  //this.router.navigate(['/'+selection.route]);
+  this.router.navigate(['/val']);
+
 }
 
 
 async onLogout() {
-  const loadingAlert = await this.presentLoading(); // Show loading spinner for logout
+  const loadingAlert = await this.presentLoading(); 
 
   this.authService.logout().subscribe(
     () => {
-      loadingAlert.dismiss(); // Dismiss loading spinner
-      this.navCtrl.navigateRoot('/login'); // Navigate to login page
+      loadingAlert.dismiss(); 
+      this.navCtrl.navigateRoot('/login'); 
     },
     error => {
-      loadingAlert.dismiss(); // Dismiss loading spinner
-      // Handle error if logout fails
-      this.presentErrorAlert('Logout failed'); // Show error alert
+      loadingAlert.dismiss(); 
+      this.presentErrorAlert('Logout failed'); 
     }
   );
 }

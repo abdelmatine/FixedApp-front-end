@@ -118,6 +118,9 @@ throw new Error('Method not implemented.');
           handler: async () => {
             const loading = await this.loadingCtrl.create({
               message: 'Veuillez patienter...',
+              spinner: 'crescent',
+              translucent: true,
+              backdropDismiss: false
             });
             await loading.present();
             this.http.post(`${environment.baseApiUrl}/api/Reglement/addReg/${this.id}`, formData)
@@ -155,17 +158,12 @@ throw new Error('Method not implemented.');
       message: message,
       backdropDismiss: false,
       buttons: [
-  
-        {
-          text: 'OK',
-          role: 'confirm',
-          handler: () => {
-            console.log('Alert confirmed');
-          },
-        },
+
       ]
     });
-  
+    setTimeout(() => {
+      alert.dismiss();
+    }, 500);
     await alert.present();
   
   }

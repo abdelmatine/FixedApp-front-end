@@ -125,7 +125,7 @@ export class ProspectionPage implements OnInit {
     this.prospectionService.searchProspection(this.selectedAttribute!, this.searchTerm)
       .subscribe((data) => {
         this.prospections = data;
-        this.notFoundMessage = 'n"existe pas';
+        this.notFoundMessage = 'n\'existe pas';
       });
   }
 

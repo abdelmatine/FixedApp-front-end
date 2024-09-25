@@ -170,6 +170,15 @@ searchControl.on('markgeocode', function (e) {
 const circle = Leaflet.circle([36.806,10.1815], { radius: 3000,color:'yellow',fillOpacity:0.5,fillColor:'yellow' }).addTo(map);
 circle.setStyle({ fillColor: 'yellow' });
 
+const circle1 = Leaflet.circle([36.74330053708882,10.302573760855013], { radius: 3000,color:'red',fillOpacity:0.5,fillColor:'red' }).addTo(map);
+circle1.setStyle({ fillColor: 'red' });
+
+const circle2 = Leaflet.circle([36.7459430149041,10.226672318094645], { radius: 3000,color:'red',fillOpacity:0.5,fillColor:'red' }).addTo(map);
+circle2.setStyle({ fillColor: 'red' });
+
+const circle3 = Leaflet.circle([36.69864689230568,10.261727388569854], { radius: 3150,color:'red',fillOpacity:0.5,fillColor:'red' }).addTo(map);
+circle3.setStyle({ fillColor: 'red' });
+
 
 }
 

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {  FormsModule } from '@angular/forms';
-import {  AlertController, IonicModule } from '@ionic/angular';
+import {  AlertController, IonicModule, LoadingController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import SignaturePad from 'signature_pad';
 import { ReservationService } from '../../services/reservation.service';
@@ -36,9 +36,12 @@ export class ConfirmationPage implements OnInit {
 
   constructor(
     private alertController: AlertController,
+    private loadingCtrl: LoadingController,
     private storageService: StorageService,
     private resService: ReservationService,
-    private modalController: ModalController,) 
+    private modalController: ModalController,
+    private router: Router
+    ) 
     { }
 
   ngOnInit() {
@@ -49,6 +52,7 @@ export class ConfirmationPage implements OnInit {
 
   cancel() {
     this.modalController!.dismiss(null, 'cancel');
+    this.router.navigate(['/home']);
   }
 
 
@@ -83,11 +87,11 @@ export class ConfirmationPage implements OnInit {
   }
 
   async presentLoading(message: string) {
-    const loading = await this.alertController.create({
+    const loading = await this.loadingCtrl.create({
       message: message,
+      spinner: 'crescent',
       translucent: true,
-      backdropDismiss: false,
-      //spinner: 'crescent'
+      backdropDismiss: false
     });
     await loading.present();
     return loading;
@@ -107,11 +111,11 @@ export class ConfirmationPage implements OnInit {
 
       // Show success alert using AlertService
       this.resService.FormPlusSignatureValidAlert('Félicitation! Votre demande de réservation a été soumise avec succès');
-  
+      this.router.navigate(['/home']);
       // Close the modal and reset the form after the alert disappears
       setTimeout(async () => {
         await this.modalController.dismiss();
-      }, 1500);
+      }, 500);
     } catch (error) {
       console.error('Failed to save the signature:', error);
       // Handle errors if necessary

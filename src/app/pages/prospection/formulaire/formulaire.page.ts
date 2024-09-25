@@ -178,8 +178,9 @@ export class FormulairePage implements OnInit {
     const avenue = adress.addresses[0].thoroughfare;
     const deleg = adress.addresses[0].administrativeArea;
     const postal = adress.addresses[0].postalCode;
+    const num = adress.addresses[0].subThoroughfare;
 
-    const adress_final = `${avenue} ${ville} ${deleg} ${postal}`;
+    const adress_final = `${num} ${avenue} ${ville} ${deleg} ${postal}`;
 
     this.prospector.controls['adresse'].setValue(adress_final);
 
@@ -253,6 +254,9 @@ export class FormulairePage implements OnInit {
   async submitForm() {
     const loading = await this.loadingCtrl.create({
       message: 'Veuillez patienter ...',
+      translucent: true,
+      backdropDismiss: false,
+      mode: "ios"
     });
     await loading.present();
     const formData = this.prospector.value;

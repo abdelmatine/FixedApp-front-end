@@ -67,16 +67,16 @@ export class ReservationsPage implements OnInit {
       civilite: ['Monsieur', Validators.required],
       nationalite: ['TN', Validators.required],
       prenom: ['Test', Validators.required],
-      nom: ['Test', Validators.required],
+      nom: ['test', Validators.required],
       idType: ['CIN', Validators.required],
-      numID: ['07451289', Validators.required],
+      numID: ['09627401', Validators.required],
       naissance: ['', Validators.required],
-      adresse: ['exemple 154', Validators.required],
-      gouvernorat: ['Ben Arous', Validators.required],
-      delegation: ['Boumhal', Validators.required],
-      localite: ['Boumhal', Validators.required],
-      ville: ['Boumhal', Validators.required],
-      codePostal: ['2097', Validators.required],
+      adresse: ['', Validators.required],
+      gouvernorat: ['', Validators.required],
+      delegation: ['', Validators.required],
+      localite: ['', Validators.required],
+      ville: ['', Validators.required],
+      codePostal: ['', Validators.required],
       email: ['abdelmatinesfar@gmail.com', Validators.required],
       telOne: ['56757140', Validators.required],
       telTwo: [''],
@@ -300,6 +300,7 @@ export class ReservationsPage implements OnInit {
       this.savedInstance = Number(result);
       console.log(this.savedInstance);
       console.log('Form submitted successfully');
+                this.myForm.reset();
       this.openModalReg();
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -327,15 +328,21 @@ export class ReservationsPage implements OnInit {
     //console.log(adress)
     const adress = await NativeGeocoder.reverseGeocode(options);
     console.log(adress)
-
+    const num = adress.addresses[0].subThoroughfare;
     const ville = adress.addresses[0].locality;
-    const codePostal = adress.addresses[0].postalCode;
+    const avenue = adress.addresses[0].thoroughfare;
+    const deleg = adress.addresses[0].administrativeArea;
+    const postal = adress.addresses[0].postalCode;
+
+    const adress_final = `${num} ${avenue} ${ville} ${deleg} ${postal}`;
+
+    this.myForm.controls['adresse'].setValue(adress_final);
     //const gouvernorat = 
-    this.myForm.controls['ville'].setValue(adress.addresses[0].subLocality);
-    this.myForm.controls['codePostal'].setValue(codePostal);
+    this.myForm.controls['ville'].setValue(adress.addresses[0].subAdministrativeArea);
+    this.myForm.controls['codePostal'].setValue(postal);
     this.myForm.controls['gouvernorat'].setValue(adress.addresses[0].administrativeArea);
     this.myForm.controls['localite'].setValue(adress.addresses[0].locality);
-    this.myForm.controls['delegation'].setValue(adress.addresses[0].subLocality);
+    this.myForm.controls['delegation'].setValue(adress.addresses[0].subAdministrativeArea);
     console.log(ville)
 
   }

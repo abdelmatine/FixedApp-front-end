@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseApiUrl: 'http://localhost:8080/FixedApp',
+  baseApiUrl: 'http://192.168.1.3:8080/FixedApp',
 };
 
 /*
